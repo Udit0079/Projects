@@ -1,0 +1,653 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="All_Ledger_Acc_type"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="650"
+		 pageHeight="842"
+		 columnWidth="590"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pReportName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedBy" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pAcNo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pAcName" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[SELECT convert(datetime,a.Date) as Date,a.Particular,a.Debit,a.Credit,a.Balance,coalesce(a.OpBal,0) as OpBal, b.bankname,b.bankaddress 
+       FROM CBS_REP_ALL_LEDGER('ACTYPE','SB06GL00021001','','20100601','20100623') a,
+bnkadd b]]></queryString>
+
+	<field name="Date" class="java.sql.Timestamp"/>
+	<field name="Particular" class="java.lang.String"/>
+	<field name="Debit" class="java.math.BigDecimal"/>
+	<field name="Credit" class="java.math.BigDecimal"/>
+	<field name="Balance" class="java.math.BigDecimal"/>
+	<field name="OpBal" class="java.math.BigDecimal"/>
+	<field name="bankname" class="java.lang.String"/>
+	<field name="bankaddress" class="java.lang.String"/>
+
+	<variable name="vTotalDr" class="java.math.BigDecimal" resetType="Group" resetGroup="hi" calculation="Sum">
+		<variableExpression><![CDATA[$F{Debit}]]></variableExpression>
+	</variable>
+	<variable name="vTotalCr" class="java.math.BigDecimal" resetType="Group" resetGroup="hi" calculation="Sum">
+		<variableExpression><![CDATA[$F{Credit}]]></variableExpression>
+	</variable>
+	<variable name="vSrNo" class="java.lang.Integer" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[Integer.valueOf($V{vSrNo}.intValue() + 1)]]></variableExpression>
+		<initialValueExpression><![CDATA[Integer.valueOf(0)]]></initialValueExpression>
+	</variable>
+
+		<group  name="hi" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="15"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="353"
+						y="0"
+						width="97"
+						height="15"
+						key="textField-7"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{OpBal}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="41"
+						y="0"
+						width="280"
+						height="15"
+						key="element-91"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Left">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Opening Balance  :]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="23"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="456"
+						y="7"
+						width="106"
+						height="15"
+						key="textField-8"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{OpBal}.add($V{vTotalCr}).subtract( $V{vTotalDr} )]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="353"
+						y="7"
+						width="97"
+						height="15"
+						key="textField-9"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vTotalCr}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="258"
+						y="7"
+						width="86"
+						height="15"
+						key="textField-10"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vTotalDr}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="118"
+						y="7"
+						width="140"
+						height="15"
+						key="element-92"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Total :]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="6"
+						width="565"
+						height="0"
+						forecolor="#808080"
+						key="line-3"
+						positionType="FixRelativeToBottom"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="22"
+						width="565"
+						height="0"
+						forecolor="#808080"
+						key="line-5"
+						positionType="FixRelativeToBottom"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="55"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="89"
+						y="1"
+						width="180"
+						height="13"
+						forecolor="#000000"
+						key="textField-1"/>
+					<box></box>
+					<textElement>
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{bankname}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="1"
+						width="89"
+						height="13"
+						key="staticText-1"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[BANK NAME        :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="89"
+						y="14"
+						width="130"
+						height="13"
+						forecolor="#000000"
+						key="textField-2"/>
+					<box></box>
+					<textElement>
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{bankaddress}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="14"
+						width="89"
+						height="13"
+						key="staticText-2"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[BANK ADDRESS :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="337"
+						y="1"
+						width="98"
+						height="13"
+						key="staticText-3"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[REPORT NAME      :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="337"
+						y="14"
+						width="98"
+						height="13"
+						key="staticText-4"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[DATE OF REPORT :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="337"
+						y="40"
+						width="98"
+						height="13"
+						key="staticText-5"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[PRINTED BY           :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="337"
+						y="27"
+						width="98"
+						height="13"
+						key="staticText-6"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[PRINTING DATE     :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="435"
+						y="1"
+						width="155"
+						height="13"
+						forecolor="#000000"
+						key="textField-3"/>
+					<box></box>
+					<textElement>
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pReportName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="435"
+						y="27"
+						width="155"
+						height="13"
+						forecolor="#000000"
+						key="textField-4"/>
+					<box></box>
+					<textElement>
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="435"
+						y="40"
+						width="155"
+						height="13"
+						forecolor="#000000"
+						key="textField-5"/>
+					<box></box>
+					<textElement>
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pPrintedBy}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="435"
+						y="14"
+						width="155"
+						height="13"
+						forecolor="#000000"
+						key="textField-6"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pPrintedDate}]]></textFieldExpression>
+				</textField>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="34"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="46"
+						y="18"
+						width="72"
+						height="15"
+						key="element-90"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Date]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="118"
+						y="18"
+						width="140"
+						height="15"
+						key="element-90"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Particular]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="258"
+						y="18"
+						width="86"
+						height="15"
+						key="element-90"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Debit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="353"
+						y="18"
+						width="97"
+						height="15"
+						key="element-90"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Credit]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="456"
+						y="18"
+						width="109"
+						height="15"
+						key="element-90"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Balance]]></text>
+				</staticText>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="17"
+						width="565"
+						height="0"
+						forecolor="#808080"
+						key="line-1"
+						positionType="FixRelativeToBottom"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="33"
+						width="565"
+						height="0"
+						forecolor="#808080"
+						key="line-2"
+						positionType="FixRelativeToBottom"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="0"
+						y="2"
+						width="107"
+						height="15"
+						key="element-93"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Left">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Account No.   :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="343"
+						y="2"
+						width="107"
+						height="15"
+						key="element-94"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Left">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Account Name   :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="107"
+						y="2"
+						width="107"
+						height="15"
+						key="textField-11"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pAcNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="453"
+						y="2"
+						width="137"
+						height="15"
+						key="textField-12"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pAcName}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="7"
+						y="1"
+						width="535"
+						height="0"
+						forecolor="#808080"
+						key="line-4"
+						positionType="FixRelativeToBottom"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+				<staticText>
+					<reportElement
+						x="1"
+						y="18"
+						width="45"
+						height="15"
+						key="element-95"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[S.No.]]></text>
+				</staticText>
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="16"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="46"
+						y="1"
+						width="72"
+						height="15"
+						key="textField"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.sql.Timestamp"><![CDATA[$F{Date}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="118"
+						y="1"
+						width="140"
+						height="15"
+						key="textField"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{Particular}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="258"
+						y="0"
+						width="86"
+						height="15"
+						key="textField"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{Debit}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="353"
+						y="1"
+						width="97"
+						height="15"
+						key="textField"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$F{Credit}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="456"
+						y="0"
+						width="108"
+						height="15"
+						key="textField"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[(java.lang.Integer.valueOf($F{Balance}.intValue())).toString().contains("-") ? 
+	$F{Balance}.negate() : $F{Balance}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="565"
+						y="0"
+						width="22"
+						height="15"
+						key="textField-14"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[(java.lang.Integer.valueOf($F{Balance}.intValue())).toString().contains("-") ? 
+	"Dr" : " "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1"
+						y="1"
+						width="45"
+						height="15"
+						key="textField-13"/>
+					<box leftPadding="2" rightPadding="5"></box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font size="10" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{vSrNo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="18"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="115"
+						y="4"
+						width="170"
+						height="14"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="289"
+						y="4"
+						width="36"
+						height="14"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<line direction="TopDown">
+					<reportElement
+						x="0"
+						y="1"
+						width="565"
+						height="0"
+						key="line"/>
+					<graphicElement stretchType="NoStretch"/>
+				</line>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

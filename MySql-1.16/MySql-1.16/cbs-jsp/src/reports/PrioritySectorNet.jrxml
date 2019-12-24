@@ -1,0 +1,1465 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="PrioritySectorNet"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="899"
+		 pageHeight="595"
+		 columnWidth="899"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pBankName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankAddress" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pAmtIn" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="report" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[SELECT sNo, GNO AS gNo, S_GNO as sGNo, SS_GNO AS ssGNo, SSS_GNO as sssGNo, SSSS_GNO  as ssssGNo, CLASSIFICATION as classification, COUNT_APPLICABLE as countApplicable,
+AC_NATURE as acNature, AC_TYPE as acType, GL_HEAD_FROM as glheadFrom, GL_HEAD_TO as glHeadTo, Range_Base_On as rangeBaseOn, RANGE_FROM as rangeFrom, RANGE_TO as rangeTo, 
+FORMULA as formula, F_GNO as fGNo, F_S_GNO as fSGNo, F_SS_GNO as fSsGNo, F_SSS_GNO as fSssGNo , F_SSSS_GNO as fSsssGNo,  DESCRIPTION AS description,REPORT_NAME as reportName, AMT as amt,  NPA_CLASSIFICATION as npaClassification
+FROM  CBS_HO_REPORT_TEST ORDER BY REPORT_NAME,CLASSIFICATION DESC,cast(GNO as int),cast(S_GNO as int),cast(SS_GNO as int),
+cast(SSS_GNO as int),cast(SSSS_GNO as int)]]></queryString>
+
+	<field name="sNo" class="java.lang.Integer"/>
+	<field name="gNo" class="java.lang.Integer"/>
+	<field name="sGNo" class="java.lang.Integer"/>
+	<field name="ssGNo" class="java.lang.Integer"/>
+	<field name="sssGNo" class="java.lang.Integer"/>
+	<field name="ssssGNo" class="java.lang.Integer"/>
+	<field name="classification" class="java.lang.String"/>
+	<field name="countApplicable" class="java.lang.String"/>
+	<field name="acNature" class="java.lang.String"/>
+	<field name="acType" class="java.lang.String"/>
+	<field name="glheadFrom" class="java.lang.String"/>
+	<field name="glHeadTo" class="java.lang.String"/>
+	<field name="rangeBaseOn" class="java.lang.String"/>
+	<field name="rangeFrom" class="java.math.BigDecimal"/>
+	<field name="rangeTo" class="java.math.BigDecimal"/>
+	<field name="formula" class="java.lang.String"/>
+	<field name="fGNo" class="java.lang.String"/>
+	<field name="fSGNo" class="java.lang.String"/>
+	<field name="fSsGNo" class="java.lang.String"/>
+	<field name="fSssGNo" class="java.lang.String"/>
+	<field name="fSsssGNo" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="reportName" class="java.lang.String"/>
+	<field name="totAccountNo" class="java.lang.Long"/>
+	<field name="npaClassification" class="java.lang.String"/>
+	<field name="sancLimit" class="java.math.BigDecimal"/>
+	<field name="advAmt" class="java.math.BigDecimal"/>
+	<field name="outstanding" class="java.math.BigDecimal"/>
+	<field name="overDue" class="java.math.BigDecimal"/>
+	<field name="nAccountNoWk" class="java.lang.Long"/>
+	<field name="sancLimitWK" class="java.math.BigDecimal"/>
+	<field name="advAmtWK" class="java.math.BigDecimal"/>
+	<field name="outstandingWK" class="java.math.BigDecimal"/>
+	<field name="overDueWK" class="java.math.BigDecimal"/>
+	<field name="nAccountNoSC" class="java.lang.Long"/>
+	<field name="sancLimitSC" class="java.math.BigDecimal"/>
+	<field name="advAmtSC" class="java.math.BigDecimal"/>
+	<field name="outstandingSC" class="java.math.BigDecimal"/>
+	<field name="overDueSC" class="java.math.BigDecimal"/>
+	<field name="nAccountNoST" class="java.lang.Long"/>
+	<field name="sancLimitST" class="java.math.BigDecimal"/>
+	<field name="advAmtST" class="java.math.BigDecimal"/>
+	<field name="outstandingST" class="java.math.BigDecimal"/>
+	<field name="overDueST" class="java.math.BigDecimal"/>
+	<field name="nAccountNoWO" class="java.lang.Long"/>
+	<field name="sancLimitWO" class="java.math.BigDecimal"/>
+	<field name="advAmtWO" class="java.math.BigDecimal"/>
+	<field name="outstandingWO" class="java.math.BigDecimal"/>
+	<field name="overDueWO" class="java.math.BigDecimal"/>
+	<field name="nAccountNoOth" class="java.lang.Long"/>
+	<field name="sancLimitOth" class="java.math.BigDecimal"/>
+	<field name="advAmtOth" class="java.math.BigDecimal"/>
+	<field name="outstandingOth" class="java.math.BigDecimal"/>
+	<field name="overDueOth" class="java.math.BigDecimal"/>
+
+	<variable name="totAccountNo_sssGNo" class="java.lang.Long" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{totAccountNo}]]></variableExpression>
+	</variable>
+	<variable name="totAccountNo_ssGNo" class="java.lang.Long" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{totAccountNo}]]></variableExpression>
+	</variable>
+	<variable name="totAccountNo_sGNo" class="java.lang.Long" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{totAccountNo}]]></variableExpression>
+	</variable>
+	<variable name="totAccountNo_desc" class="java.lang.Long" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{totAccountNo}]]></variableExpression>
+	</variable>
+	<variable name="desc_SS_GNO" class="java.lang.String" resetType="Group" resetGroup="ssgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="desc_S_GNO" class="java.lang.String" resetType="Group" resetGroup="sgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="desc_GNO" class="java.lang.String" resetType="Group" resetGroup="gno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="totAccountNo_gNo" class="java.lang.Long" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{totAccountNo}]]></variableExpression>
+	</variable>
+	<variable name="desc_SSS_GNO" class="java.lang.String" resetType="Group" resetGroup="sssgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="desc_SSSS_GNO" class="java.lang.String" resetType="Group" resetGroup="ssssgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="totAccountNo_ssssGNo" class="java.lang.Long" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{totAccountNo}]]></variableExpression>
+	</variable>
+	<variable name="DESC_CNT" class="java.lang.Integer" resetType="Group" resetGroup="Desc" calculation="Count">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="SSSS_CNT" class="java.lang.Integer" resetType="Group" resetGroup="ssssgno" calculation="Count">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="GNoExclude" class="java.lang.String" resetType="Group" resetGroup="gno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SGNoExclude" class="java.lang.String" resetType="Group" resetGroup="sgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SsGNoExclude" class="java.lang.String" resetType="Group" resetGroup="ssgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SssGNoExclude" class="java.lang.String" resetType="Group" resetGroup="sssgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SsssGNOExclude" class="java.lang.String" resetType="Group" resetGroup="ssssgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="DescExclude" class="java.lang.String" resetType="Group" resetGroup="Desc" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="sancLimitTotal_desc" class="java.math.BigDecimal" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimit}]]></variableExpression>
+	</variable>
+	<variable name="sancLimitTotal_ssssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimit}]]></variableExpression>
+	</variable>
+	<variable name="sancLimitTotal_sssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimit}]]></variableExpression>
+	</variable>
+	<variable name="sancLimitTotal_ssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimit}]]></variableExpression>
+	</variable>
+	<variable name="sancLimitTotal_sGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimit}]]></variableExpression>
+	</variable>
+	<variable name="sancLimitTotal_gNo" class="java.math.BigDecimal" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimit}]]></variableExpression>
+	</variable>
+	<variable name="advAmtTotal_desc" class="java.math.BigDecimal" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmt}]]></variableExpression>
+	</variable>
+	<variable name="advAmtTotal_ssssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmt}]]></variableExpression>
+	</variable>
+	<variable name="advAmtTotal_sssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmt}]]></variableExpression>
+	</variable>
+	<variable name="advAmtTotal_ssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmt}]]></variableExpression>
+	</variable>
+	<variable name="advAmtTotal_sGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmt}]]></variableExpression>
+	</variable>
+	<variable name="advAmtTotal_gNo" class="java.math.BigDecimal" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmt}]]></variableExpression>
+	</variable>
+	<variable name="outstandingTotal_desc" class="java.math.BigDecimal" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstanding}]]></variableExpression>
+	</variable>
+	<variable name="outstandingTotal_ssssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstanding}]]></variableExpression>
+	</variable>
+	<variable name="outstandingTotal_sssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstanding}]]></variableExpression>
+	</variable>
+	<variable name="outstandingTotal_ssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstanding}]]></variableExpression>
+	</variable>
+	<variable name="outstandingTotal_sGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstanding}]]></variableExpression>
+	</variable>
+	<variable name="outstandingTotal_gNo" class="java.math.BigDecimal" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstanding}]]></variableExpression>
+	</variable>
+	<variable name="overDueTotal_desc" class="java.math.BigDecimal" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDue}]]></variableExpression>
+	</variable>
+	<variable name="overDueTotal_ssssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDue}]]></variableExpression>
+	</variable>
+	<variable name="overDueTotal_sssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDue}]]></variableExpression>
+	</variable>
+	<variable name="overDueTotal_ssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDue}]]></variableExpression>
+	</variable>
+	<variable name="overDueTotal_sGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDue}]]></variableExpression>
+	</variable>
+	<variable name="overDueTotal_gNo" class="java.math.BigDecimal" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDue}]]></variableExpression>
+	</variable>
+	<variable name="nAccountNoWkTotal_desc" class="java.lang.Long" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{nAccountNoWk}]]></variableExpression>
+	</variable>
+	<variable name="nAccountNoWkTotal_ssssGNo" class="java.lang.Long" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{nAccountNoWk}]]></variableExpression>
+	</variable>
+	<variable name="nAccountNoWkTotal_sssGNo" class="java.lang.Long" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{nAccountNoWk}]]></variableExpression>
+	</variable>
+	<variable name="nAccountNoWkTotal_ssGNo" class="java.lang.Long" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{nAccountNoWk}]]></variableExpression>
+	</variable>
+	<variable name="nAccountNoWkTotal_sGNo" class="java.lang.Long" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{nAccountNoWk}]]></variableExpression>
+	</variable>
+	<variable name="nAccountNoWkTotal_gNo" class="java.lang.Long" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{nAccountNoWk}]]></variableExpression>
+	</variable>
+	<variable name="sancLimitWKTotal_desc" class="java.math.BigDecimal" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimitWK}]]></variableExpression>
+	</variable>
+	<variable name="sancLimitWKTotal_ssssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimitWK}]]></variableExpression>
+	</variable>
+	<variable name="sancLimitWKTotal_sssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimitWK}]]></variableExpression>
+	</variable>
+	<variable name="sancLimitWKTotal_ssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimitWK}]]></variableExpression>
+	</variable>
+	<variable name="sancLimitWKTotal_sGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimitWK}]]></variableExpression>
+	</variable>
+	<variable name="sancLimitWKTotal_gNo" class="java.math.BigDecimal" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sancLimitWK}]]></variableExpression>
+	</variable>
+	<variable name="advAmtWKTotal_desc" class="java.math.BigDecimal" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmtWK}]]></variableExpression>
+	</variable>
+	<variable name="advAmtWKTotal_ssssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmtWK}]]></variableExpression>
+	</variable>
+	<variable name="advAmtWKTotal_sssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmtWK}]]></variableExpression>
+	</variable>
+	<variable name="advAmtWKTotal_ssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmtWK}]]></variableExpression>
+	</variable>
+	<variable name="advAmtWKTotal_sGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmtWK}]]></variableExpression>
+	</variable>
+	<variable name="advAmtWKTotal_gNo" class="java.math.BigDecimal" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{advAmtWK}]]></variableExpression>
+	</variable>
+	<variable name="outstandingWKTotal_desc" class="java.math.BigDecimal" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstandingWK}]]></variableExpression>
+	</variable>
+	<variable name="outstandingWKTotal_ssssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstandingWK}]]></variableExpression>
+	</variable>
+	<variable name="outstandingWKTotal_sssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstandingWK}]]></variableExpression>
+	</variable>
+	<variable name="outstandingWKTotal_ssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstandingWK}]]></variableExpression>
+	</variable>
+	<variable name="outstandingWKTotal_sGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstandingWK}]]></variableExpression>
+	</variable>
+	<variable name="outstandingWKTotal_gNo" class="java.math.BigDecimal" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{outstandingWK}]]></variableExpression>
+	</variable>
+	<variable name="overDueWKTotal_desc" class="java.math.BigDecimal" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDueWK}]]></variableExpression>
+	</variable>
+	<variable name="overDueWKTotal_ssssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDueWK}]]></variableExpression>
+	</variable>
+	<variable name="overDueWKTotal_sssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDueWK}]]></variableExpression>
+	</variable>
+	<variable name="overDueWKTotal_ssGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDueWK}]]></variableExpression>
+	</variable>
+	<variable name="overDueWKTotal_sGNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDueWK}]]></variableExpression>
+	</variable>
+	<variable name="overDueWKTotal_gNo" class="java.math.BigDecimal" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{overDueWK}]]></variableExpression>
+	</variable>
+	<variable name="sNo" class="java.lang.Long" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[Long.valueOf($V{sNo}.longValue() + 1)]]></variableExpression>
+		<initialValueExpression><![CDATA[$V{sNo}.valueOf(0)]]></initialValueExpression>
+	</variable>
+
+		<group  name="gno" isReprintHeaderOnEachPage="true" >
+			<groupExpression><![CDATA[$F{gNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$V{GNoExclude}.equalsIgnoreCase( "T" )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="36"
+						y="0"
+						width="211"
+						height="14"
+						key="textField-44"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total "+$V{desc_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="247"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-79"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{nAccountNoWkTotal_gNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="312"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-80"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{sancLimitWKTotal_gNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="377"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-81"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{advAmtWKTotal_gNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="442"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-82"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{outstandingWKTotal_gNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="507"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-83"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{overDueWKTotal_gNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="36"
+						height="14"
+						key="textField-125"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="sgno" >
+			<groupExpression><![CDATA[$F{sGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{ssGNo}.intValue()>0?
+($V{SGNoExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="36"
+						y="0"
+						width="211"
+						height="14"
+						key="textField-33"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["  Sum of "+$V{desc_S_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="247"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-84"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{nAccountNoWkTotal_sGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="312"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-85"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{sancLimitWKTotal_sGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="377"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-86"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{advAmtWKTotal_sGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="442"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-87"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{outstandingWKTotal_sGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="507"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-88"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{overDueWKTotal_sGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="36"
+						height="14"
+						key="textField-126"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ssgno" >
+			<groupExpression><![CDATA[$F{ssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{sssGNo}.intValue()>0?
+($V{SsGNoExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="36"
+						y="0"
+						width="211"
+						height="14"
+						key="textField-42"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["  Sum of "+$V{desc_SS_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="247"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-89"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{nAccountNoWkTotal_ssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="312"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-90"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{sancLimitWKTotal_ssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="377"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-91"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{advAmtWKTotal_ssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="442"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-92"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{outstandingWKTotal_ssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="507"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-93"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{overDueWKTotal_ssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="36"
+						height="14"
+						key="textField-127"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="sssgno" >
+			<groupExpression><![CDATA[$F{sssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{ssssGNo}.intValue()>0?
+($V{SssGNoExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="36"
+						y="0"
+						width="211"
+						height="14"
+						key="textField-46"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["    Sum of "+$V{desc_SSS_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="247"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-94"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{nAccountNoWkTotal_sssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="312"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-95"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{sancLimitWKTotal_sssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="377"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-96"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{advAmtWKTotal_sssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="442"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-97"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{outstandingWKTotal_sssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="507"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-98"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{overDueWKTotal_sssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="36"
+						height="14"
+						key="textField-128"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ssssgno" >
+			<groupExpression><![CDATA[$F{ssssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{ssssGNo}.intValue()>0?
+($V{DESC_CNT}.equals( $V{SSSS_CNT} )?Boolean.FALSE:
+($V{SsssGNOExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE)):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="36"
+						y="0"
+						width="211"
+						height="14"
+						key="textField-48"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["      Sum of "+$V{desc_SSSS_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="247"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-99"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{nAccountNoWkTotal_ssssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="312"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-100"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{sancLimitWKTotal_ssssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="377"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-101"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{advAmtWKTotal_ssssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="442"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-102"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{outstandingWKTotal_ssssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="507"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-103"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{overDueWKTotal_ssssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="36"
+						height="14"
+						key="textField-129"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Desc" >
+			<groupExpression><![CDATA[$F{description}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{sGNo}.intValue()>0?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="36"
+						y="0"
+						width="211"
+						height="14"
+						key="textField-28"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="247"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-104"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{nAccountNoWkTotal_desc}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="312"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-105"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{sancLimitWKTotal_desc}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="377"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-106"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{advAmtWKTotal_desc}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="442"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-107"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{outstandingWKTotal_desc}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="507"
+						y="0"
+						width="65"
+						height="14"
+						key="textField-108"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{overDueWKTotal_desc}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="36"
+						height="14"
+						key="textField-130"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{sNo}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="72"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="36"
+						y="0"
+						width="211"
+						height="15"
+						key="textField-117"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="36"
+						height="15"
+						key="textField-118"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="247"
+						y="0"
+						width="325"
+						height="15"
+						key="textField-119"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Net Position to be reported in PART-I"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="36"
+						y="15"
+						width="211"
+						height="57"
+						key="textField-131"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Nature of Activity \n 2"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="15"
+						width="36"
+						height="57"
+						key="textField-137"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Sr.\nNo.\n1"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="247"
+						y="15"
+						width="65"
+						height="57"
+						key="textField-138"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Number of\nBorrowing\nUnits\n23"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="312"
+						y="15"
+						width="65"
+						height="57"
+						key="textField-139"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Limit\nSanctioned\n24"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="377"
+						y="15"
+						width="65"
+						height="57"
+						key="textField-140"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Amount\nAdvanced\n25"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="442"
+						y="15"
+						width="65"
+						height="57"
+						key="textField-141"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Balance\nOutstanding\n26"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="507"
+						y="15"
+						width="65"
+						height="57"
+						key="textField-142"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Amount\nOverdue under\nBalance\nOutstanding\n27"]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

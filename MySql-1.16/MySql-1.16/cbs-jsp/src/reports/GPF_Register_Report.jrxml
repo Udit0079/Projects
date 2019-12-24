@@ -1,0 +1,591 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="GPF_Register_Report"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="778"
+		 pageHeight="799"
+		 columnWidth="738"
+		 columnSpacing="0"
+		 leftMargin="20"
+		 rightMargin="20"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pReportName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pYearFrom" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pMonth" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pYearTo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pYear" isForPrompting="false" class="java.lang.String"/>
+
+	<field name="gpfCode" class="java.lang.String"/>
+	<field name="employeeName" class="java.lang.String"/>
+	<field name="dayspayable" class="java.lang.String"/>
+	<field name="salary" class="java.lang.Double"/>
+	<field name="gpf" class="java.lang.Double"/>
+	<field name="gpfEmpContribution" class="java.lang.Double"/>
+	<field name="pension" class="java.lang.Double"/>
+
+	<variable name="sno" class="java.lang.Long" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[Long.valueOf($V{sno}.longValue()+1)]]></variableExpression>
+		<initialValueExpression><![CDATA[$V{sno}.valueOf(0)]]></initialValueExpression>
+	</variable>
+	<variable name="salTotal" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{salary}]]></variableExpression>
+	</variable>
+	<variable name="gpfTotal" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{gpf}]]></variableExpression>
+	</variable>
+	<variable name="vTotalEc" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{gpfEmpContribution}]]></variableExpression>
+	</variable>
+	<variable name="vPensionTotal" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{pension}]]></variableExpression>
+	</variable>
+
+		<group  name="hi" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="13"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="368"
+						height="13"
+						key="staticText-21"/>
+					<box>					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[                                                       GRANT TOTAL]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="368"
+						y="0"
+						width="110"
+						height="13"
+						key="textField"/>
+					<box rightPadding="7">					<pen lineWidth="1.0" lineColor="#0B0707"/>
+					<topPen lineWidth="1.0" lineColor="#0B0707"/>
+					<leftPen lineWidth="1.0" lineColor="#0B0707"/>
+					<bottomPen lineWidth="1.0" lineColor="#0B0707"/>
+					<rightPen lineWidth="1.0" lineColor="#0B0707"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{salTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="478"
+						y="0"
+						width="78"
+						height="13"
+						key="textField"/>
+					<box rightPadding="7">					<pen lineWidth="1.0" lineColor="#0B0707"/>
+					<topPen lineWidth="1.0" lineColor="#0B0707"/>
+					<leftPen lineWidth="1.0" lineColor="#0B0707"/>
+					<bottomPen lineWidth="1.0" lineColor="#0B0707"/>
+					<rightPen lineWidth="1.0" lineColor="#0B0707"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{gpfTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="556"
+						y="0"
+						width="87"
+						height="13"
+						key="textField"/>
+					<box rightPadding="7">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vTotalEc}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="643"
+						y="0"
+						width="89"
+						height="13"
+						key="textField"/>
+					<box rightPadding="7">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vPensionTotal}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="68"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="212"
+						y="6"
+						width="292"
+						height="19"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pBankName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="51"
+						width="738"
+						height="12"
+						key="staticText-1"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="314"
+						y="30"
+						width="145"
+						height="18"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pReportName}]]></textFieldExpression>
+				</textField>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="107"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="314"
+						y="5"
+						width="269"
+						height="15"
+						key="textField-1"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["For The Year:"+$P{pYearFrom}+"-"+$P{pYearTo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="543"
+						y="36"
+						width="185"
+						height="19"
+						key="textField-2"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pMonth}+"-"+$P{pYear}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="60"
+						width="57"
+						height="47"
+						key="staticText-2"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" rotation="None">
+						<font size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[S.NO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="57"
+						y="60"
+						width="84"
+						height="47"
+						key="staticText-12"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" rotation="None">
+						<font size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[GPF Code]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="141"
+						y="60"
+						width="146"
+						height="47"
+						key="staticText-13"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" rotation="None">
+						<font size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Name of Employee]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="287"
+						y="60"
+						width="81"
+						height="47"
+						key="staticText-14"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" rotation="None">
+						<font size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Days Payable]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="368"
+						y="60"
+						width="110"
+						height="47"
+						key="staticText-15"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" rotation="None">
+						<font size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Salary]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="478"
+						y="60"
+						width="78"
+						height="23"
+						key="staticText-16"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" rotation="None">
+						<font size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[E.C.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="478"
+						y="83"
+						width="78"
+						height="24"
+						key="staticText-17"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" rotation="None">
+						<font size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[GPF]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="556"
+						y="60"
+						width="176"
+						height="23"
+						key="staticText-18"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" rotation="None">
+						<font size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Employeer's Contribution]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="556"
+						y="83"
+						width="87"
+						height="24"
+						key="staticText-19"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" rotation="None">
+						<font size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[GPF]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="643"
+						y="83"
+						width="89"
+						height="24"
+						key="staticText-20"/>
+					<box leftPadding="1" rightPadding="1" topPadding="1" bottomPadding="1">					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+</box>
+					<textElement textAlignment="Center" rotation="None">
+						<font size="10" isPdfEmbedded ="false"/>
+					</textElement>
+				<text><![CDATA[Pension]]></text>
+				</staticText>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="13"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="57"
+						y="0"
+						width="84"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="7">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{gpfCode}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="141"
+						y="0"
+						width="146"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{employeeName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="287"
+						y="0"
+						width="81"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{dayspayable}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="368"
+						y="0"
+						width="110"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="9">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{salary}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="478"
+						y="0"
+						width="78"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="9">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{gpf}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="556"
+						y="0"
+						width="87"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="9">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{gpfEmpContribution}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="643"
+						y="0"
+						width="89"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="9">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{pension}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="57"
+						height="13"
+						key="textField-3"
+						stretchType="RelativeToTallestObject"/>
+					<box leftPadding="4">					<leftPen lineWidth="1.0" lineStyle="Solid"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{sno}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="15"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="629"
+						y="0"
+						width="73"
+						height="14"
+						key="textField-4"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "
+]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="702"
+						y="0"
+						width="30"
+						height="14"
+						key="textField-5"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

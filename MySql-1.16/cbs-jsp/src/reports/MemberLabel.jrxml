@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="memberLabel"
+		 columnCount="3"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="189"
+		 columnSpacing="8"
+		 leftMargin="11"
+		 rightMargin="1"
+		 topMargin="22"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<queryString><![CDATA[SELECT * FROM CBS_REP_ACC_STM('06SB00467201','20110425','20110902')]]></queryString>
+
+	<field name="regFoliono" class="java.lang.String"/>
+	<field name="customerName" class="java.lang.String"/>
+	<field name="perPostalcode" class="java.lang.String"/>
+	<field name="perAddressLine1" class="java.lang.String"/>
+	<field name="perAddressLine2" class="java.lang.String"/>
+	<field name="nomName" class="java.lang.String"/>
+
+	<variable name="sNo" class="java.lang.Integer" resetType="Report" incrementType="Column" calculation="Nothing">
+		<variableExpression><![CDATA[Integer.valueOf($V{sNo}.intValue()+1)]]></variableExpression>
+		<initialValueExpression><![CDATA[Integer.valueOf(0)
+]]></initialValueExpression>
+	</variable>
+
+		<group  name="hi" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="hello" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="102"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="190"
+						height="102"
+						key="textField-2"/>
+					<box leftPadding="9" rightPadding="2"></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single">
+						<font pdfFontName="Helvetica" size="9" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["SrNo  "+$V{sNo}+"/"+
+$F{regFoliono}+"\n"+
+$F{customerName}+"\n"+
+$F{perAddressLine1}+"\n"+
+$F{perAddressLine2}+"\n"+
+$F{perPostalcode}+"\n"]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

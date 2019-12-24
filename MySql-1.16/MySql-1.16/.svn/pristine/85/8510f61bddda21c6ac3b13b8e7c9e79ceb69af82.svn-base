@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="LockerRentDueLetter"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="820"
+		 columnWidth="535"
+		 columnSpacing="0"
+		 leftMargin="30"
+		 rightMargin="30"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pReportDt" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBranchAddress" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBranchPinCode" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="image" isForPrompting="false" class="java.lang.String"/>
+
+	<field name="lockerNo" class="java.lang.String"/>
+	<field name="rent" class="java.lang.Double"/>
+	<field name="rentDueDt" class="java.lang.String"/>
+	<field name="custFullName" class="java.lang.String"/>
+	<field name="mailAddressLine1" class="java.lang.String"/>
+	<field name="mailAddressLine2" class="java.lang.String"/>
+	<field name="mailVillage" class="java.lang.String"/>
+	<field name="mailDistrict" class="java.lang.String"/>
+	<field name="mailPostalCode" class="java.lang.String"/>
+	<field name="mailStateCode" class="java.lang.String"/>
+	<field name="bankNameReq" class="java.lang.String"/>
+	<field name="bankaddressReq" class="java.lang.String"/>
+	<field name="city" class="java.lang.String"/>
+	<field name="pinCode" class="java.lang.String"/>
+
+		<background>
+			<band height="1"  isSplitAllowed="false" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="false" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="false" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="631"  isSplitAllowed="false" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="214"
+						y="1"
+						width="136"
+						height="30"
+						key="textField-1"/>
+					<box></box>
+					<textElement lineSpacing="Double">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["SPEEDPOST "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="414"
+						y="9"
+						width="104"
+						height="22"
+						key="textField-2"/>
+					<box></box>
+					<textElement textAlignment="Center" lineSpacing="Double">
+						<font pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pReportDt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="23"
+						y="227"
+						width="511"
+						height="28"
+						key="textField-4"/>
+					<box></box>
+					<textElement textAlignment="Center" lineSpacing="Double">
+						<font pdfFontName="Helvetica-Bold" isBold="true" isUnderline="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Reg: Non-Payment of Rent- Locker No." + $F{lockerNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="23"
+						y="105"
+						width="283"
+						height="119"
+						key="textField-10"/>
+					<box></box>
+					<textElement lineSpacing="Single">
+						<font pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["To:" +"\n"+ $F{custFullName} +"\n"+$F{mailAddressLine1}  +" "+ $F{mailVillage} + "\n" + $F{mailDistrict} +"\n"+ $F{mailStateCode} +" - "+
+$F{mailPostalCode}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="22"
+						y="259"
+						width="93"
+						height="25"
+						key="textField-5"/>
+					<box></box>
+					<textElement lineSpacing="Double">
+						<font pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Dear Sir,"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="20"
+						y="284"
+						width="483"
+						height="237"
+						key="textField-6"/>
+					<box></box>
+					<textElement lineSpacing="Double">
+						<font pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["We observed from our record that since " + $F{rentDueDt} + " you have not paid the" +"\n"+
+"rent of your above stated locker. As a result of non-payment, a sum of Rs." +$F{rent}+ "/-" +"\n"+
+"has become due for payment by you."  +"\n"+
+"      "+"\n"+
+"We therefore, request you to make the said payment of  Rs." +$F{rent}+"/-" +"\n"+
+"immediately on receipt of this letter. Please also take a note to ensure that rent in" +"\n"+
+"respect of your locker is paid regularly every year, in future." +"\n"+
+"      "+"\n"+
+"Kindly treat this as most urgent."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="20"
+						y="539"
+						width="110"
+						height="22"
+						key="textField-7"/>
+					<box></box>
+					<textElement lineSpacing="Double">
+						<font pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Thanking you,"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="366"
+						y="530"
+						width="169"
+						height="101"
+						key="textField-8"/>
+					<box></box>
+					<textElement lineSpacing="Double">
+						<font pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Yours faithfully," +"\n"+
+"  " +"\n"+
+"  " +"\n"+
+"Manager"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="345"
+						y="107"
+						width="189"
+						height="117"
+						key="textField-11"/>
+					<box></box>
+					<textElement lineSpacing="Single">
+						<font pdfFontName="Helvetica" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["From:"+"\n"+
+$F{bankNameReq} +"\n"+
+$F{bankaddressReq}+"\n"+
+$F{city} + "-" +$F{pinCode}]]></textFieldExpression>
+				</textField>
+				<image  hAlign="Left" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="11"
+						y="31"
+						width="70"
+						height="70"
+						key="image-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA[$P{image}]]></imageExpression>
+				</image>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="85"
+						y="45"
+						width="444"
+						height="18"
+						forecolor="#000000"
+						key="textField-12"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font fontName="SansSerif" pdfFontName="Times-Bold" size="14" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{bankNameReq}.toUpperCase()]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="6"  isSplitAllowed="false" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

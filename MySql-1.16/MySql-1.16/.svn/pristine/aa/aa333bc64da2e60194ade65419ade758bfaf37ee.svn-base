@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="generalLedgerBookForAssetsConComp"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="320"
+		 pageHeight="280"
+		 columnWidth="320"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="acType" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="option" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pGrandTotalRet" isForPrompting="false" class="java.math.BigDecimal">
+		<defaultValueExpression ><![CDATA[$V{vGrandTotalSub}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pReportDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pReportDate1" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[select TYPE AS ACTYPE, GroupCode AS GNO , subGroupCode AS SGNO, Description as ACNAME, crAmt-Dramt AS AMOUNT from glbtempactypeentry where type = 'A' and Description NOT IN ('SUB TOTAL')order by TYPE, GroupCode, subGroupCode, Description]]></queryString>
+
+	<field name="ACNAME" class="java.lang.String"/>
+	<field name="AMOUNT" class="java.math.BigDecimal"/>
+	<field name="GNO" class="java.lang.Integer"/>
+	<field name="ACTYPE" class="java.lang.String"/>
+	<field name="SGNO" class="java.lang.Integer"/>
+	<field name="AMOUNT1" class="java.math.BigDecimal"/>
+
+	<variable name="vSubTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="GNO" calculation="Sum">
+		<variableExpression><![CDATA[$F{AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="vGrandTotalSub" class="java.math.BigDecimal" resetType="Group" resetGroup="ACTYPE" calculation="Sum">
+		<variableExpression><![CDATA[$F{AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="vDescTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="DESC" calculation="Sum">
+		<variableExpression><![CDATA[$F{AMOUNT}]]></variableExpression>
+	</variable>
+	<variable name="vDescTotal1" class="java.math.BigDecimal" resetType="Group" resetGroup="DESC" calculation="Sum">
+		<variableExpression><![CDATA[$F{AMOUNT1}]]></variableExpression>
+	</variable>
+	<variable name="vSubTotal1" class="java.math.BigDecimal" resetType="Group" resetGroup="GNO" calculation="Sum">
+		<variableExpression><![CDATA[$F{AMOUNT1}]]></variableExpression>
+	</variable>
+
+		<group  name="ACTYPE" >
+			<groupExpression><![CDATA[$F{ACTYPE}]]></groupExpression>
+			<groupHeader>
+			<band height="73"  isSplitAllowed="false" >
+				<staticText>
+					<reportElement
+						x="1"
+						y="26"
+						width="153"
+						height="34"
+						key="staticText-5"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Account Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="95"
+						y="0"
+						width="114"
+						height="13"
+						key="staticText-8"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[ASSETS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="13"
+						width="319"
+						height="13"
+						key="staticText-9"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[-----------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="60"
+						width="319"
+						height="13"
+						key="staticText-10"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="154"
+						y="26"
+						width="83"
+						height="34"
+						key="textField-7"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Balance as on "+$P{pReportDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="237"
+						y="26"
+						width="83"
+						height="34"
+						key="textField-8"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Balance as on "+$P{pReportDate1}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="GNO" >
+			<groupExpression><![CDATA[$F{GNO}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="39"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="154"
+						y="13"
+						width="83"
+						height="13"
+						key="textField-2"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vSubTotal}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="1"
+						y="13"
+						width="153"
+						height="13"
+						key="element-91"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3"></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<text><![CDATA[SUB TOTAL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="320"
+						height="13"
+						key="staticText-1"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="26"
+						width="320"
+						height="13"
+						key="staticText-2"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[--------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="237"
+						y="13"
+						width="83"
+						height="13"
+						key="textField-6"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vSubTotal1}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="SGNO" >
+			<groupExpression><![CDATA[$F{SGNO}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="DESC" >
+			<groupExpression><![CDATA[$F{ACNAME}]]></groupExpression>
+			<groupHeader>
+			<band height="13"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1"
+						y="0"
+						width="153"
+						height="13"
+						key="textField-3"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3"></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{ACNAME}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Group" evaluationGroup="DESC"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="154"
+						y="0"
+						width="83"
+						height="13"
+						key="textField-4"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[$F{SGNO}.doubleValue()==0? Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="3"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vDescTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Group" evaluationGroup="DESC"  hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="237"
+						y="0"
+						width="83"
+						height="13"
+						key="textField-5"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[$F{SGNO}.doubleValue()==0? Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="3"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vDescTotal1}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

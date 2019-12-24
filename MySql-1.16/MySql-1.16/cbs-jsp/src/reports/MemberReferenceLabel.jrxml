@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="MemberReferenceLabel"
+		 columnCount="3"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="189"
+		 columnSpacing="8"
+		 leftMargin="11"
+		 rightMargin="1"
+		 topMargin="22"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<queryString><![CDATA[select re.UnderDes as designation, re.ReferBy as referBy, mem.MembershipNo as membershipNo,
+mem.memName as personName, mem.memAdd as address, mem.memMobNo as contactNo from 
+(select aa.DesignationCode, aa.ReferBy, aa.MembershipNo, aa.memName, 
+concat(aa.MailAddressLine1, aa.MailAddressLine2, aa.MailVillage, aa.MailBlock, 
+if(ifnull(bb.mailCity,'')='','',concat(trim(bb.mailCity),' ')) , 
+if(ifnull(cc.mailState,'')='','',concat(trim(cc.mailState),' ')), 
+aa.MailPostalCode) as memAdd, aa.memMobNo  from 
+(select c.DesignationCode, c.ReferBy, c.MembershipNo, trim(d.CustFullName) as memName, 
+if(ifnull(d.MailAddressLine1,'')='','',concat(trim(d.MailAddressLine1),' ')) as MailAddressLine1, 
+if(ifnull(d.MailAddressLine2,'')='','',concat(trim(d.MailAddressLine2),' ')) as MailAddressLine2,
+if(ifnull(d.MailVillage,'')='','',concat(trim(d.MailVillage),' ')) as MailVillage,
+if(ifnull(d.MailBlock,'')='','',concat(trim(d.MailBlock),' ')) as MailBlock, 
+if(ifnull(d.mailCityCode,'')='','',d.mailCityCode) as mailCityCode, 
+if(ifnull(d.MailStateCode,'')='','',d.MailStateCode) as MailStateCode, 
+if(ifnull(d.MailPostalCode,'')='','',d.MailPostalCode) as MailPostalCode, 
+ifnull(d.mobilenumber, ifnull(d.TelexNumber, ifnull(d.MailPhoneNumber, ifnull(d.MailTelexNumber, ifnull(d.MailFaxNumber, ''))))) as memMobNo
+
+from memeber_reference_mapping c, cbs_customer_master_detail d, share_holder e 
+where d.customerid = e.custId 
+and e.Regfoliono = c.MembershipNo) aa 
+left join 
+(select ref_code, ref_desc as mailCity from cbs_ref_rec_type where ref_rec_no = 001 ) bb on bb.REF_CODE = aa.mailCityCode 
+left join 
+(select ref_code, ref_desc as MailState from cbs_ref_rec_type where ref_rec_no = 002 ) cc on cc.ref_code = aa.MailStateCode ) mem,
+
+(select a.ORDER_BY, b.DesignationCode, a.REF_DESC as UnderDes, b.PersonRefNo, concat( '[',b.PersonRefNo,'] ', trim(b.PersonName)) as ReferBy
+from cbs_ref_rec_type a, member_Designation_mapping b 
+where a.REF_CODE = b.DesignationCode 
+and a.ref_rec_no = '416' order by a.ORDER_BY, b.PersonRefNo) re 
+where mem.DesignationCode = re.DesignationCode and mem.ReferBy = re.PersonRefNo  
+order by ORDER_BY, re.PersonRefNo;]]></queryString>
+
+	<field name="designation" class="java.lang.String"/>
+	<field name="referBy" class="java.lang.String"/>
+	<field name="membershipNo" class="java.lang.String"/>
+	<field name="personName" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="contactNo" class="java.lang.String"/>
+
+	<variable name="sNo" class="java.lang.Integer" resetType="Report" incrementType="Column" calculation="Nothing">
+		<variableExpression><![CDATA[Integer.valueOf($V{sNo}.intValue()+1)]]></variableExpression>
+		<initialValueExpression><![CDATA[Integer.valueOf(0)
+]]></initialValueExpression>
+	</variable>
+
+		<group  name="hi" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="hello" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="102"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="190"
+						height="102"
+						key="textField-2"/>
+					<box leftPadding="9" rightPadding="2"></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" lineSpacing="Single">
+						<font pdfFontName="Helvetica" size="9" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Sr.No.  "+$V{sNo}+"/ "+
+$F{membershipNo}+"\n"+
+$F{personName}+"\n"+
+$F{address}+"\n"+
+$F{contactNo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

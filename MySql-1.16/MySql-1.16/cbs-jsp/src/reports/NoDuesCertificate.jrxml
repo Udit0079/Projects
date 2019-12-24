@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="NoDuesCertificate"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="694"
+		 pageHeight="850"
+		 columnWidth="638"
+		 columnSpacing="0"
+		 leftMargin="28"
+		 rightMargin="28"
+		 topMargin="28"
+		 bottomMargin="28"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pReportName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedBy" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pStmtPeriod" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbankName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbankAddress" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pClosingBalance" isForPrompting="false" class="java.lang.Double"/>
+	<parameter name="pAvailableBalance" isForPrompting="false" class="java.lang.Double"/>
+	<parameter name="vChqNo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pIfscCode" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[Select a.acno as acNo, a.custname as custName, b.acctdesc as acType, a.jtname1 as jtName, a.jtname2 as jtName2, c.craddress as crAdd, c.praddress as prAdd,a.jtname3 as jtName3,a.jtname4 as jtName4,a.nomination as nomination, 
+"Y" as acStatus,d.Description as acStatusDesc,d.Description as perStatus, date_format(dt, '%d/%m/%Y') as date,details as particulars,instno as chequeNo,dramt as withdrawl, 
+cramt as deposit,balance as balance,date_format(ValueDt, '%d/%m/%Y') as valueDt, 
+( select ifnull(sum(cramt-dramt),0) from recon where acno = '060301502901' and dt<='20150401') as openBal, 
+(SELECT ifnull(SUM(txninstamt) ,0) from clg_ow_shadowbal where acno = '060301502901' AND DT <= '20150401') as pendBal 
+ from accountmaster a, accounttypemaster b ,customermaster c,codebook d, recon e  where a.accstatus = d.code and d.groupcode = '3' and a.acno= e.acno and  a.acno='060301502901' and substring(a.acno,3,2)=b.acctcode and 
+substring(a.acno,5,6)=c.custno and c.brncode = a.curbrcode and substring(a.acno,3,2)=c.actype and 
+substring(a.acno,11,2)=c.agcode;]]></queryString>
+
+	<field name="acNo" class="java.lang.String"/>
+	<field name="custName" class="java.lang.String"/>
+	<field name="acType" class="java.lang.String"/>
+	<field name="jtName" class="java.lang.String"/>
+	<field name="crAdd" class="java.lang.String"/>
+	<field name="prAdd" class="java.lang.String"/>
+	<field name="nomination" class="java.lang.String"/>
+	<field name="date" class="java.util.Date"/>
+	<field name="particulars" class="java.lang.String"/>
+	<field name="chequeno" class="java.lang.String"/>
+	<field name="withDrawl" class="java.math.BigDecimal"/>
+	<field name="deposit" class="java.math.BigDecimal"/>
+	<field name="balance" class="java.math.BigDecimal"/>
+	<field name="valueDt" class="java.util.Date"/>
+	<field name="openBal" class="java.math.BigDecimal"/>
+	<field name="pendBal" class="java.math.BigDecimal"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="635"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="113"
+						width="327"
+						height="87"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Left" lineSpacing="Double">
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["To"+"\n"+$F{custName}+"\n"+$F{crAdd}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="20"
+						width="582"
+						height="32"
+						forecolor="#000000"
+						key="textField-1"
+						stretchType="RelativeToTallestObject"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="18" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="true" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbankName}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="52"
+						width="582"
+						height="15"
+						forecolor="#000000"
+						key="textField-2"
+						stretchType="RelativeToTallestObject"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" pdfFontName="Helvetica" size="11" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbankAddress}.toUpperCase()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="27"
+						y="87"
+						width="582"
+						height="17"
+						key="staticText-14"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="14" isBold="true" isUnderline="true"/>
+					</textElement>
+				<text><![CDATA[No Dues Certificate]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="208"
+						width="582"
+						height="35"
+						key="textField-12"
+						stretchType="RelativeToTallestObject"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="12" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Reg: Account No."+$F{acNo}+" in the name of "+$F{custName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="27"
+						y="243"
+						width="566"
+						height="372"
+						key="textField-13"
+						stretchType="RelativeToTallestObject"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Left" lineSpacing="Double">
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Dear Sir, "+"\n"+"       "+"Certified that as per books of accounts or computerized data maintained by the Bank in its usual and ordinary course of business, your loan account no. "+$F{acNo}+" in the name of "+$F{custName}+" in Branch Office "+$P{pbankAddress}+" has been adjusted in full and final and there are no dues outstanding in the said account. This certificate is issued at your specific request, as per records. The account has been closed on "+ (new SimpleDateFormat("dd/MM/yyyy").format($F{date}))+"."+"\n\n"+"This is also certify that "+$P{pbankName}+" has no claim or right any more against you or your property in respect of the said loan."+"\n\n\n\n"+"Authorised Signatory"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="438"
+						y="118"
+						width="151"
+						height="14"
+						key="textField-14"
+						stretchType="RelativeToTallestObject"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica" size="12" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Dated: "+$P{pStmtPeriod}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1"
+						y="1"
+						width="240"
+						height="13"
+						key="textField-9"
+						stretchType="RelativeToTallestObject"/>
+					<box leftPadding="2" rightPadding="2"></box>
+					<textElement textAlignment="Left">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[new SimpleDateFormat("dd/MM/yyyy h.mm a").format(new Date())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="455"
+						y="1"
+						width="165"
+						height="13"
+						forecolor="#000000"
+						key="textField-11"
+						stretchType="RelativeToTallestObject"/>
+					<box leftPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="true" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Printed By: "+$P{pPrintedBy}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

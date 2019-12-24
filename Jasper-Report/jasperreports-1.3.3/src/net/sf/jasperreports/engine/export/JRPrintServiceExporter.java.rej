@@ -1,0 +1,32 @@
+@@ -202,6 +208,11 @@
+ 						printRequestAttributeSet.add(orientation);
+ 					}
+ 					
++				}
++		
++				try 
++				{
++					
+ 					if (!isModeBatch)
+ 					{
+ 						printRequestAttributeSet.add(new PageRanges(startPageIndex + 1, endPageIndex + 1));
+@@ -213,7 +224,6 @@
+ 					{
+ 						printerJob.pageDialog(printRequestAttributeSet);
+ 					}
+-					
+ 					if (displayPrintDialog)
+ 					{
+ 						if (printerJob.printDialog(printRequestAttributeSet))
+@@ -220,6 +230,11 @@
+ 						{
+ 							printerJob.print(printRequestAttributeSet);
+ 						}
++						if(displayPrintDialogOnlyOnce)
++						{
++							displayPrintDialog = false;
++						}
++							
+ 					}
+ 					else
+ 					{

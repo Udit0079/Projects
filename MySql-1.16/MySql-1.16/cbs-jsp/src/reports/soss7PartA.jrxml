@@ -1,0 +1,648 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="soss7PartA"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="842"
+		 pageHeight="595"
+		 columnWidth="814"
+		 columnSpacing="0"
+		 leftMargin="14"
+		 rightMargin="14"
+		 topMargin="18"
+		 bottomMargin="18"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pBankName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankAddress" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pAmtIn" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="report" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[SELECT sNo,  gNo,  sGNo,  ssGNo,  sssGNo,  ssssGNo,  classification,  countApplicable,
+ acNature, acType,  glheadFrom,  glHeadTo,  rangeBaseOn,  rangeFrom, rangeTo, 
+ formula,  fGNo, fSGNo, fSsGNo, fSssGNo , fSsssGNo,   description, reportName, opbal as amt, npaClassification, dramt as secondAmount, cramt as thirdAmount, opbal as fourthAmount, dramt as fifthAmount, opbal as  sixthAmount, dramt as seventhAmount
+FROM  test1 ORDER BY gNo,  sGNo,  ssGNo,  sssGNo,  ssssGNo]]></queryString>
+
+	<field name="sNo" class="java.lang.Integer"/>
+	<field name="gNo" class="java.lang.Integer"/>
+	<field name="sGNo" class="java.lang.Integer"/>
+	<field name="ssGNo" class="java.lang.Integer"/>
+	<field name="sssGNo" class="java.lang.Integer"/>
+	<field name="ssssGNo" class="java.lang.Integer"/>
+	<field name="classification" class="java.lang.String"/>
+	<field name="countApplicable" class="java.lang.String"/>
+	<field name="acNature" class="java.lang.String"/>
+	<field name="acType" class="java.lang.String"/>
+	<field name="glheadFrom" class="java.lang.String"/>
+	<field name="glHeadTo" class="java.lang.String"/>
+	<field name="rangeBaseOn" class="java.lang.String"/>
+	<field name="rangeFrom" class="java.math.BigDecimal"/>
+	<field name="rangeTo" class="java.math.BigDecimal"/>
+	<field name="formula" class="java.lang.String"/>
+	<field name="fGNo" class="java.lang.Integer"/>
+	<field name="fSGNo" class="java.lang.Integer"/>
+	<field name="fSsGNo" class="java.lang.Integer"/>
+	<field name="fSssGNo" class="java.lang.Integer"/>
+	<field name="fSsssGNo" class="java.lang.Integer"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="reportName" class="java.lang.String"/>
+	<field name="amt" class="java.math.BigDecimal"/>
+	<field name="npaClassification" class="java.lang.String"/>
+	<field name="secondAmount" class="java.math.BigDecimal"/>
+	<field name="thirdAmount" class="java.math.BigDecimal"/>
+	<field name="fourthAmount" class="java.math.BigDecimal"/>
+	<field name="fifthAmount" class="java.math.BigDecimal"/>
+	<field name="sixthAmount" class="java.math.BigDecimal"/>
+	<field name="seventhAmount" class="java.math.BigDecimal"/>
+
+	<variable name="vTotal_First_SSS_GNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{npaClassification}.equalsIgnoreCase( "Ex" )?new BigDecimal("0"):$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="vTotal_First_SS_GNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{npaClassification}.equalsIgnoreCase( "Ex" )?new BigDecimal("0"):$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="vTotal_First_S_GNo" class="java.math.BigDecimal" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{npaClassification}.equalsIgnoreCase( "Ex" )?new BigDecimal("0"):$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="vTotal_First_Desc" class="java.math.BigDecimal" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="desc_SS_GNO" class="java.lang.String" resetType="Group" resetGroup="ssgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="desc_S_GNO" class="java.lang.String" resetType="Group" resetGroup="sgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="desc_GNO" class="java.lang.String" resetType="Group" resetGroup="gno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="vGrandTotal_GNO" class="java.math.BigDecimal" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{npaClassification}.equalsIgnoreCase( "Ex" )?new BigDecimal("0"):$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="desc_SSS_GNO" class="java.lang.String" resetType="Group" resetGroup="sssgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="desc_SSSS_GNO" class="java.lang.String" resetType="Group" resetGroup="ssssgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="vTotal_First_SSSS_GNo" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{npaClassification}.equalsIgnoreCase( "Ex" )?new BigDecimal("0"):$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="DESC_CNT" class="java.lang.Integer" resetType="Group" resetGroup="Desc" calculation="Count">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="SSSS_CNT" class="java.lang.Integer" resetType="Group" resetGroup="ssssgno" calculation="Count">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="GNoExclude" class="java.lang.String" resetType="Group" resetGroup="gno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SGNoExclude" class="java.lang.String" resetType="Group" resetGroup="sgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SsGNoExclude" class="java.lang.String" resetType="Group" resetGroup="ssgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SssGNoExclude" class="java.lang.String" resetType="Group" resetGroup="sssgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SsssGNOExclude" class="java.lang.String" resetType="Group" resetGroup="ssssgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="DescExclude" class="java.lang.String" resetType="Group" resetGroup="Desc" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+
+		<group  name="hi" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="20"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="657"
+						y="0"
+						width="153"
+						height="15"
+						backcolor="#CCCCCC"
+						key="textField-52"/>
+					<box leftPadding="5"></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pAmtIn}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="651"
+						height="15"
+						backcolor="#CCCCCC"
+						key="textField-53"/>
+					<box leftPadding="5"></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Part A - Capital Funds and Risk Assets Ratio"]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="111"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="2"
+						y="6"
+						width="808"
+						height="15"
+						backcolor="#CCCCCC"
+						key="textField-54"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Notes : Capital reserves representing surplus on sale of assets and held in a separate account will be included "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="2"
+						y="21"
+						width="808"
+						height="30"
+						backcolor="#CCCCCC"
+						key="textField-55"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Revaluation reserves, general/floating provisions and specific provisions made for loan losses and other asset losses or diminution in the value of any assets will not be reckoned as capital funds. "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="2"
+						y="51"
+						width="808"
+						height="30"
+						backcolor="#CCCCCC"
+						key="textField-56"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["*Any surplus (net) in profit and loss account i.e. balance after appropriation towards dividend payable, education fund, other funds whose utilization is defined and asset loss, if any etc. "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="2"
+						y="81"
+						width="808"
+						height="30"
+						backcolor="#CCCCCC"
+						key="textField-57"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["# Includes General Provision on Standard Assets. Such Provisions which are considered for inclusion in Tier II captial will be admitted upto 1.25% of total risk weighted assets."]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="gno" >
+			<groupExpression><![CDATA[$F{gNo}]]></groupExpression>
+			<groupHeader>
+			<band height="15"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="813"
+						height="15"
+						backcolor="#CCCCCC"
+						key="textField-41"
+						stretchType="RelativeToTallestObject"
+						positionType="Float">
+							<printWhenExpression><![CDATA[$F{sGNo}.intValue()==0?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25" lineColor="#000000"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$V{GNoExclude}.equalsIgnoreCase( "T" )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="651"
+						height="20"
+						backcolor="#CCCCCC"
+						key="textField-44"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total "+$V{desc_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="651"
+						y="0"
+						width="162"
+						height="20"
+						backcolor="#CCCCCC"
+						key="textField-45"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vGrandTotal_GNO}.abs()]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="sgno" >
+			<groupExpression><![CDATA[$F{sGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="20"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{ssGNo}.intValue()>0?
+($V{SGNoExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="651"
+						height="20"
+						backcolor="#CCCCCC"
+						key="textField-33"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["  Sum of "+$V{desc_S_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="651"
+						y="0"
+						width="162"
+						height="20"
+						backcolor="#CCCCCC"
+						key="textField-34"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vTotal_First_S_GNo}.abs()]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ssgno" >
+			<groupExpression><![CDATA[$F{ssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="17"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{sssGNo}.intValue()>0?
+($V{SsGNoExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="651"
+						height="17"
+						backcolor="#CCCCCC"
+						key="textField-42"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["  Sum of "+$V{desc_SS_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="651"
+						y="0"
+						width="162"
+						height="17"
+						backcolor="#CCCCCC"
+						key="textField-43"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vTotal_First_SS_GNo}.abs()]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="sssgno" >
+			<groupExpression><![CDATA[$F{sssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="17"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{ssssGNo}.intValue()>0?
+($V{SssGNoExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="651"
+						height="17"
+						backcolor="#CCCCCC"
+						key="textField-46"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["    Sum of "+$V{desc_SSS_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="651"
+						y="0"
+						width="162"
+						height="17"
+						backcolor="#CCCCCC"
+						key="textField-47"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vTotal_First_SSS_GNo}.abs()]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ssssgno" >
+			<groupExpression><![CDATA[$F{ssssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="17"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{ssssGNo}.intValue()>0?
+($V{DESC_CNT}.equals( $V{SSSS_CNT} )?Boolean.FALSE:
+($V{SsssGNOExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE)):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="651"
+						height="17"
+						backcolor="#CCCCCC"
+						key="textField-48"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["      Sum of "+$V{desc_SSSS_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="651"
+						y="0"
+						width="162"
+						height="17"
+						backcolor="#CCCCCC"
+						key="textField-49"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vTotal_First_SSSS_GNo}.abs()]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Desc" >
+			<groupExpression><![CDATA[$F{description}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="15"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{sGNo}.intValue()>0?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="651"
+						height="15"
+						key="textField-28"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="651"
+						y="0"
+						width="162"
+						height="15"
+						key="textField-29"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{vTotal_First_Desc}.abs()]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

@@ -1,0 +1,879 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="dtWiseRecon"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="1187"
+		 pageHeight="612"
+		 columnWidth="1159"
+		 columnSpacing="0"
+		 leftMargin="14"
+		 rightMargin="14"
+		 topMargin="14"
+		 bottomMargin="14"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pbankName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbankAddress" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pReportName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pReportDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedBy" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[select  a.orgn,  a.modeOfTrn as modeOfTran, a.dest, a.acno, a.amt  from
+(
+
+(select acno,org_brnid as orgn, dest_brnid as dest,'Manual' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and org_brnid=dest_brnid group by dest_brnid) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='000610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest,'Manual' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and org_brnid=dest_brnid group by dest_brnid) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='010610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest,'Manual' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and org_brnid=dest_brnid group by dest_brnid) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='020610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest,'Manual' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and org_brnid=dest_brnid group by dest_brnid) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='030610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest,'Manual' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and org_brnid=dest_brnid group by dest_brnid) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='040610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest,'Manual' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and org_brnid=dest_brnid group by dest_brnid) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='050610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest,'Manual' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and org_brnid=dest_brnid group by dest_brnid) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='060610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno, org_brnid as orgn, advicebrncode as dest, 'Manual' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and org_brnid=dest_brnid and trandesc <>999 and iy<>999  and dt<='20170331' and org_brnid='90' group by advicebrncode) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='00' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='00' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='01' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='01' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='02' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='02' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='03' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='03' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='04' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='04' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='05' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='05' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+ (select acno,org_brnid as orgn, dest_brnid as dest ,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='90' and dest_brnid='06' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+ union all 
+(select acno,org_brnid as orgn, dest_brnid as dest,'Auto' as modeOfTrn, cast(sum(cramt-dramt) as decimal(14,2)) as amt from gl_recon where acno='900610225801' and dt<='20170331' and (trandesc=999 or iy=999) and org_brnid='06' and dest_brnid='90' having cast(sum(cramt-dramt) as decimal(14,2)) <>0) 
+)a 
+
+order by a.orgn,  a.modeOfTrn desc, a.dest, a.acno]]></queryString>
+
+	<field name="orgn" class="java.lang.String"/>
+	<field name="modeOfTran" class="java.lang.String"/>
+	<field name="dest" class="java.lang.String"/>
+	<field name="acno" class="java.lang.String"/>
+	<field name="amt" class="java.lang.Double"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="65"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="-1"
+						width="72"
+						height="13"
+						key="staticText-1"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Bank Name   :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="12"
+						width="72"
+						height="13"
+						key="staticText-2"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Bank Address:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="519"
+						y="0"
+						width="75"
+						height="13"
+						key="staticText-3"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement>
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Report Name:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="519"
+						y="13"
+						width="75"
+						height="13"
+						key="staticText-4"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement>
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Report Date  :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="519"
+						y="26"
+						width="75"
+						height="13"
+						key="staticText-5"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement>
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Print Date     :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="519"
+						y="39"
+						width="75"
+						height="13"
+						key="staticText-6"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement>
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Printed By     : ]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="594"
+						y="0"
+						width="254"
+						height="13"
+						key="textField-3"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement>
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pReportName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="594"
+						y="13"
+						width="254"
+						height="13"
+						key="textField-4"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement>
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pReportDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="594"
+						y="39"
+						width="254"
+						height="13"
+						key="textField-5"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement>
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pPrintedBy}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="true" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="594"
+						y="26"
+						width="254"
+						height="13"
+						key="textField-6"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement>
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="72"
+						y="0"
+						width="301"
+						height="13"
+						key="textField-7"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbankName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="72"
+						y="13"
+						width="301"
+						height="13"
+						key="textField-8"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbankAddress}]]></textFieldExpression>
+				</textField>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="23"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="374"
+						y="0"
+						width="71"
+						height="18"
+						key="textField-1"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="450"
+						y="0"
+						width="66"
+						height="18"
+						key="textField-2"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="16"  isSplitAllowed="true" >
+				<crosstab >
+					<reportElement
+						x="0"
+						y="0"
+						width="1159"
+						height="16"
+						key="crosstab-1"/>
+					<crosstabHeaderCell>						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="81"
+						height="15"
+						key="textField-9"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Reconciliation Type"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="81"
+						y="0"
+						width="70"
+						height="15"
+						key="textField-9"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Destination Branch"+"\n"+"----------------"+"\n"+"Origin Branch"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="151"
+						y="0"
+						width="80"
+						height="15"
+						key="textField-9"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["GL Head"]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabHeaderCell>					<rowGroup name="modeOfTran" width="81">
+						<bucket>
+							<bucketExpression class="java.lang.String"><![CDATA[$F{modeOfTran}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="81"
+						height="28"
+						key="textField-9"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{modeOfTran}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabRowHeader>
+					</rowGroup>
+					<rowGroup name="orgn" width="70" totalPosition="End">
+						<bucket>
+							<bucketExpression class="java.lang.String"><![CDATA[$F{orgn}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="70"
+						height="14"
+						key="textField"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" isBold="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{orgn}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="70"
+						height="14"
+						key="textField"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["["+$V{modeOfTran}+"] Reconciliation Difference"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="70"
+						y="0"
+						width="80"
+						height="14"
+						key="textField-9"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="acno" width="80">
+						<bucket>
+							<bucketExpression class="java.lang.String"><![CDATA[$F{acno}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="80"
+						height="14"
+						key="textField-9"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{acno}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabRowHeader>
+					</rowGroup>
+					<columnGroup name="dest" height="15" totalPosition="End" headerPosition="Center">
+						<bucket>
+							<bucketExpression class="java.lang.String"><![CDATA[$F{dest}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="80"
+						height="15"
+						key="textField"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="2" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{dest}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="85"
+						height="15"
+						key="textField"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="2" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total"]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+
+					<measure name="amt_Sum" class="java.lang.Double" calculation="Sum">
+						<measureExpression><![CDATA[$F{amt}]]></measureExpression>
+					</measure>
+					<crosstabCell width="80" height="14">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="80"
+						height="14"
+						key="textField"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="2" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{amt_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="85" height="14" columnTotalGroup="dest">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="85"
+						height="14"
+						key="textField"
+						stretchType="RelativeToBandHeight"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{amt_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="80" height="14" rowTotalGroup="orgn">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="80"
+						height="14"
+						key="textField"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="2" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{amt_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="85" height="14" rowTotalGroup="orgn" columnTotalGroup="dest">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="85"
+						height="14"
+						key="textField"
+						stretchType="RelativeToBandHeight"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{amt_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="80" height="0" rowTotalGroup="modeOfTran">
+						<cellContents mode="Transparent">
+					<box></box>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="85" height="0" rowTotalGroup="modeOfTran" columnTotalGroup="dest">
+						<cellContents mode="Transparent">
+					<box></box>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="80" height="0" rowTotalGroup="acno">
+						<cellContents mode="Transparent">
+					<box></box>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="85" height="0" rowTotalGroup="acno" columnTotalGroup="dest">
+						<cellContents mode="Transparent">
+					<box></box>
+						</cellContents>
+					</crosstabCell>
+					<whenNoDataCell>						<cellContents mode="Transparent">
+					<box></box>
+						</cellContents>
+					</whenNoDataCell>					</crosstab>
+			</band>
+		</summary>
+</jasperReport>

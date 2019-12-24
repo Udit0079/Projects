@@ -1,0 +1,969 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="misDetails"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="2012"
+		 pageHeight="595"
+		 columnWidth="1984"
+		 columnSpacing="0"
+		 leftMargin="14"
+		 rightMargin="14"
+		 topMargin="14"
+		 bottomMargin="14"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="net.sf.jasperreports.crosstab.ignore.width" value="true" />
+	<property name="ireport.jasperserver.reportUnit" value="/public/Samples/SampleForPDFExportDynamicWidth" />
+	<property name="net.sf.jasperreports.export.pdf.size.page.to.content" value="true" />
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pBnkName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBnkAddr" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pRepName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pRepDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedBy" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[select  (select AlphaCode from branchmaster where LPAD(BrnCode,2,'0') = aa.brn_code) as brncode,
+'1.Task Given (Morning)' as WorkType, aa.follow_up_dt,aa.id, cc.assigned_user, 
+aa.source_of_data,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 421 and ref_code =  aa.source_of_data) as source_of_data_desc,
+(select order_by from cbs_ref_rec_type where ref_rec_no = 421 and ref_code =  aa.source_of_data) as source_of_data_order,
+ aa.source_of_marketing,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 422 and ref_code =  aa.source_of_marketing) as source_of_marketing_desc, 
+(select order_by from cbs_ref_rec_type where ref_rec_no = 422 and ref_code =  aa.source_of_marketing) as source_of_marketing_order, 
+aa.source_of_data as purpose,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 421 and ref_code =  aa.source_of_data) as purpose_description, 
+(select order_by from cbs_ref_rec_type where ref_rec_no = 421 and ref_code =  aa.source_of_data) as purpose_order,
+aa.source_of_marketing as purpose_desc,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 422 and ref_code =  aa.source_of_marketing) as purpose_desc_description, 
+(select order_by from cbs_ref_rec_type where ref_rec_no = 422 and ref_code =  aa.source_of_marketing) as purpose_desc_order,
+cc.status,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 424 and ref_code =  cc.status) as status_description, 
+(select order_by from cbs_ref_rec_type where ref_rec_no = 424 and ref_code =  cc.status) as status_order, 
+count(bb.id)  as noOfLead, '' as ref_acno 
+from cbs_lead_mgmt_id aa, cbs_lead_mgmt_details bb, cbs_lead_follow_ups cc 
+where /*aa.follow_up_dt = '20190426' and*/ aa.id = bb.lead_id and bb.id = cc.lead_detail_id and cc.status = 'N'
+group by  cc.assigned_user,aa.follow_up_dt,aa.source_of_marketing
+
+union all 
+
+select (select AlphaCode from branchmaster where LPAD(BrnCode,2,'0') = aa.brn_code) as brncode,
+'2.Marketing Activity Done' as WorkType, aa.follow_up_dt, aa.id, cc.assigned_user,
+aa.source_of_data,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 421 and ref_code =  aa.source_of_data) as source_of_data_desc,
+(select order_by from cbs_ref_rec_type where ref_rec_no = 421 and ref_code =  aa.source_of_data) as source_of_data_order,
+aa.source_of_marketing,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 422 and ref_code =  aa.source_of_marketing) as source_of_marketing_desc, 
+(select order_by from cbs_ref_rec_type where ref_rec_no = 422 and ref_code =  aa.source_of_marketing) as source_of_marketing_order, 
+aa.source_of_data as purpose,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 421 and ref_code =  aa.source_of_data) as purpose_description, 
+(select order_by from cbs_ref_rec_type where ref_rec_no = 421 and ref_code =  aa.source_of_data) as purpose_order,
+aa.source_of_marketing as purpose_desc,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 422 and ref_code =  aa.source_of_marketing) as purpose_desc_description, 
+(select order_by from cbs_ref_rec_type where ref_rec_no = 422 and ref_code =  aa.source_of_marketing) as purpose_desc_order,
+cc.status,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 424 and ref_code =  cc.status) as status_description, 
+(select order_by from cbs_ref_rec_type where ref_rec_no = 424 and ref_code =  cc.status) as status_order, 
+
+ 
+count(bb.id)   as noOfLead, '' as ref_acno 
+from cbs_lead_mgmt_id aa, cbs_lead_mgmt_details bb, cbs_lead_follow_ups cc 
+where /*aa.follow_up_dt = '20190426' and*/ aa.id = bb.lead_id and bb.id = cc.lead_detail_id and cc.status <> 'N'
+group by cc.assigned_user, aa.follow_up_dt, aa.source_of_marketing 
+
+
+union all 
+
+select xx.* from 
+(select  yy.brncode,
+'3.Marketing Conversion Done (Evening)' as WorkType , yy.follow_up_dt, yy.id, yy.assigned_user, yy.source_of_data, yy.source_of_data_desc, yy.source_of_data_order ,
+yy.source_of_marketing, yy.source_of_marketing_desc, yy.source_of_marketing_order, 
+ifnull(yy.purpose,zz.ref_code) as purpose, ifnull(yy.purpose_description, zz.ref_desc) as purpose_description, ifnull(yy.purpose_order,zz.order_by) as purpose_order,
+yy.purpose_desc, yy.purpose_desc_description, yy.purpose_desc_order, 
+yy.status, yy.status_description, yy.status_order, ifnull(yy.noOfLead,0), yy.ref_acno  from 
+(select ref_code,ref_desc, order_by from cbs_ref_rec_type where ref_rec_no = 423 ) zz left join 
+(select  (select AlphaCode from branchmaster where LPAD(BrnCode,2,'0') = aa.brn_code) as brncode,
+'3.Marketing Conversion Done (Evening)' as WorkType, aa.follow_up_dt,aa.id, cc.assigned_user,  
+aa.source_of_data,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 421 and ref_code =  aa.source_of_data) as source_of_data_desc,
+(select order_by from cbs_ref_rec_type where ref_rec_no = 421 and ref_code =  aa.source_of_data) as source_of_data_order,
+aa.source_of_marketing,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 422 and ref_code =  aa.source_of_marketing) as source_of_marketing_desc, 
+(select order_by from cbs_ref_rec_type where ref_rec_no = 422 and ref_code =  aa.source_of_marketing) as source_of_marketing_order,
+cc.purpose,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 423 and ref_code =  cc.purpose) as purpose_description,
+(select order_by from cbs_ref_rec_type where ref_rec_no = 423 and ref_code =  cc.purpose) as  purpose_order,
+cc.purpose_desc,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 426 and ref_code =  cc.purpose_desc) as purpose_desc_description,
+(select order_by from cbs_ref_rec_type where ref_rec_no = 426 and ref_code =  cc.purpose_desc) as  purpose_desc_order,
+cc.status,
+(select ref_desc from cbs_ref_rec_type where ref_rec_no = 424 and ref_code =  cc.status) as status_description, 
+(select order_by from cbs_ref_rec_type where ref_rec_no = 424 and ref_code =  cc.status) as status_order,
+count(bb.id)   as noOfLead, GROUP_CONCAT(cc.ref_acno  ORDER BY cc.ref_acno  SEPARATOR ', ' ) AS ref_acno   
+from cbs_lead_mgmt_id aa, cbs_lead_mgmt_details bb, cbs_lead_follow_ups cc 
+where /*aa.follow_up_dt = '20190426' and*/ aa.id = bb.lead_id and bb.id = cc.lead_detail_id and cc.status = 'B'
+group by  cc.assigned_user,  aa.follow_up_dt, cc.purpose, cc.purpose_desc) yy 
+on zz.ref_code = yy.purpose) xx order by WorkType, follow_up_dt, assigned_user, purpose_order,
+ purpose_desc_order, status_order, id ;]]></queryString>
+
+	<field name="brncode" class="java.lang.String"/>
+	<field name="workType" class="java.lang.String"/>
+	<field name="follow_up_dt" class="java.lang.String"/>
+	<field name="id" class="java.lang.Long"/>
+	<field name="assigned_user" class="java.lang.String"/>
+	<field name="source_of_data" class="java.lang.String"/>
+	<field name="source_of_data_desc" class="java.lang.String"/>
+	<field name="source_of_data_order" class="java.math.BigDecimal"/>
+	<field name="source_of_marketing" class="java.lang.String"/>
+	<field name="source_of_marketing_desc" class="java.lang.String"/>
+	<field name="source_of_marketing_order" class="java.math.BigDecimal"/>
+	<field name="purpose" class="java.lang.String"/>
+	<field name="purpose_description" class="java.lang.String"/>
+	<field name="purpose_order" class="java.math.BigDecimal"/>
+	<field name="purpose_desc" class="java.lang.String"/>
+	<field name="purpose_desc_description" class="java.lang.String"/>
+	<field name="purpose_desc_order" class="java.math.BigDecimal"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="status_description" class="java.lang.String"/>
+	<field name="status_order" class="java.math.BigDecimal"/>
+	<field name="noOfLead" class="java.lang.Long"/>
+	<field name="ref_acno" class="java.lang.String"/>
+
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="69"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="12"
+						y="1"
+						width="86"
+						height="14"
+						key="staticText-1"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Bank Name:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="98"
+						y="1"
+						width="200"
+						height="14"
+						key="textField-1"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pBnkName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="12"
+						y="15"
+						width="86"
+						height="14"
+						key="staticText-2"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Bank Address : Address:]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="98"
+						y="15"
+						width="200"
+						height="14"
+						key="textField-2"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pBnkAddr}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="556"
+						y="0"
+						width="76"
+						height="14"
+						key="staticText-3"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Report Name :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="632"
+						y="0"
+						width="407"
+						height="14"
+						key="textField-3"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pRepName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="556"
+						y="14"
+						width="76"
+						height="14"
+						key="staticText-4"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Print Date :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="true" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="632"
+						y="14"
+						width="407"
+						height="14"
+						key="textField-4"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement>
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="556"
+						y="42"
+						width="76"
+						height="14"
+						key="staticText-5"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Printed By :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="632"
+						y="42"
+						width="407"
+						height="14"
+						key="textField-5"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pPrintedBy}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="556"
+						y="28"
+						width="76"
+						height="14"
+						key="staticText-6"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Report Date :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="632"
+						y="28"
+						width="407"
+						height="14"
+						key="textField-6"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pRepDate}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="2"
+						y="56"
+						width="1472"
+						height="12"
+						key="staticText-7"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="40"  isSplitAllowed="true" >
+				<crosstab >
+					<reportElement
+						x="1"
+						y="3"
+						width="1981"
+						height="22"
+						key="crosstab-1"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"
+						isPrintWhenDetailOverflows="true"/>
+					<crosstabHeaderCell>						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="147"
+						height="25"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Activity Progress (As per Time)"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="25"
+						width="147"
+						height="25"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Purpopse Wise Details"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="50"
+						width="47"
+						height="25"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Branch"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="47"
+						y="50"
+						width="100"
+						height="25"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["User"]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabHeaderCell>					<rowGroup name="brncode" width="47" totalPosition="End">
+						<bucket>
+							<bucketExpression class="java.lang.String"><![CDATA[$F{brncode}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="47"
+						height="29"
+						key="textField-1"
+						stretchType="RelativeToBandHeight">
+							<printWhenExpression><![CDATA[$V{brncode}.equalsIgnoreCase( null )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{brncode}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="147"
+						height="16"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Grand Total:"]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<rowGroup name="assigned_user" width="100" totalPosition="End">
+						<bucket>
+							<bucketExpression class="java.lang.String"><![CDATA[$F{assigned_user}]]></bucketExpression>
+						</bucket>
+						<crosstabRowHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="100"
+						height="14"
+						key="textField"
+						stretchType="RelativeToBandHeight">
+							<printWhenExpression><![CDATA[$V{brncode}.equalsIgnoreCase( null )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{assigned_user}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabRowHeader>
+						<crosstabTotalRowHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="100"
+						height="15"
+						backcolor="#E4C3C3"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						isPrintRepeatedValues="false">
+							<printWhenExpression><![CDATA[$V{brncode}.equalsIgnoreCase( null )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{brncode}+"  Total"]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabTotalRowHeader>
+					</rowGroup>
+					<columnGroup name="WorkType" height="25" totalPosition="End" headerPosition="Stretch">
+						<bucket>
+							<bucketExpression class="java.lang.String"><![CDATA[$F{workType}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="150"
+						height="25"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{WorkType}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabColumnHeader>
+					</columnGroup>
+					<columnGroup name="purpose_description" height="25" totalPosition="End" headerPosition="Stretch">
+						<bucket>
+							<bucketExpression class="java.lang.String"><![CDATA[$F{purpose_description}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="100"
+						height="25"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{purpose_description}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="50"
+						height="50"
+						key="textField"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Purpose Total"]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+					<columnGroup name="purpose_desc_description" height="25" totalPosition="End" headerPosition="Stretch">
+						<bucket>
+							<bucketExpression class="java.lang.String"><![CDATA[$F{purpose_desc_description}]]></bucketExpression>
+						</bucket>
+						<crosstabColumnHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="50"
+						height="25"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$V{purpose_desc_description}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabColumnHeader>
+						<crosstabTotalColumnHeader>
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="50"
+						height="25"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="4">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total"]]></textFieldExpression>
+				</textField>
+						</cellContents>
+						</crosstabTotalColumnHeader>
+					</columnGroup>
+
+					<measure name="noOfLead_Sum" class="java.lang.Long" calculation="Sum">
+						<measureExpression><![CDATA[$F{noOfLead}]]></measureExpression>
+					</measure>
+					<crosstabCell width="50" height="14">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="50"
+						height="14"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[$V{brncode}.equalsIgnoreCase( null )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box leftPadding="4" rightPadding="5">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{noOfLead_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" height="14" columnTotalGroup="purpose_description">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="50"
+						height="14"
+						backcolor="#E4C3C3"
+						key="textField"
+						stretchType="RelativeToBandHeight">
+							<printWhenExpression><![CDATA[$V{brncode}.equalsIgnoreCase( null )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box leftPadding="4" rightPadding="5">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{noOfLead_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="0" height="14" columnTotalGroup="WorkType">
+						<cellContents mode="Transparent">
+					<box></box>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" height="15" rowTotalGroup="assigned_user">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="50"
+						height="15"
+						backcolor="#E4C3C3"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isPrintRepeatedValues="false"
+						isRemoveLineWhenBlank="true"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true">
+							<printWhenExpression><![CDATA[$V{brncode}.equalsIgnoreCase( null )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box leftPadding="4" rightPadding="5">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{noOfLead_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" height="15" rowTotalGroup="assigned_user" columnTotalGroup="purpose_description">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="50"
+						height="15"
+						backcolor="#E4C3C3"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						isPrintRepeatedValues="false">
+							<printWhenExpression><![CDATA[$V{brncode}.equalsIgnoreCase( null )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box leftPadding="4" rightPadding="5">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{noOfLead_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="0" height="15" rowTotalGroup="assigned_user" columnTotalGroup="WorkType">
+						<cellContents mode="Transparent">
+					<box></box>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" height="14" columnTotalGroup="purpose_desc_description">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="50"
+						height="14"
+						key="textField-1"
+						stretchType="RelativeToBandHeight">
+							<printWhenExpression><![CDATA[$V{brncode}.equalsIgnoreCase( null )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box leftPadding="4" rightPadding="5">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{noOfLead_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" height="15" rowTotalGroup="assigned_user" columnTotalGroup="purpose_desc_description">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="50"
+						height="15"
+						backcolor="#E4C3C3"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"
+						isPrintRepeatedValues="false">
+							<printWhenExpression><![CDATA[$V{brncode}.equalsIgnoreCase( null )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box leftPadding="4" rightPadding="5">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{noOfLead_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" height="16" rowTotalGroup="brncode">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="50"
+						height="16"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"
+						positionType="Float"
+						isRemoveLineWhenBlank="true"
+						isPrintInFirstWholeBand="true"
+						isPrintWhenDetailOverflows="true"/>
+					<box leftPadding="4" rightPadding="5">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{noOfLead_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" height="16" rowTotalGroup="brncode" columnTotalGroup="purpose_desc_description">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="50"
+						height="16"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="4" rightPadding="5">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{noOfLead_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="50" height="16" rowTotalGroup="brncode" columnTotalGroup="purpose_description">
+						<cellContents mode="Transparent">
+					<box></box>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="50"
+						height="16"
+						backcolor="#E4C3C3"
+						key="textField-1"
+						stretchType="RelativeToBandHeight"/>
+					<box leftPadding="4" rightPadding="5">					<pen lineWidth="0.25" lineStyle="Solid"/>
+					<topPen lineWidth="0.25" lineStyle="Solid"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid"/>
+					<bottomPen lineWidth="0.25" lineStyle="Solid"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Long"><![CDATA[$V{noOfLead_Sum}]]></textFieldExpression>
+				</textField>
+						</cellContents>
+					</crosstabCell>
+					<crosstabCell width="0" height="16" rowTotalGroup="brncode" columnTotalGroup="WorkType">
+						<cellContents mode="Transparent">
+					<box></box>
+						</cellContents>
+					</crosstabCell>
+					<whenNoDataCell>						<cellContents mode="Transparent">
+					<box></box>
+						</cellContents>
+					</whenNoDataCell>					</crosstab>
+			</band>
+		</summary>
+</jasperReport>

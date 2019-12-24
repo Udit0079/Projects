@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN/EN" "http://www.springframework.org/dtd/spring-beans.dtd" >
+<beans>
+    <bean id="siplScheduler" class="com.cbs.web.listener.SiplScheduler"/>
+    <!--Task-->
+    <bean id="smsSenderTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject"> 
+            <ref bean="siplScheduler" /> 
+        </property>
+        <property name="targetMethod"> 
+            <value>smsSender</value> 
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="neftRtgsTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject"> 
+            <ref bean="siplScheduler" /> 
+        </property>
+        <property name="targetMethod"> 
+            <value>neftRtgsScheduler</value> 
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    
+    <bean id="ckycrTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject"> 
+            <ref bean="siplScheduler" /> 
+        </property>
+        <property name="targetMethod"> 
+            <value>ckycrScheduler</value> 
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    
+    <bean id="npciH2hTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject"> 
+            <ref bean="siplScheduler" /> 
+        </property>
+        <property name="targetMethod"> 
+            <value>npciH2hScheduler</value> 
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    
+    <bean id="autoCtsTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject"> 
+            <ref bean="siplScheduler" /> 
+        </property>
+        <property name="targetMethod"> 
+            <value>autoCtsScheduler</value> 
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+
+    <bean id="autoEmailTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject"> 
+            <ref bean="siplScheduler" /> 
+        </property>
+        <property name="targetMethod"> 
+            <value>autoEmailScheduler</value> 
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    
+    <bean id="eodSmsTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject"> 
+            <ref bean="siplScheduler" /> 
+        </property>
+        <property name="targetMethod"> 
+            <value>autoEODSmsScheduler</value> 
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <!--Task Regarding FCRA-->
+    <bean id="fcraQuickAccountValTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject"> 
+            <ref bean="siplScheduler" /> 
+        </property>
+        <property name="targetMethod"> 
+            <value>fcraQuickAccountValScheduler</value> 
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="fcraRegularAccountValTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject"> 
+            <ref bean="siplScheduler" /> 
+        </property>
+        <property name="targetMethod"> 
+            <value>fcraRegularAccountValScheduler</value> 
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="fcraTxnTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject"> 
+            <ref bean="siplScheduler" /> 
+        </property>
+        <property name="targetMethod"> 
+            <value>fcraTxnScheduler</value> 
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <bean id="fcraTxnHistoryTask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject"> 
+            <ref bean="siplScheduler" /> 
+        </property>
+        <property name="targetMethod"> 
+            <value>fcraTxnHistoryScheduler</value> 
+        </property>
+        <property name="concurrent" value="false"/>
+    </bean>
+    <!--Trigger-->
+    <bean id="SmsSenderTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail"> 
+            <ref bean="smsSenderTask" /> 
+        </property>
+        <property name="cronExpression"> 
+            <value>0 0/1 * * * ?</value> 
+        </property>
+    </bean>
+    
+    <bean id="NeftRtgsTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail"> 
+            <ref bean="neftRtgsTask" /> 
+        </property>
+        <property name="cronExpression"> 
+            <value>0 0/10 * * * ?</value> 
+        </property>
+    </bean>
+    
+    <bean id="CKYCRTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail"> 
+            <ref bean="ckycrTask" /> 
+        </property>
+        <property name="cronExpression"> 
+            <value>0 0 0/2 * * ?</value> 
+        </property>
+    </bean>
+    
+    <bean id="NpciH2hTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail"> 
+            <ref bean="npciH2hTask" /> 
+        </property>
+        <property name="cronExpression"> 
+            <value>0 0/15 * * * ?</value> 
+        </property>
+    </bean>
+    
+    <bean id="AutoCTSTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail"> 
+            <ref bean="autoCtsTask" /> 
+        </property>
+        <property name="cronExpression"> 
+            <value>0 0/20 * * * ?</value> 
+        </property>
+    </bean>
+    
+    <bean id="EmailTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail"> 
+            <ref bean="autoEmailTask" /> 
+        </property>
+        <property name="cronExpression"> 
+            <value>0 0/2 * * * ?</value> 
+        </property>
+    </bean>
+    
+    <bean id="EODSmsTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail"> 
+            <ref bean="eodSmsTask" /> 
+        </property>
+        <property name="cronExpression"> 
+            <value>0 0/1 * * * ?</value> 
+        </property>
+    </bean>
+    
+    <!--Triggers Regarding FCRA-->
+    <bean id="FcraQuickAccountValTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail"> 
+            <ref bean="fcraQuickAccountValTask" /> 
+        </property>
+        <property name="cronExpression"> 
+            <value>0 0/2 * * * ?</value> 
+        </property>
+    </bean>
+    <bean id="FcraRegularAccountValTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail"> 
+            <ref bean="fcraRegularAccountValTask" /> 
+        </property>
+        <property name="cronExpression"> 
+            <value>0 0 0/2 * * ?</value> 
+        </property>
+    </bean>
+    <bean id="FcraTxnTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail"> 
+            <ref bean="fcraTxnTask" /> 
+        </property>
+        <property name="cronExpression"> 
+            <value>0 0 7 * * ?</value> 
+        </property>
+    </bean>
+    <bean id="FcraTxnHistoryTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail"> 
+            <ref bean="fcraTxnHistoryTask" /> 
+        </property>
+        <property name="cronExpression"> 
+            <value>0 0 17 * * ?</value> 
+        </property>
+    </bean>
+    
+    <!--Trigger Registration-->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="SmsSenderTrigger"/>
+                <ref bean="NeftRtgsTrigger" />
+                <ref bean="CKYCRTrigger" />
+                <ref bean="NpciH2hTrigger" />
+                <ref bean="AutoCTSTrigger" />
+                <ref bean="EmailTrigger" />
+                <ref bean="EODSmsTrigger" />
+                <!--FCRA Schedulers-->
+                <ref bean="FcraQuickAccountValTrigger" />
+                <ref bean="FcraRegularAccountValTrigger" />
+                <ref bean="FcraTxnTrigger" />
+                <ref bean="FcraTxnHistoryTrigger" />
+            </list>
+        </property>
+    </bean>
+</beans>

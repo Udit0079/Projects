@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="NPAReminder1"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="564"
+		 pageHeight="842"
+		 columnWidth="524"
+		 columnSpacing="0"
+		 leftMargin="20"
+		 rightMargin="20"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.zoom" value="1.0" />
+	<property name="ireport.x" value="0" />
+	<property name="ireport.y" value="0" />
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pReportName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedBy" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBranchAddress" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pReminder" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pRefNoLabel" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pAccountNumber" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pCustomerName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pCustomerAddress" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankAddress" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pCustomerDist" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pCustomerCity" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pCustomerPin" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pLoanSenctionDt" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pLoanSenctionAmt" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pMonthlyInstAmt" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pDescription" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pRegards" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pNoteDesc" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pGranter1" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pGranter2" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankState" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankCity" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankPin" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pIsBankAddress" isForPrompting="false" class="java.lang.Boolean"/>
+	<queryString language="SQL"><![CDATA[select convert(varchar(10),tdate,103) as Date,opamt as openingAmount,brncode as brName from opcash where tdate > = '20140710' order by tdate]]></queryString>
+
+	<field name="accountNumber" class="java.lang.String"/>
+	<field name="customerName" class="java.lang.String"/>
+	<field name="customerAddress" class="java.lang.String"/>
+	<field name="customerCity" class="java.lang.String"/>
+	<field name="customerPin" class="java.lang.String"/>
+	<field name="loanSenctionDt" class="java.lang.String"/>
+	<field name="loanSenctionAmt" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="monthlyInstAmt" class="java.lang.String"/>
+	<field name="customerState" class="java.lang.String"/>
+	<field name="granter1" class="java.lang.String"/>
+	<field name="granter2" class="java.lang.String"/>
+
+	<variable name="vTotalOpAmtByDate" class="java.lang.Double" resetType="Group" resetGroup="Date" calculation="Sum">
+	</variable>
+	<variable name="vGrandTotalOpAmt" class="java.lang.Double" resetType="Report" calculation="Sum">
+	</variable>
+	<variable name="sno" class="java.lang.Integer" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[Integer.valueOf($V{sno}.intValue()+1)]]></variableExpression>
+		<initialValueExpression><![CDATA[Integer.valueOf(0)]]></initialValueExpression>
+	</variable>
+
+		<group  name="acNo" isStartNewPage="true" >
+			<groupExpression><![CDATA[$F{accountNumber}]]></groupExpression>
+			<groupHeader>
+			<band height="132"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="349"
+						y="22"
+						width="35"
+						height="14"
+						key="staticText-25"/>
+					<box></box>
+					<textElement textAlignment="Justified">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Date :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="true" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="384"
+						y="22"
+						width="140"
+						height="14"
+						key="textField-15"/>
+					<box leftPadding="2"></box>
+					<textElement textAlignment="Justified">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="209"
+						y="0"
+						width="100"
+						height="18"
+						key="textField-16"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pReminder}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="283"
+						y="36"
+						width="241"
+						height="96"
+						key="textField-17"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[$P{pIsBankAddress}.booleanValue()==true ?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Form:\n"+$P{pBankName}+"\n"+$P{pBranchAddress}+"\n"+$P{pBankCity}+"\n"+$P{pBankState}+" "+$P{pBankPin}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="36"
+						width="253"
+						height="96"
+						key="textField-18"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pRefNoLabel}+" "+$F{accountNumber}+"\nTo.\nMr./Ms. "+$F{customerName}+"\n"+$F{customerAddress}+"\n"+$F{customerCity}+"\n"+$F{customerState}+" "+$F{customerPin}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Date" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="50"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="14"
+						width="524"
+						height="36"
+						key="textField-10"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Dear Sir/Madam,\n\tRef: Loan Dated "+$F{loanSenctionDt}+" For Rs. "+$F{loanSenctionAmt}+"\n\tMonthly Installment of Rs. "+$F{monthlyInstAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Subject" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="14"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="377"
+						height="14"
+						key="staticText-23"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="172"
+						y="0"
+						width="352"
+						height="14"
+						key="staticText-26"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="note" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="25"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="1"
+						y="10"
+						width="39"
+						height="15"
+						key="staticText-24"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Note  :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="40"
+						y="10"
+						width="484"
+						height="15"
+						key="textField-14"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pNoteDesc}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="regards" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="25"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="283"
+						y="10"
+						width="241"
+						height="15"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pRegards}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="10"
+						y="-455"
+						width="0"
+						height="0"
+						key="staticText-21"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Static Text]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="14"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="77"
+						y="-235"
+						width="0"
+						height="0"
+						key="staticText-22"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[Static Text]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="524"
+						height="14"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement textAlignment="Justified">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

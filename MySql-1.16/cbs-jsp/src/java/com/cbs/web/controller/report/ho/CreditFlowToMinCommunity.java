@@ -1,0 +1,279 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.cbs.web.controller.report.ho;
+
+/**
+ *
+ * @author root
+ */
+import com.cbs.constant.CbsConstant;
+import com.cbs.dto.report.LoanMisCellaniousPojo;
+import com.cbs.dto.report.PrioritySectorPojo;
+import com.cbs.facade.report.CommonReportMethodsRemote;
+import com.cbs.facade.report.GLReportFacadeRemote;
+import com.cbs.facade.report.LoanReportFacadeRemote;
+import com.cbs.facade.report.RbiReportFacadeHalfYearlyRemote;
+import com.cbs.utils.ServiceLocator;
+import com.cbs.web.controller.BaseBean;
+import com.cbs.web.controller.ReportBean;
+import com.cbs.web.utils.Util;
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Vector;
+import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+
+/**
+ *
+ * @author saurabhsipl
+ */
+public class CreditFlowToMinCommunity extends BaseBean {
+
+    private String msg;
+    private String branch;
+    private List<SelectItem> branchList;
+    private String reportType;
+    private List<SelectItem> reportTypeList;
+    private String calDate;
+    private String FromDate;
+    private String reportIn;
+    private List<SelectItem> reportInList;
+    private RbiReportFacadeHalfYearlyRemote ossBeanPartDRemote;
+    private GLReportFacadeRemote glBeanRemote;
+    private CommonReportMethodsRemote common;
+    private LoanReportFacadeRemote loanRptFacade;
+    SimpleDateFormat ymd = new SimpleDateFormat("yyyyMMdd");
+    SimpleDateFormat dmy = new SimpleDateFormat("dd/MM/yyyy");
+
+    public String getBranch() {
+        return branch;
+    }
+
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+
+    public List<SelectItem> getBranchList() {
+        return branchList;
+    }
+
+    public void setBranchList(List<SelectItem> branchList) {
+        this.branchList = branchList;
+    }
+
+    public String getCalDate() {
+        return calDate;
+    }
+
+    public void setCalDate(String calDate) {
+        this.calDate = calDate;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getReportIn() {
+        return reportIn;
+    }
+
+    public void setReportIn(String reportIn) {
+        this.reportIn = reportIn;
+    }
+
+    public List<SelectItem> getReportInList() {
+        return reportInList;
+    }
+
+    public void setReportInList(List<SelectItem> reportInList) {
+        this.reportInList = reportInList;
+    }
+
+    public String getReportType() {
+        return reportType;
+    }
+
+    public void setReportType(String reportType) {
+        this.reportType = reportType;
+    }
+
+    public List<SelectItem> getReportTypeList() {
+        return reportTypeList;
+    }
+
+    public void setReportTypeList(List<SelectItem> reportTypeList) {
+        this.reportTypeList = reportTypeList;
+    }
+
+    public String getFromDate() {
+        return FromDate;
+    }
+
+    public void setFromDate(String FromDate) {
+        this.FromDate = FromDate;
+    }
+
+    public CreditFlowToMinCommunity() {
+        reportTypeList = new ArrayList<SelectItem>();
+        reportInList = new ArrayList<SelectItem>();
+        try {
+            glBeanRemote = (GLReportFacadeRemote) ServiceLocator.getInstance().lookup("GLReportFacade");
+            common = (CommonReportMethodsRemote) ServiceLocator.getInstance().lookup("CommonReportMethods");
+            ossBeanPartDRemote = (RbiReportFacadeHalfYearlyRemote) ServiceLocator.getInstance().lookup("RbiReportFacadeHalfYearly");
+            loanRptFacade = (LoanReportFacadeRemote) ServiceLocator.getInstance().lookup("LoanReportFacade");
+
+            reportTypeList.add(new SelectItem("", "--Select--"));
+            reportTypeList.add(new SelectItem("MinorityCommCrFlow", "Credit Flow to Minority Communities"));
+
+            List brnLst = new ArrayList();
+            brnLst = glBeanRemote.getBranchCodeListExt(getOrgnBrCode());
+            branchList = new ArrayList<SelectItem>();
+            if (!brnLst.isEmpty()) {
+                for (int i = 0; i < brnLst.size(); i++) {
+                    Vector ele7 = (Vector) brnLst.get(i);
+                    branchList.add(new SelectItem(ele7.get(0).toString().length() < 2 ? "0" + ele7.get(0).toString() : ele7.get(0).toString(), ele7.get(1).toString()));
+                }
+            }
+            reportInList.add(new SelectItem("R", "Rs."));
+            reportInList.add(new SelectItem("T", "Thousand"));
+            reportInList.add(new SelectItem("L", "Lacs"));
+            reportInList.add(new SelectItem("C", "Crore"));
+            this.setCalDate(getTodayDate());
+        } catch (Exception ex) {
+            this.setMsg(ex.getMessage());
+        }
+    }
+
+    public void downloadPdf() {
+        try {
+            if (this.reportType == null || this.reportType.equals("")) {
+                this.setMsg("Please select report type.");
+                return;
+            }
+            if (this.calDate == null || this.calDate.equals("")) {
+                this.setMsg("Please select appropriate date.");
+                return;
+            }
+            BigDecimal totalAdv = new BigDecimal("0");
+            BigDecimal totalPriorAdv = new BigDecimal("0");
+            BigDecimal totalWkAdv = new BigDecimal("0");
+            BigDecimal totalPriorPerAdv = new BigDecimal("0");
+            BigDecimal totalWkPerOfTotalAdv = new BigDecimal("0");
+            BigDecimal totalWkPerPriorAdv = new BigDecimal("0");
+
+
+            String reportName = "Credit Flow to Minority Communities";
+            Map fillParams = new HashMap();
+            String[] arr = Util.getReportOptionAndDescription(this.reportIn);
+            List brNameAndAddList = common.getBranchNameandAddress(branch.equalsIgnoreCase("0A") ? "90" : branch);
+            fillParams.put("pBankName", brNameAndAddList.get(0).toString());
+            fillParams.put("pBankAddress", brNameAndAddList.get(1).toString());
+            fillParams.put("printedBy", getUserName());
+            fillParams.put("pAmtIn", arr[1]);
+            fillParams.put("pReportName", reportName);
+            fillParams.put("pPrintedDate", dmy.format(dmy.parse(calDate)));
+            fillParams.put("pFromDt", dmy.format(dmy.parse(FromDate)));
+            fillParams.put("pToDt", dmy.format(dmy.parse(calDate)));
+            fillParams.put("SUBREPORT_DIR", getHttpSession().getServletContext().getRealPath("/WEB-INF/reports") + "/");
+
+            if (reportType.equalsIgnoreCase("MinorityCommCrFlow")) {
+
+//                List<PrioritySectorPojo> priorityList = ossBeanPartDRemote.getPrioritySector(reportType, ymd.format(dmy.parse(calDate)), getOrgnBrCode(), new BigDecimal(arr[0]));
+//                new ReportBean().downloadPdf("XBRL_Priority_Sector_" + ymd.format(dmy.parse(calDate)), "PrioritySector",
+//                        new JRBeanCollectionDataSource(priorityList), fillParams);
+                List<LoanMisCellaniousPojo> allAccList = new ArrayList<LoanMisCellaniousPojo>();
+                allAccList = loanRptFacade.cbsLoanMisReport(branch, "0", "0", ymd.format(dmy.parse(calDate)), "A", 0.0, 99999999999.99, "S", "0", "0",
+                        "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "0", "Active", "0", "0", "N","0","N","0","N","N", "0", "0", "0", "0");
+                for (int k = 0; k < allAccList.size(); k++) {
+                    if (allAccList.get(k).getAcNature().equalsIgnoreCase(CbsConstant.CURRENT_AC)) {
+                        totalAdv = totalAdv.add(allAccList.get(k).getOutstanding().compareTo(new BigDecimal("0")) >= 0 ? new BigDecimal("0") : allAccList.get(k).getOutstanding());
+                        if (allAccList.get(k).getSector().equalsIgnoreCase("PRIOR")) {
+                            totalPriorAdv = totalPriorAdv.add(allAccList.get(k).getOutstanding().compareTo(new BigDecimal("0")) >= 0 ? new BigDecimal("0") : allAccList.get(k).getOutstanding());
+                            if (allAccList.get(k).getCategoryOpt().equalsIgnoreCase("MC")) {
+                                totalWkAdv = totalWkAdv.add(allAccList.get(k).getOutstanding().compareTo(new BigDecimal("0")) >= 0 ? new BigDecimal("0") : allAccList.get(k).getOutstanding());
+                            }
+                        }
+                    } else {
+                        totalAdv = totalAdv.add(allAccList.get(k).getOutstanding());
+                        if (allAccList.get(k).getSector().equalsIgnoreCase("PRIOR")) {
+                            totalPriorAdv = totalPriorAdv.add(allAccList.get(k).getOutstanding().compareTo(new BigDecimal("0")) >= 0 ? new BigDecimal("0") : allAccList.get(k).getOutstanding());
+                            if (allAccList.get(k).getCategoryOpt().equalsIgnoreCase("MC")) {
+                                totalWkAdv = totalWkAdv.add(allAccList.get(k).getOutstanding().compareTo(new BigDecimal("0")) >= 0 ? new BigDecimal("0") : allAccList.get(k).getOutstanding());
+                            }
+                        }
+                    }
+                }
+                List<PrioritySectorPojo> minorityList = ossBeanPartDRemote.getMinorityCommCreditFlow(reportType, ymd.format(dmy.parse(FromDate)), ymd.format(dmy.parse(calDate)), branch, new BigDecimal(arr[0]));
+                if (!minorityList.isEmpty()) {
+                    if (totalAdv.compareTo(new BigDecimal("0")) != 0) {
+                        totalAdv = totalAdv.divide(new BigDecimal(arr[0]), 2, BigDecimal.ROUND_HALF_UP);
+                    }
+                    if (totalPriorAdv.compareTo(new BigDecimal("0")) != 0) {
+                        totalPriorAdv = totalPriorAdv.divide(new BigDecimal(arr[0]), 2, BigDecimal.ROUND_HALF_UP);
+                        totalPriorPerAdv = totalPriorAdv.multiply(new BigDecimal("100")).divide(totalAdv.abs(), 2, BigDecimal.ROUND_HALF_UP);
+                    }
+                    if (totalWkAdv.compareTo(new BigDecimal("0")) != 0) {
+                        totalWkAdv = totalWkAdv.divide(new BigDecimal(arr[0]), 2, BigDecimal.ROUND_HALF_UP);
+                        totalWkPerPriorAdv = totalWkAdv.multiply(new BigDecimal("100")).divide(totalPriorAdv, 2, BigDecimal.ROUND_HALF_UP);
+                        totalWkPerOfTotalAdv = totalWkAdv.multiply(new BigDecimal("100")).divide(totalAdv.abs(), 2, BigDecimal.ROUND_HALF_UP);
+                    }
+
+                    fillParams.put("pTotalAdv", totalAdv.abs());
+                    fillParams.put("pTotalPriAdv", totalPriorAdv.abs());
+                    fillParams.put("pTotalPriPercentageOfAdv", totalPriorPerAdv.abs());
+                    fillParams.put("pTotalWkAdv", totalWkAdv.abs());
+                    fillParams.put("pTotalWkPercentageOfAdv", totalWkPerOfTotalAdv.abs());
+                    fillParams.put("pTotalWkPercentageOfPriAdv", totalWkPerPriorAdv.abs());
+
+//                List<Form2StmtUnSecAdvToDirFirm> dirAdvList = new ArrayList<Form2StmtUnSecAdvToDirFirm>();
+//                    Form2StmtUnSecAdvToDirFirm pojo1 = new Form2StmtUnSecAdvToDirFirm();
+//                pojo1.setDirAdvList(new JRBeanCollectionDataSource(priorityList));
+//                pojo1.setDirAdvList1(new JRBeanCollectionDataSource(priorityList));
+//                pojo1.setDirAdvList2(new JRBeanCollectionDataSource(priorityList));
+//                pojo1.setDirAdvList3(new JRBeanCollectionDataSource(priorityList));
+//                dirAdvList.add(pojo1);            
+//                new ReportBean().downloadPdf("OSS_Priority_Sector_" + ymd.format(dmy.parse(calDate)), "PrioritySectorOss",
+//                        new JRBeanCollectionDataSource(jrxmlList), fillParams);
+                    new ReportBean().openPdf("MinorityCommunityCreditFlow" + ymd.format(dmy.parse(calDate)), "MinorityCommCreditFlow", new JRBeanCollectionDataSource(minorityList), fillParams);
+                    ((HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse()).sendRedirect("/cbs-jsp/faces/report/ReportPage.jsp");
+                    HttpSession httpSession = getHttpSession();
+                    httpSession.setAttribute("ReportName", reportName);
+                } else {
+                    this.setMsg("Date doesn't Exist");
+                }
+            }
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+//            System.out.println(" Error Is" + ex);
+            this.setMsg(ex.getMessage());
+        }
+    }
+
+    public void btnRefreshAction() {
+        this.setMsg("");
+        this.setReportType("");
+        this.setFromDate("");
+        this.setCalDate(getTodayDate());
+        this.setReportIn("R");
+    }
+
+    public String btnExitAction() {
+        btnRefreshAction();
+        return "case1";
+    }
+}

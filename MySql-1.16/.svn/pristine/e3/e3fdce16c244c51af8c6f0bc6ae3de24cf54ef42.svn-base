@@ -1,0 +1,1301 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="AccEditHistory"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="1580"
+		 pageHeight="850"
+		 columnWidth="1580"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="28"
+		 bottomMargin="28"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pReportName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedBy" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankAdd" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="SUBREPORT_DIR" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["D:\\Project\\cbs-1.2\\cbs\\cbs-jsp\\src\\reports\\"]]></defaultValueExpression>
+	</parameter>
+
+	<field name="acno" class="java.lang.String"/>
+	<field name="custName" class="java.lang.String"/>
+	<field name="openingDt" class="java.lang.String"/>
+	<field name="updatedDt" class="java.lang.String"/>
+	<field name="name" class="java.lang.String"/>
+	<field name="operationMode" class="java.lang.String"/>
+	<field name="orgnCode" class="java.lang.String"/>
+	<field name="introAcno" class="java.lang.String"/>
+	<field name="fatherName" class="java.lang.String"/>
+	<field name="mailAdd" class="java.lang.String"/>
+	<field name="permAdd" class="java.lang.String"/>
+	<field name="phoneNo" class="java.lang.String"/>
+	<field name="panNo" class="java.lang.String"/>
+	<field name="checkBook" class="java.lang.String"/>
+	<field name="nominee" class="java.lang.String"/>
+	<field name="relationShip" class="java.lang.String"/>
+	<field name="jtName1" class="java.lang.String"/>
+	<field name="jtName2" class="java.lang.String"/>
+	<field name="jtName3" class="java.lang.String"/>
+	<field name="jtName4" class="java.lang.String"/>
+	<field name="guardianName" class="java.lang.String"/>
+	<field name="acInst" class="java.lang.String"/>
+	<field name="appTds" class="java.lang.String"/>
+	<field name="tdsDocu" class="java.lang.String"/>
+	<field name="intOpt" class="java.lang.String"/>
+	<field name="minBalCharge" class="java.lang.String"/>
+	<field name="authBy" class="java.lang.String"/>
+	<field name="enterBy" class="java.lang.String"/>
+	<field name="intToAcno" class="java.lang.String"/>
+	<field name="roiUpdatedDt" class="java.lang.String"/>
+	<field name="limit" class="java.lang.String"/>
+	<field name="maxLimit" class="java.lang.String"/>
+	<field name="adHocLimit" class="java.lang.String"/>
+	<field name="adHocDt" class="java.lang.String"/>
+	<field name="adHocInt" class="java.lang.String"/>
+	<field name="adHocApplicableDt" class="java.lang.String"/>
+	<field name="subsidyAmt" class="java.lang.String"/>
+	<field name="subsidyExpDt" class="java.lang.String"/>
+	<field name="sanctionLimit" class="java.lang.String"/>
+	<field name="sanctionLimitDt" class="java.lang.String"/>
+	<field name="roi" class="java.lang.String"/>
+	<field name="panelRoi" class="java.lang.String"/>
+	<field name="limitEnterBy" class="java.lang.String"/>
+	<field name="limitAuthBy" class="java.lang.String"/>
+	<field name="acNature" class="java.lang.String"/>
+	<field name="allJtName" class="java.lang.String"/>
+
+	<variable name="vSrNo" class="java.lang.Integer" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[Integer.valueOf($V{vSrNo}.intValue() + 1)]]></variableExpression>
+		<initialValueExpression><![CDATA[Integer.valueOf(0)]]></initialValueExpression>
+	</variable>
+
+		<group  name="updatedDtWise" isStartNewPage="true" isReprintHeaderOnEachPage="true" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="roiUpdated" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="End" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="55"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="1"
+						y="14"
+						width="65"
+						height="28"
+						key="staticText-70"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement verticalAlignment="Top">
+						<font/>
+					</textElement>
+				<text><![CDATA[UPDATED DATE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="66"
+						y="14"
+						width="156"
+						height="28"
+						key="staticText-71"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[NAME]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="222"
+						y="14"
+						width="60"
+						height="28"
+						key="staticText-72"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[OPERATION MODE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="282"
+						y="14"
+						width="45"
+						height="28"
+						key="staticText-73"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[ORG CODE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="332"
+						y="14"
+						width="77"
+						height="28"
+						key="staticText-74"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[INTRO A/C NO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="409"
+						y="14"
+						width="120"
+						height="28"
+						key="staticText-75"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[FATHER'S NAME]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="529"
+						y="14"
+						width="125"
+						height="28"
+						key="staticText-76"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[MAILING ADDRESS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="654"
+						y="14"
+						width="120"
+						height="28"
+						key="staticText-77"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[PERMANENT ADDRESS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="774"
+						y="14"
+						width="70"
+						height="28"
+						key="staticText-78"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[PHONE NO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="844"
+						y="14"
+						width="70"
+						height="28"
+						key="staticText-79"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[PAN NO ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="914"
+						y="14"
+						width="50"
+						height="28"
+						key="staticText-80"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[CHEQUE BOOK]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="964"
+						y="14"
+						width="80"
+						height="28"
+						key="staticText-81"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[NOMINEE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1044"
+						y="14"
+						width="55"
+						height="28"
+						key="staticText-82"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[RELATIONSHIP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1104"
+						y="14"
+						width="80"
+						height="28"
+						key="staticText-83"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[JOINT NAME ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1184"
+						y="14"
+						width="65"
+						height="28"
+						key="staticText-87"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[GUARDIAN NAME]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1249"
+						y="14"
+						width="35"
+						height="28"
+						key="staticText-88"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[A/C INST]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1289"
+						y="14"
+						width="35"
+						height="28"
+						key="staticText-89"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[APP   TDS ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1329"
+						y="14"
+						width="35"
+						height="28"
+						key="staticText-90"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[TDS   DOC]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1369"
+						y="14"
+						width="35"
+						height="28"
+						key="staticText-91"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[INT   OPT]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1409"
+						y="14"
+						width="50"
+						height="28"
+						key="staticText-92"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[MIN BAL CHARGE]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1459"
+						y="14"
+						width="60"
+						height="28"
+						key="staticText-93"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[AUTHORIZED BY]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1519"
+						y="14"
+						width="60"
+						height="28"
+						key="staticText-94"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<text><![CDATA[ENTERED BY ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="42"
+						width="1578"
+						height="13"
+						key="staticText-95"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1"
+						y="1"
+						width="1578"
+						height="13"
+						key="staticText-96"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="7"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="1"
+						y="-6"
+						width="1578"
+						height="13"
+						key="staticText-97"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="134"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="378"
+						y="117"
+						width="582"
+						height="16"
+						key="staticText-21"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<text><![CDATA[************************** A/C EDIT HISTORY *******************************]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1098"
+						y="40"
+						width="200"
+						height="13"
+						forecolor="#000000"
+						key="textField-5"/>
+					<box></box>
+					<textElement>
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pPrintedBy}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1098"
+						y="14"
+						width="200"
+						height="13"
+						forecolor="#000000"
+						key="textField-6"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pPrintedDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="272"
+						y="1"
+						width="278"
+						height="13"
+						key="textField-10"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pBankName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="272"
+						y="14"
+						width="278"
+						height="13"
+						key="textField-11"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pBankAdd}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="1001"
+						y="1"
+						width="97"
+						height="13"
+						key="staticText-12"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Report Name      :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1098"
+						y="1"
+						width="200"
+						height="13"
+						forecolor="#000000"
+						key="textField-12"/>
+					<box></box>
+					<textElement>
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pReportName}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="1001"
+						y="14"
+						width="97"
+						height="13"
+						key="staticText-13"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Date                  :   ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1001"
+						y="27"
+						width="97"
+						height="13"
+						key="staticText-14"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Printing Date    :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1098"
+						y="27"
+						width="200"
+						height="13"
+						forecolor="#000000"
+						key="textField-13"/>
+					<box></box>
+					<textElement>
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="1001"
+						y="40"
+						width="97"
+						height="13"
+						key="staticText-15"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Printed By       :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="378"
+						y="46"
+						width="622"
+						height="13"
+						key="staticText-16"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="439"
+						y="59"
+						width="101"
+						height="13"
+						key="staticText-17"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[ACCOUNT NO.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="439"
+						y="72"
+						width="101"
+						height="13"
+						key="staticText-18"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[CUSTOMER NAME]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="439"
+						y="85"
+						width="101"
+						height="13"
+						key="staticText-19"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<text><![CDATA[OPENING DATE]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="586"
+						y="60"
+						width="100"
+						height="13"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{acno}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="586"
+						y="73"
+						width="245"
+						height="13"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{custName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="586"
+						y="86"
+						width="100"
+						height="13"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{openingDt}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="378"
+						y="99"
+						width="622"
+						height="13"
+						key="staticText-20"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="20"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1"
+						y="1"
+						width="65"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement verticalAlignment="Middle">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{updatedDt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="222"
+						y="1"
+						width="60"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{operationMode}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="66"
+						y="1"
+						width="156"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{name}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="282"
+						y="1"
+						width="50"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{orgnCode}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="332"
+						y="1"
+						width="77"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{introAcno}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="409"
+						y="1"
+						width="120"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{fatherName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="529"
+						y="1"
+						width="125"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{mailAdd}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="654"
+						y="1"
+						width="120"
+						height="13"
+						key="textField"
+						stretchType="RelativeToBandHeight"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{permAdd}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="774"
+						y="1"
+						width="70"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{phoneNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="844"
+						y="1"
+						width="70"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{panNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="914"
+						y="1"
+						width="50"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{checkBook}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="964"
+						y="1"
+						width="80"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nominee}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1044"
+						y="1"
+						width="60"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{relationShip}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1104"
+						y="1"
+						width="80"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{allJtName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1184"
+						y="1"
+						width="65"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{guardianName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1249"
+						y="1"
+						width="40"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{acInst}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1289"
+						y="1"
+						width="40"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{appTds}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1329"
+						y="1"
+						width="40"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{tdsDocu}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1369"
+						y="1"
+						width="40"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{intOpt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1409"
+						y="1"
+						width="50"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{minBalCharge}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1459"
+						y="1"
+						width="60"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{authBy}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1519"
+						y="1"
+						width="60"
+						height="13"
+						key="textField"
+						isRemoveLineWhenBlank="true"
+						printWhenGroupChanges="updatedDtWise">
+							<printWhenExpression><![CDATA[$F{updatedDt}!=null]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{enterBy}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="13"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="795"
+						y="0"
+						width="170"
+						height="13"
+						key="textField-14"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="969"
+						y="0"
+						width="36"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-15"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<lastPageFooter>
+			<band height="48"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="17"
+						y="15"
+						width="95"
+						height="17"
+						key="staticText-66"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="9"/>
+					</textElement>
+				<text><![CDATA[CHECKED BY]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="662"
+						y="15"
+						width="95"
+						height="17"
+						key="staticText-67"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="9"/>
+					</textElement>
+				<text><![CDATA[OFFICER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1360"
+						y="15"
+						width="95"
+						height="17"
+						key="staticText-68"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font size="9"/>
+					</textElement>
+				<text><![CDATA[MANAGER
+]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="795"
+						y="32"
+						width="170"
+						height="13"
+						key="textField-16"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="969"
+						y="32"
+						width="36"
+						height="13"
+						forecolor="#000000"
+						backcolor="#FFFFFF"
+						key="textField-17"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" lineSpacing="Single">
+						<font size="10" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" pdfEncoding ="CP1252" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+			</band>
+		</lastPageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

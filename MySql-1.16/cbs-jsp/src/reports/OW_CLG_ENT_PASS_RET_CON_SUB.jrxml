@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="OW_CLG_ENT_PASS_RET"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="700"
+		 pageHeight="850"
+		 columnWidth="700"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pPrintedBy" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pReportName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pReportDate" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[select a.bankName as bnkName, a.bankaddress as bnkAdd, b.brncode,  d.acctType as actype,c.* from bnkadd a,branchmaster b, 
+CBS_REP_OW_CLEARING_ENTERED('B','O/W Clg Entered','20121205','11') c, AccountTypeMaster d where a.alphacode = b.alphacode and b.brncode = CAST(substring(c.acno, 1,2) AS INT) 
+and substring(c.acno,3,2) = d.acctCode
+order by actype, VOUCHERNO, ACNO]]></queryString>
+
+	<field name="bnkName" class="java.lang.String"/>
+	<field name="bnkAdd" class="java.lang.String"/>
+	<field name="brncode" class="java.lang.Integer"/>
+	<field name="actype" class="java.lang.String"/>
+	<field name="sNo" class="java.lang.Integer"/>
+	<field name="acNo" class="java.lang.String"/>
+	<field name="custName" class="java.lang.String"/>
+	<field name="voucherNo" class="java.lang.Integer"/>
+	<field name="bankName" class="java.lang.String"/>
+	<field name="bankAddress" class="java.lang.String"/>
+	<field name="instNo" class="java.lang.String"/>
+	<field name="instDate" class="java.lang.String"/>
+	<field name="instAmount" class="java.math.BigDecimal"/>
+	<field name="vchAmount" class="java.math.BigDecimal"/>
+	<field name="status" class="java.lang.String"/>
+	<field name="micrCode" class="java.lang.String"/>
+
+	<variable name="vTotalNoVch" class="java.lang.Integer" resetType="Report" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{acNo}]]></variableExpression>
+	</variable>
+	<variable name="vTotalNoChq" class="java.lang.Integer" resetType="Report" calculation="Count">
+		<variableExpression><![CDATA[$F{instNo}]]></variableExpression>
+	</variable>
+	<variable name="vTotalAmt" class="java.math.BigDecimal" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{vchAmount}]]></variableExpression>
+	</variable>
+	<variable name="vSubTotalVch" class="java.lang.Integer" resetType="Group" resetGroup="Hello" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{acNo}]]></variableExpression>
+	</variable>
+	<variable name="vSubTotalChq" class="java.lang.Integer" resetType="Group" resetGroup="Hello" calculation="Count">
+		<variableExpression><![CDATA[$F{instNo}]]></variableExpression>
+	</variable>
+	<variable name="vSubTotalAmt" class="java.math.BigDecimal" resetType="Group" resetGroup="Hello" calculation="Sum">
+		<variableExpression><![CDATA[$F{instAmount}]]></variableExpression>
+	</variable>
+	<variable name="vSrNo" class="java.lang.Integer" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[Integer.valueOf($V{vSrNo}.intValue() + 1)]]></variableExpression>
+		<initialValueExpression><![CDATA[Integer.valueOf(0)]]></initialValueExpression>
+	</variable>
+	<variable name="SUM_instAmount_1" class="java.math.BigDecimal" resetType="Group" resetGroup="hi" calculation="Sum">
+		<variableExpression><![CDATA[$F{instAmount}]]></variableExpression>
+	</variable>
+
+		<group  name="hi" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="12"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="693"
+						height="12"
+						key="staticText-2"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font size="9"/>
+					</textElement>
+				<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="57"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="##0.00" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="66"
+						y="0"
+						width="543"
+						height="45"
+						key="textField-2"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["GRAND TOTAL NUMBER OF VOUCHER : "+$V{vTotalNoVch}+"\n"+"GRAND TOTAL NUMBER OF CHEQUE  : "+$V{vTotalNoChq}+"\n"+"GRAND TOTAL AMOUNT            : "+$V{SUM_instAmount_1}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="45"
+						width="693"
+						height="12"
+						key="staticText-1"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font size="9"/>
+					</textElement>
+				<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Hello" >
+			<groupExpression><![CDATA[$F{actype}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="51"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="66"
+						y="0"
+						width="543"
+						height="51"
+						forecolor="#000000"
+						key="textField-1"
+						stretchType="RelativeToTallestObject"/>
+					<box></box>
+					<textElement>
+						<font/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["TOTAL NUMBER OF VOUCHER OF "+$F{actype}+" : "+$V{vSubTotalVch}+"\n"+"TOTAL NUMBER OF CHEQUE OF "+$F{actype}+"  : "+$V{vSubTotalChq}+"\n"+"TOTAL AMOUNT OF CHEQUE OF "+$F{actype}+"  : "+$V{vSubTotalAmt}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

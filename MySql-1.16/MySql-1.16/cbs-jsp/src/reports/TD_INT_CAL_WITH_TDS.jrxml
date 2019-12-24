@@ -1,0 +1,2077 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="TD_INT_CAL_WITH_TDS"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="1644"
+		 pageHeight="850"
+		 columnWidth="1644"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="28"
+		 bottomMargin="28"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="RpName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="RpDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="PntBy" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="ReportName" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[select a.bankName as bnkName, a.bankaddress as bnkAdd,c.* from bnkadd a,branchmaster b,
+CBS_REP_TD_INT_CAL_REPORT('c','06') c where a.alphacode = b.alphacode
+and b.brncode = CAST(substring(c.acno, 1,2) AS INT) order by c.acno]]></queryString>
+
+	<field name="bnkName" class="java.lang.String"/>
+	<field name="bnkAdd" class="java.lang.String"/>
+	<field name="acno" class="java.lang.String"/>
+	<field name="custName" class="java.lang.String"/>
+	<field name="voucherNo" class="java.lang.Integer"/>
+	<field name="intToAcno" class="java.lang.String"/>
+	<field name="intCustName" class="java.lang.String"/>
+	<field name="pAmt" class="java.lang.Double"/>
+	<field name="roi" class="java.lang.Float"/>
+	<field name="interest" class="java.lang.Double"/>
+	<field name="seqno" class="java.lang.Float"/>
+	<field name="custId" class="java.lang.String"/>
+	<field name="tdsFlag" class="java.lang.String"/>
+	<field name="minorInterest" class="java.lang.Double"/>
+	<field name="majorInterest" class="java.lang.Double"/>
+	<field name="interestWithMinMaj" class="java.lang.Double"/>
+	<field name="totalIntPaidVouchWise" class="java.lang.Double"/>
+	<field name="custIdWiseCurrentInt" class="java.lang.String"/>
+	<field name="minorFlag" class="java.lang.String"/>
+	<field name="tdsDeducted" class="java.lang.Double"/>
+	<field name="tds" class="java.lang.Double"/>
+	<field name="propInt" class="java.lang.Double"/>
+	<field name="totalInt" class="java.lang.Double"/>
+	<field name="closeAcIntPaid" class="java.lang.Double"/>
+	<field name="unRecoverTds" class="java.lang.Double"/>
+	<field name="closeAcTds" class="java.lang.Double"/>
+	<field name="tdsPer" class="java.lang.Double"/>
+	<field name="tdsExtraShift" class="java.lang.Double"/>
+	<field name="majorCustId" class="java.lang.String"/>
+
+	<variable name="sno" class="java.lang.Integer" resetType="Report" calculation="Nothing">
+		<variableExpression><![CDATA[Integer.valueOf($V{sno}.intValue() + 1)]]></variableExpression>
+		<initialValueExpression><![CDATA[Integer.valueOf(0)]]></initialValueExpression>
+	</variable>
+	<variable name="totPrin" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{pAmt}]]></variableExpression>
+	</variable>
+	<variable name="totInt" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{interest}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseTotPrin" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{pAmt}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseTotInt" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{interest}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseTotMinorInt" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{minorInterest}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseTotMajorInt" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{majorInterest}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseTotIntPaid" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalIntPaidVouchWise}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseTotTdsDeducted" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{tdsDeducted}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseTotalTdsToBeDedected" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{tds}]]></variableExpression>
+	</variable>
+	<variable name="totMinorInt" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{minorInterest}]]></variableExpression>
+	</variable>
+	<variable name="totMajorInt" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{majorInterest}]]></variableExpression>
+	</variable>
+	<variable name="totIntPosted" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalIntPaidVouchWise}]]></variableExpression>
+	</variable>
+	<variable name="totTdsDeducted" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{tdsDeducted}]]></variableExpression>
+	</variable>
+	<variable name="totTds" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{tds}]]></variableExpression>
+	</variable>
+	<variable name="custIdCount" class="java.lang.Integer" resetType="Group" resetGroup="CustId" calculation="Count">
+		<variableExpression><![CDATA[$F{custId}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseTotalPropInt" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{propInt}]]></variableExpression>
+	</variable>
+	<variable name="totPropInt" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{propInt}]]></variableExpression>
+	</variable>
+	<variable name="totalTdsWithoutNegative" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{tds}.doubleValue()<0.0?new Double(0):$F{tds}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseCloseAcInt" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{closeAcIntPaid}]]></variableExpression>
+	</variable>
+	<variable name="totalCloseAcIntPaid" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{closeAcIntPaid}]]></variableExpression>
+	</variable>
+	<variable name="custIdCloseAcTds" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{closeAcTds}]]></variableExpression>
+	</variable>
+	<variable name="totalCloseAcTds" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{closeAcTds}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseMajInt" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{majorInterest}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseMinInt" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{minorInterest}]]></variableExpression>
+	</variable>
+	<variable name="custIdWisePropInt" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{propInt}]]></variableExpression>
+	</variable>
+	<variable name="totalPropInt" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{propInt}]]></variableExpression>
+	</variable>
+	<variable name="custIdWiseUnRecTds" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{unRecoverTds}]]></variableExpression>
+	</variable>
+	<variable name="totalUnRecTds" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{unRecoverTds}]]></variableExpression>
+	</variable>
+	<variable name="totalCustIdExtraTdsShifted" class="java.lang.Double" resetType="Group" resetGroup="CustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{tdsExtraShift}]]></variableExpression>
+	</variable>
+	<variable name="grandTotExtraTdsShifted" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{tdsExtraShift}]]></variableExpression>
+	</variable>
+	<variable name="majorCustIdIntAmt" class="java.lang.Double" resetType="Group" resetGroup="majorCustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{interest}]]></variableExpression>
+	</variable>
+	<variable name="majorCustIdIntPosted" class="java.lang.Double" resetType="Group" resetGroup="majorCustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{totalIntPaidVouchWise}]]></variableExpression>
+	</variable>
+	<variable name="majorCustIdCloseAcInt" class="java.lang.Double" resetType="Group" resetGroup="majorCustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{closeAcIntPaid}]]></variableExpression>
+	</variable>
+	<variable name="majorCustIdCloseTds" class="java.lang.Double" resetType="Group" resetGroup="majorCustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{closeAcTds}]]></variableExpression>
+	</variable>
+	<variable name="majorCustIdUnRecTds" class="java.lang.Double" resetType="Group" resetGroup="majorCustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{unRecoverTds}]]></variableExpression>
+	</variable>
+	<variable name="majorCustIdTdsDeducted" class="java.lang.Double" resetType="Group" resetGroup="majorCustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{tdsDeducted}]]></variableExpression>
+	</variable>
+	<variable name="majorCustIdTdsToBeDeducted" class="java.lang.Double" resetType="Group" resetGroup="majorCustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{tds}]]></variableExpression>
+	</variable>
+	<variable name="majorCustIdExtraTdsShifted" class="java.lang.Double" resetType="Group" resetGroup="majorCustId" calculation="Sum">
+		<variableExpression><![CDATA[$F{tdsExtraShift}]]></variableExpression>
+	</variable>
+	<variable name="custIdOnMajor" class="java.lang.Integer" resetType="Group" resetGroup="majorCustId" calculation="DistinctCount">
+		<variableExpression><![CDATA[$F{custId}]]></variableExpression>
+	</variable>
+
+		<group  name="q" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="121"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="166"
+						y="13"
+						width="81"
+						height="14"
+						key="staticText-1"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[GRAND TOTAL :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="627"
+						y="13"
+						width="145"
+						height="14"
+						key="textField-1"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totPrin}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="1"
+						y="59"
+						width="1036"
+						height="15"
+						key="staticText-2"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[The Particulars given above are true as per record of the Bank]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="488"
+						y="95"
+						width="120"
+						height="18"
+						key="staticText-3"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[OFFICER]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="974"
+						y="95"
+						width="120"
+						height="18"
+						key="staticText-4"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[MANAGER]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="772"
+						y="13"
+						width="99"
+						height="14"
+						key="textField-20"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totInt}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="44"
+						width="510"
+						height="13"
+						key="staticText-16"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="22"
+						y="95"
+						width="120"
+						height="18"
+						key="staticText-17"/>
+					<box></box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[PREPARED BY]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="420"
+						y="44"
+						width="531"
+						height="13"
+						key="staticText-25"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1510"
+						y="13"
+						width="64"
+						height="14"
+						key="textField-40"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totTds}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1446"
+						y="13"
+						width="64"
+						height="14"
+						key="textField-41"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totTdsDeducted}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1063"
+						y="13"
+						width="64"
+						height="14"
+						key="textField-42"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totIntPosted}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="999"
+						y="13"
+						width="64"
+						height="14"
+						key="textField-43"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totMajorInt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="871"
+						y="13"
+						width="64"
+						height="14"
+						key="textField-44"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totMinorInt}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="700"
+						y="44"
+						width="537"
+						height="13"
+						key="staticText-34"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="510"
+						height="13"
+						key="staticText-35"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="420"
+						y="0"
+						width="531"
+						height="13"
+						key="staticText-36"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="700"
+						y="0"
+						width="537"
+						height="13"
+						key="staticText-37"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1493"
+						y="27"
+						width="78"
+						height="14"
+						key="textField-51"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totalTdsWithoutNegative}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="928"
+						y="0"
+						width="710"
+						height="13"
+						key="staticText-42"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="928"
+						y="44"
+						width="710"
+						height="13"
+						key="staticText-43"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="1319"
+						y="27"
+						width="174"
+						height="14"
+						key="staticText-44"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[TDS TOTAL (+ive Balance) :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1127"
+						y="13"
+						width="64"
+						height="14"
+						key="textField-57"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totalCloseAcIntPaid}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1191"
+						y="13"
+						width="64"
+						height="14"
+						key="textField-59"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totalCloseAcTds}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="935"
+						y="13"
+						width="64"
+						height="14"
+						key="textField-63">
+							<printWhenExpression><![CDATA[$V{custIdCount}.intValue()==1?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totalPropInt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1255"
+						y="13"
+						width="75"
+						height="14"
+						key="textField-65"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totalUnRecTds}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1574"
+						y="13"
+						width="64"
+						height="14"
+						key="textField-69"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{grandTotExtraTdsShifted}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="majorCustId" >
+			<groupExpression><![CDATA[$F{majorCustId}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="39"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$V{custIdOnMajor}.intValue()>1?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="13"
+						width="223"
+						height="13"
+						key="textField-71"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[">>>No. of Cust Id in Major ("+$V{custIdOnMajor}+"): "+$F{majorCustId}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="807"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-73"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{majorCustIdIntAmt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1063"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-74"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{majorCustIdIntPosted}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="26"
+						width="510"
+						height="13"
+						key="staticText-45"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="420"
+						y="26"
+						width="531"
+						height="13"
+						key="staticText-46"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="700"
+						y="26"
+						width="537"
+						height="13"
+						key="staticText-47"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="542"
+						y="13"
+						width="80"
+						height="13"
+						key="textField-75"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{interestWithMinMaj}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="223"
+						y="13"
+						width="319"
+						height="13"
+						key="textField-76"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total Interest Paid on Major CustId (In Financial Year):"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="928"
+						y="26"
+						width="710"
+						height="13"
+						key="staticText-48"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1191"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-78"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{majorCustIdCloseTds}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1255"
+						y="13"
+						width="75"
+						height="13"
+						key="textField-82"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{majorCustIdUnRecTds}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1446"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-83"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{majorCustIdTdsDeducted}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1510"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-84"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{majorCustIdTdsToBeDeducted}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1574"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-85"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{majorCustIdExtraTdsShifted}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1127"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-86"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{majorCustIdCloseAcInt}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="510"
+						height="13"
+						key="staticText-49"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="420"
+						y="0"
+						width="531"
+						height="13"
+						key="staticText-50"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="700"
+						y="0"
+						width="537"
+						height="13"
+						key="staticText-51"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="928"
+						y="0"
+						width="710"
+						height="13"
+						key="staticText-52"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="CustId" >
+			<groupExpression><![CDATA[$F{custId}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$V{custIdCount}.intValue()>1?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="39"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$V{custIdCount}.intValue()>1?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="510"
+						height="13"
+						key="staticText-19"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="13"
+						width="148"
+						height="13"
+						key="textField-27"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total of Cust Id: "+$F{custId}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="692"
+						y="13"
+						width="80"
+						height="13"
+						key="textField-28"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{custIdWiseTotPrin}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="420"
+						y="0"
+						width="531"
+						height="13"
+						key="staticText-23"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="807"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-33"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{custIdWiseTotInt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1063"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-36"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{custIdWiseTotIntPaid}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1446"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-38"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{custIdWiseTotTdsDeducted}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1510"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-39"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{custIdWiseTotalTdsToBeDedected}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="26"
+						width="510"
+						height="13"
+						key="staticText-26"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="420"
+						y="26"
+						width="531"
+						height="13"
+						key="staticText-27"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="700"
+						y="0"
+						width="537"
+						height="13"
+						key="staticText-31"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="700"
+						y="26"
+						width="537"
+						height="13"
+						key="staticText-32"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="542"
+						y="13"
+						width="80"
+						height="13"
+						key="textField-49"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{totalInt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="223"
+						y="13"
+						width="319"
+						height="13"
+						key="textField-50"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total Interest Paid on CustId (In Financial Year):"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="928"
+						y="0"
+						width="710"
+						height="13"
+						key="staticText-40"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="928"
+						y="26"
+						width="710"
+						height="13"
+						key="staticText-41"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1127"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-56"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{custIdWiseCloseAcInt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1191"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-58"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{custIdCloseAcTds}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="999"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-60"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{custIdWiseMajInt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="871"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-61"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{custIdWiseMinInt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="935"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-62">
+							<printWhenExpression><![CDATA[$V{custIdCount}.intValue()==1?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{custIdWisePropInt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1255"
+						y="13"
+						width="75"
+						height="13"
+						key="textField-64"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{custIdWiseUnRecTds}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1574"
+						y="13"
+						width="64"
+						height="13"
+						key="textField-68"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{totalCustIdExtraTdsShifted}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="56"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="300"
+						height="14"
+						key="textField-2"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{bnkName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="14"
+						width="300"
+						height="14"
+						key="textField-3"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{bnkAdd}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="921"
+						y="42"
+						width="100"
+						height="14"
+						key="staticText-7"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Printed By      :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="921"
+						y="28"
+						width="100"
+						height="14"
+						key="staticText-8"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Print Date      :]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="921"
+						y="0"
+						width="100"
+						height="14"
+						key="staticText-10"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Report Name :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1021"
+						y="0"
+						width="214"
+						height="14"
+						key="textField-5"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{RpName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1021"
+						y="28"
+						width="214"
+						height="14"
+						key="textField-7"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new Date()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1021"
+						y="42"
+						width="214"
+						height="14"
+						key="textField-8"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{PntBy}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="920"
+						y="14"
+						width="315"
+						height="14"
+						key="textField-23"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{ReportName}+$P{RpDate}]]></textFieldExpression>
+				</textField>
+			</band>
+		</title>
+		<pageHeader>
+			<band height="55"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="14"
+						width="35"
+						height="28"
+						forecolor="#070707"
+						key="element-1"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Sr.No.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="310"
+						y="14"
+						width="87"
+						height="28"
+						forecolor="#070707"
+						key="element-2"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[A/C NO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="492"
+						y="14"
+						width="80"
+						height="28"
+						forecolor="#070707"
+						key="element-3"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[IntToAcno]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="572"
+						y="14"
+						width="120"
+						height="28"
+						forecolor="#070707"
+						key="element-4"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Left">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[InToCustomerName]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="692"
+						y="14"
+						width="80"
+						height="28"
+						forecolor="#070707"
+						key="element-5"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Prin.Amt]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="772"
+						y="14"
+						width="35"
+						height="28"
+						forecolor="#070707"
+						key="element-6"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Roi]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="397"
+						y="14"
+						width="50"
+						height="28"
+						forecolor="#070707"
+						key="element-8"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Voucher No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="807"
+						y="14"
+						width="64"
+						height="28"
+						forecolor="#070707"
+						key="element-9"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Interest]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="447"
+						y="14"
+						width="45"
+						height="28"
+						forecolor="#070707"
+						key="element-10"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Control No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="1"
+						width="510"
+						height="13"
+						key="staticText-13"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="0"
+						y="42"
+						width="510"
+						height="13"
+						key="staticText-14"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="871"
+						y="14"
+						width="64"
+						height="28"
+						forecolor="#070707"
+						key="element-11"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Minor Int]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="999"
+						y="14"
+						width="64"
+						height="28"
+						forecolor="#070707"
+						key="element-12"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Major Int]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="1063"
+						y="14"
+						width="64"
+						height="28"
+						forecolor="#070707"
+						key="element-13"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Int Posted]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="1330"
+						y="14"
+						width="57"
+						height="28"
+						forecolor="#070707"
+						key="element-14"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[TDS Applicable]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="1446"
+						y="14"
+						width="64"
+						height="28"
+						forecolor="#070707"
+						key="element-15"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[TDS deducted]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="1510"
+						y="14"
+						width="64"
+						height="28"
+						forecolor="#070707"
+						key="element-16"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[TDS to be deducted]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="420"
+						y="1"
+						width="531"
+						height="13"
+						key="staticText-20"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="420"
+						y="42"
+						width="531"
+						height="13"
+						key="staticText-21"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="935"
+						y="14"
+						width="64"
+						height="28"
+						forecolor="#070707"
+						key="element-17"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Prop. Int]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="35"
+						y="14"
+						width="70"
+						height="28"
+						forecolor="#070707"
+						key="element-18"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Left">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Cust Id]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="175"
+						y="14"
+						width="135"
+						height="28"
+						forecolor="#070707"
+						key="element-19"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Customer Name]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="700"
+						y="1"
+						width="537"
+						height="13"
+						key="staticText-28"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="700"
+						y="42"
+						width="531"
+						height="13"
+						key="staticText-30"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="1127"
+						y="14"
+						width="64"
+						height="28"
+						forecolor="#070707"
+						key="element-20"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Close A/c Int Posted]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="1255"
+						y="14"
+						width="75"
+						height="28"
+						forecolor="#070707"
+						key="element-21"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Un-Recovered TDS]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="928"
+						y="1"
+						width="710"
+						height="13"
+						key="staticText-38"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						x="928"
+						y="42"
+						width="710"
+						height="13"
+						key="staticText-39"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="1191"
+						y="14"
+						width="64"
+						height="28"
+						forecolor="#070707"
+						key="element-22"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Close A/c Tds]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="1387"
+						y="14"
+						width="57"
+						height="28"
+						forecolor="#070707"
+						key="element-23"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Center">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[TDS Rate
+(in %)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="1574"
+						y="14"
+						width="64"
+						height="28"
+						forecolor="#070707"
+						key="element-24"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Extra TDS shifted]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="105"
+						y="14"
+						width="70"
+						height="28"
+						forecolor="#070707"
+						key="element-25"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Left">
+						<font size="10"/>
+					</textElement>
+				<text><![CDATA[Major Cust Id]]></text>
+				</staticText>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="13"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="35"
+						height="13"
+						key="textField-9"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$V{sno}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="310"
+						y="0"
+						width="87"
+						height="13"
+						key="textField-10"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{acno}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="397"
+						y="0"
+						width="50"
+						height="13"
+						key="textField-12"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Integer"><![CDATA[$F{voucherNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="492"
+						y="0"
+						width="80"
+						height="13"
+						key="textField-13"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{intToAcno}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="692"
+						y="0"
+						width="80"
+						height="13"
+						key="textField-14"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{pAmt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="572"
+						y="0"
+						width="120"
+						height="13"
+						key="textField-16"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{intCustName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="772"
+						y="0"
+						width="35"
+						height="13"
+						key="textField-17"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Float"><![CDATA[$F{roi}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="807"
+						y="0"
+						width="64"
+						height="13"
+						key="textField-18"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{interest}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="447"
+						y="0"
+						width="45"
+						height="13"
+						key="textField-19"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Float"><![CDATA[$F{seqno}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="871"
+						y="0"
+						width="64"
+						height="13"
+						key="textField-24"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{minorInterest}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="999"
+						y="0"
+						width="64"
+						height="13"
+						key="textField-25"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{majorInterest}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1063"
+						y="0"
+						width="64"
+						height="13"
+						key="textField-29"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{totalIntPaidVouchWise}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1330"
+						y="0"
+						width="57"
+						height="13"
+						key="textField-30"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{tdsFlag}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1446"
+						y="0"
+						width="64"
+						height="13"
+						key="textField-31"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{tdsDeducted}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1510"
+						y="0"
+						width="64"
+						height="13"
+						key="textField-32"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{tds}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="935"
+						y="0"
+						width="64"
+						height="13"
+						key="textField-45">
+							<printWhenExpression><![CDATA[$V{custIdCount}.intValue()==1?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{propInt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="35"
+						y="0"
+						width="70"
+						height="13"
+						key="textField-47"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{custId}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="175"
+						y="0"
+						width="135"
+						height="13"
+						key="textField-48"/>
+					<box rightPadding="2"></box>
+					<textElement textAlignment="Left">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{custName}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1127"
+						y="0"
+						width="64"
+						height="13"
+						key="textField-52"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{closeAcIntPaid}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1255"
+						y="0"
+						width="75"
+						height="13"
+						key="textField-54"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{unRecoverTds}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1191"
+						y="0"
+						width="64"
+						height="13"
+						key="textField-55"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{closeAcTds}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1387"
+						y="0"
+						width="57"
+						height="13"
+						key="textField-66"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{tdsPer}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="1574"
+						y="0"
+						width="64"
+						height="13"
+						key="textField-67"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{tdsExtraShift}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="105"
+						y="0"
+						width="70"
+						height="13"
+						key="textField-70"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{majorCustId}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="18"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="442"
+						y="4"
+						width="100"
+						height="14"
+						key="textField"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="548"
+						y="4"
+						width="100"
+						height="14"
+						key="textField"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

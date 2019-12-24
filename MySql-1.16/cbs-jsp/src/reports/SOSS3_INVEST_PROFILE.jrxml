@@ -1,0 +1,1197 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="SOSS3_INVEST_PROFILE"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="569"
+		 pageHeight="842"
+		 columnWidth="569"
+		 columnSpacing="0"
+		 leftMargin="0"
+		 rightMargin="0"
+		 topMargin="0"
+		 bottomMargin="0"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pAmtIn" isForPrompting="false" class="java.lang.String">
+		<defaultValueExpression ><![CDATA[$P{pAmtIn}]]></defaultValueExpression>
+	</parameter>
+	<queryString><![CDATA[select *from test2]]></queryString>
+
+	<field name="sNo" class="java.lang.Integer"/>
+	<field name="reportName" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="gNo" class="java.lang.Integer"/>
+	<field name="sGNo" class="java.lang.Integer"/>
+	<field name="ssGNo" class="java.lang.Integer"/>
+	<field name="sssGNo" class="java.lang.Integer"/>
+	<field name="ssssGNo" class="java.lang.Integer"/>
+	<field name="classification" class="java.lang.String"/>
+	<field name="countApplicable" class="java.lang.String"/>
+	<field name="acNature" class="java.lang.String"/>
+	<field name="acType" class="java.lang.String"/>
+	<field name="npaClassification" class="java.lang.String"/>
+	<field name="glheadFrom" class="java.lang.String"/>
+	<field name="glHeadTo" class="java.lang.String"/>
+	<field name="rangeBaseOn" class="java.lang.String"/>
+	<field name="rangeFrom" class="java.math.BigDecimal"/>
+	<field name="rangeTo" class="java.math.BigDecimal"/>
+	<field name="formula" class="java.lang.String"/>
+	<field name="fGNo" class="java.lang.String"/>
+	<field name="fSGNo" class="java.lang.String"/>
+	<field name="fSsGNo" class="java.lang.String"/>
+	<field name="fSssGNo" class="java.lang.String"/>
+	<field name="fSsssGNo" class="java.lang.String"/>
+	<field name="commAmt" class="java.math.BigDecimal"/>
+	<field name="noteAmt" class="java.math.BigDecimal"/>
+	<field name="interAmt" class="java.math.BigDecimal"/>
+	<field name="leaseAmt" class="java.math.BigDecimal"/>
+	<field name="slrAmt" class="java.math.BigDecimal"/>
+
+	<variable name="descCnt" class="java.lang.Integer" resetType="Group" resetGroup="description" calculation="Count">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="ssssCnt" class="java.lang.Integer" resetType="Group" resetGroup="ssssGNo" calculation="Count">
+		<variableExpression><![CDATA[$F{ssssGNo}]]></variableExpression>
+	</variable>
+	<variable name="commDescTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="description" calculation="Sum">
+		<variableExpression><![CDATA[$F{commAmt}]]></variableExpression>
+	</variable>
+	<variable name="commSsssGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{commAmt}]]></variableExpression>
+	</variable>
+	<variable name="commSssGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="sssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{commAmt}]]></variableExpression>
+	</variable>
+	<variable name="commSsGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="ssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{commAmt}]]></variableExpression>
+	</variable>
+	<variable name="commSGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="sGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{commAmt}]]></variableExpression>
+	</variable>
+	<variable name="commGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="gNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{commAmt}]]></variableExpression>
+	</variable>
+	<variable name="noteDescTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="description" calculation="Sum">
+		<variableExpression><![CDATA[$F{noteAmt}]]></variableExpression>
+	</variable>
+	<variable name="noteSsssGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{noteAmt}]]></variableExpression>
+	</variable>
+	<variable name="noteSssGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="sssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{noteAmt}]]></variableExpression>
+	</variable>
+	<variable name="noteSsGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="ssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{noteAmt}]]></variableExpression>
+	</variable>
+	<variable name="noteSGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="sGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{noteAmt}]]></variableExpression>
+	</variable>
+	<variable name="noteGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="gNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{noteAmt}]]></variableExpression>
+	</variable>
+	<variable name="interDescTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="description" calculation="Sum">
+		<variableExpression><![CDATA[$F{interAmt}]]></variableExpression>
+	</variable>
+	<variable name="interSsssGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{interAmt}]]></variableExpression>
+	</variable>
+	<variable name="interSssGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="sssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{interAmt}]]></variableExpression>
+	</variable>
+	<variable name="interSsGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="ssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{interAmt}]]></variableExpression>
+	</variable>
+	<variable name="interSGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="sGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{interAmt}]]></variableExpression>
+	</variable>
+	<variable name="interGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="gNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{interAmt}]]></variableExpression>
+	</variable>
+	<variable name="descDesc" class="java.lang.String" resetType="Group" resetGroup="description" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="descSsssGNo" class="java.lang.String" resetType="Group" resetGroup="ssssGNo" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="descSssGNo" class="java.lang.String" resetType="Group" resetGroup="sssGNo" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="descSsGNo" class="java.lang.String" resetType="Group" resetGroup="ssGNo" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="descSGNo" class="java.lang.String" resetType="Group" resetGroup="sGNo" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="descGNo" class="java.lang.String" resetType="Group" resetGroup="gNo" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="leaseDescTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="description" calculation="Sum">
+		<variableExpression><![CDATA[$F{leaseAmt}]]></variableExpression>
+	</variable>
+	<variable name="leaseSsssGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{leaseAmt}]]></variableExpression>
+	</variable>
+	<variable name="leaseSssGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="sssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{leaseAmt}]]></variableExpression>
+	</variable>
+	<variable name="leaseSsGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="ssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{leaseAmt}]]></variableExpression>
+	</variable>
+	<variable name="leaseSGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="sGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{leaseAmt}]]></variableExpression>
+	</variable>
+	<variable name="leaseGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="gNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{leaseAmt}]]></variableExpression>
+	</variable>
+	<variable name="slrDescTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="description" calculation="Sum">
+		<variableExpression><![CDATA[$F{slrAmt}]]></variableExpression>
+	</variable>
+	<variable name="slrSsssGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="ssssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{slrAmt}]]></variableExpression>
+	</variable>
+	<variable name="slrSssGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="sssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{slrAmt}]]></variableExpression>
+	</variable>
+	<variable name="slrSsGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="ssGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{slrAmt}]]></variableExpression>
+	</variable>
+	<variable name="slrSGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="sGNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{slrAmt}]]></variableExpression>
+	</variable>
+	<variable name="slrGNoTotal" class="java.math.BigDecimal" resetType="Group" resetGroup="gNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{slrAmt}]]></variableExpression>
+	</variable>
+
+		<group  name="gNo" >
+			<groupExpression><![CDATA[$F{gNo}]]></groupExpression>
+			<groupHeader>
+			<band height="75"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="36"
+						width="194"
+						height="39"
+						backcolor="#CCCCCC"
+						key="staticText-1"/>
+					<box leftPadding="5">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Item]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="194"
+						y="49"
+						width="75"
+						height="26"
+						backcolor="#CCCCCC"
+						key="staticText-2"/>
+					<box leftPadding="5">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Held to 
+Maturity]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="269"
+						y="49"
+						width="75"
+						height="26"
+						backcolor="#CCCCCC"
+						key="staticText-3"/>
+					<box leftPadding="5">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Available for Sale]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="344"
+						y="49"
+						width="75"
+						height="26"
+						backcolor="#CCCCCC"
+						key="staticText-4"/>
+					<box leftPadding="5">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Held for 
+Trading]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="0"
+						y="18"
+						width="445"
+						height="13"
+						key="textField-3"/>
+					<box leftPadding="5">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="419"
+						y="49"
+						width="75"
+						height="26"
+						backcolor="#CCCCCC"
+						key="staticText-6"/>
+					<box leftPadding="5">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Available for Sale]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="494"
+						y="49"
+						width="75"
+						height="26"
+						backcolor="#CCCCCC"
+						key="staticText-8"/>
+					<box leftPadding="5">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Held for 
+Trading]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="465"
+						y="18"
+						width="100"
+						height="13"
+						key="textField-47"/>
+					<box leftPadding="5" rightPadding="2">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pAmtIn}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Transparent"
+						x="10"
+						y="3"
+						width="549"
+						height="13"
+						key="textField-48"/>
+					<box leftPadding="5">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["QUALITY OF SECURITY PORTFOLIO"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="194"
+						y="36"
+						width="225"
+						height="13"
+						backcolor="#CCCCCC"
+						key="staticText-9"/>
+					<box leftPadding="5">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Book Value]]></text>
+				</staticText>
+				<staticText>
+					<reportElement
+						mode="Opaque"
+						x="419"
+						y="36"
+						width="150"
+						height="13"
+						backcolor="#CCCCCC"
+						key="staticText-10"/>
+					<box leftPadding="5">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<text><![CDATA[Market Value]]></text>
+				</staticText>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="13"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="194"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-39"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{commGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="269"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-40"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{noteGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="344"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-41"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{interGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="194"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-42"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total "+$V{descGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="419"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-43"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{leaseGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="494"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-45"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{slrGNoTotal}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="sGNo" >
+			<groupExpression><![CDATA[$F{sGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="13"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[($F{ssGNo}).intValue()>0?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="194"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-19"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{commSGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="269"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-20"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{noteSGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="344"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-21"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{interSGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="194"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-22"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Sum of "+$V{descSGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="419"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-24"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{leaseSGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="494"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-34"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{slrSGNoTotal}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ssGNo" >
+			<groupExpression><![CDATA[$F{ssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="13"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[($F{sssGNo}).intValue()>0?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="194"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-14"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{commSsGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="269"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-15"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{noteSsGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="344"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-16"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{interSsGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="194"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-17"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Sum of "+$V{descSsGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="419"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-25"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{leaseSsGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="494"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-35"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{slrSsGNoTotal}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="sssGNo" >
+			<groupExpression><![CDATA[$F{sssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="13"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[($F{ssssGNo}).intValue()>0?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="194"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-9"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{commSssGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="269"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-10"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{noteSssGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="344"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-11"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{interSssGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="194"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-12"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Sum of "+$V{descSssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="419"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-26"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{leaseSssGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="494"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-36"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{slrSssGNoTotal}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ssssGNo" >
+			<groupExpression><![CDATA[$F{ssssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="13"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[($F{ssssGNo}).intValue()>0?
+($V{descCnt}.equals( $V{ssssCnt} )?Boolean.FALSE:Boolean.TRUE):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="194"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-4"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{commSsssGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="269"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-5"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{noteSsssGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="344"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-6"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{interSsssGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="194"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-7"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Sum of "+$V{descSsssGNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="419"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-27"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{leaseSsssGNoTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="494"
+						y="0"
+						width="75"
+						height="13"
+						backcolor="#CCCCCC"
+						key="textField-37"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" pdfFontName="Helvetica-Bold" size="9" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{slrSsssGNoTotal}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="description" >
+			<groupExpression><![CDATA[$F{description}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="13"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[($F{sGNo}).intValue()>0?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="194"
+						y="0"
+						width="75"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{commDescTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="269"
+						y="0"
+						width="75"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{noteDescTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="344"
+						y="0"
+						width="75"
+						height="13"
+						key="textField"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{interDescTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="194"
+						height="13"
+						key="textField-1"
+						stretchType="RelativeToTallestObject"/>
+					<box leftPadding="5">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="419"
+						y="0"
+						width="75"
+						height="13"
+						key="textField-28"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{leaseDescTotal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="494"
+						y="0"
+						width="75"
+						height="13"
+						key="textField-38"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="4">					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.math.BigDecimal"><![CDATA[$V{slrDescTotal}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>

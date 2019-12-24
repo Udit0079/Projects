@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:p="http://www.springframework.org/schema/p" 
+             xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/security
+	http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+           
+    <http auto-config="true" disable-url-rewriting="true">
+        <intercept-url pattern="/style/**" filters="none"/>
+        <intercept-url pattern="/faces/pages/**" access="ROLE_SUPER_USER,ROLE_MANAGER,ROLE_ASST_MANAGER,ROLE_OFFICER,ROLE_CLERK,ROLE_DBA,ROLE_AUDITOR,ROLE_SYS_ADMIN,ROLE_ASST_DBA" />
+        <intercept-url pattern="/faces/report/**" access="ROLE_SUPER_USER,ROLE_MANAGER,ROLE_ASST_MANAGER,ROLE_OFFICER,ROLE_CLERK,ROLE_DBA,ROLE_AUDITOR,ROLE_SYS_ADMIN,ROLE_ASST_DBA" />
+        <intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        
+        <form-login login-processing-url="/j_spring_security_check" login-page="/login.jsp" authentication-success-handler-ref="successAuthHandler"
+                    always-use-default-target="true" authentication-failure-handler-ref="failureHandler" />
+        <logout logout-success-url="/login.jsp"/>
+        
+        <session-management invalid-session-url="/timeout.jsp">
+            <!--<concurrency-control max-sessions="1" error-if-maximum-exceeded="true" />-->
+        </session-management>
+    </http>
+    <beans:bean id="successAuthHandler" class="com.cbs.web.security.SuccessfulAuthenticationHandler"/>
+    
+    <beans:bean id="failureHandler" class="com.cbs.web.security.AuthenticationFailureHandler"/>
+     
+    <beans:bean id="userAuthService" class="com.cbs.web.security.UserAuthenticationService"/>
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider ref="daoAuthenticationProvider"/>
+    </authentication-manager>
+    
+    <beans:bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder"/>
+    <beans:bean id="daoAuthenticationProvider"  class="org.springframework.security.authentication.dao.DaoAuthenticationProvider"
+                p:preAuthenticationChecks-ref="userDetailValidator" p:postAuthenticationChecks-ref="postUserDetailValidator"
+                p:userDetailsService-ref="userAuthService" p:passwordEncoder-ref="passwordEncoder"/>
+    
+    <beans:bean id="userDetailValidator"  class="com.cbs.web.security.UserDetailsValidator" />  
+    <beans:bean id="postUserDetailValidator"  class="com.cbs.web.security.PostAuthenticationValidator" />  
+    
+    <beans:bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">  
+        <beans:property name="basenames">  
+            <beans:list>
+                <beans:value>myMessages</beans:value>
+            </beans:list>
+        </beans:property>
+    </beans:bean>
+
+</beans:beans>

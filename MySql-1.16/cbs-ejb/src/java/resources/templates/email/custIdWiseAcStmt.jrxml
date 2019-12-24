@@ -1,0 +1,1548 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="custIdWiseAcStmt"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Portrait"
+		 pageWidth="595"
+		 pageHeight="842"
+		 columnWidth="569"
+		 columnSpacing="0"
+		 leftMargin="14"
+		 rightMargin="12"
+		 topMargin="20"
+		 bottomMargin="20"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="image" isForPrompting="true" class="java.lang.String">
+		<defaultValueExpression ><![CDATA["/root/Downloads/logo-retina1.jpg"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="pdFromDt" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pdToDt" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="vChqNo" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="nameImage" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[select bb.* from (select UPPER(cc.title) as title,aa.CustId as custId, atm.acctNature, atm.AcctCode as acctCode, UPPER(atm.acctdesc) as acctDesc,  
+LPAD(ifnull(bm.brncode,''), 2, '0') as brnCode, aa.Acno as acNo, ifnull(aa.Nomination,'') as nomination,  
+if(ifnull((select ifnull(code,'0') from parameterinfo_report where reportname='ROI-IN-DESC'),'0')='0', 
+SUBSTRING_INDEX(if(ifnull(trim(LEADING '0' from  aa.instno),'')<>'',  
+concat(if(aa.ty='0', if(aa.details<>'',concat(CAST('By ' AS CHAR CHARACTER SET utf8),CAST(aa.details AS CHAR CHARACTER SET utf8)),CAST(aa.details AS CHAR CHARACTER SET utf8)), 
+if(aa.details<>'',concat(CAST('To ' AS CHAR CHARACTER SET utf8),CAST(aa.details AS CHAR CHARACTER SET utf8)),aa.details)), 
+concat(CAST(' CHQ DT:' AS CHAR CHARACTER SET utf8),CAST(aa.InstDt AS CHAR CHARACTER SET utf8), CAST(' CHQ No:' AS CHAR CHARACTER SET utf8),CAST(trim(LEADING '0' from  aa.instno) AS CHAR CHARACTER SET utf8)))   
+,if(aa.ty='0', if(aa.details<>'',concat('By ',aa.details),aa.details),if(aa.details<>'',concat('To ',aa.details),aa.details))),'@',1)  
+,if(ifnull(trim(LEADING '0' from  aa.instno),'')<>'',  
+concat(if(aa.ty='0', if(aa.details<>'',concat(CAST('By ' AS CHAR CHARACTER SET utf8), CAST(aa.details AS CHAR CHARACTER SET utf8)), 
+CAST(aa.details AS CHAR CHARACTER SET utf8)),if(aa.details<>'',concat(CAST('To ' AS CHAR CHARACTER SET utf8), CAST(aa.details AS CHAR CHARACTER SET utf8)), 
+CAST(aa.details AS CHAR CHARACTER SET utf8))), 
+concat(CAST(' CHQ DT:' AS CHAR CHARACTER SET utf8),CAST(aa.InstDt AS CHAR CHARACTER SET utf8),  
+CAST(' CHQ No:' AS CHAR CHARACTER SET utf8),CAST(trim(LEADING '0' from  aa.instno) AS CHAR CHARACTER SET utf8)))   
+,if(aa.ty='0', if(aa.details<>'',concat(CAST('By ' AS CHAR CHARACTER SET utf8), CAST(aa.details AS CHAR CHARACTER SET utf8)), 
+CAST(aa.details AS CHAR CHARACTER SET utf8)),if(aa.details<>'',concat(CAST('To ' AS CHAR CHARACTER SET utf8), CAST(aa.details AS CHAR CHARACTER SET utf8)),aa.details))))as details,   
+date_format(ifnull(aa.dt,'01/01/1900'),'%d/%m/%Y') as date ,date_format(ifnull(aa.valuedt,'01/01/1900'),'%d/%m/%Y') as valueDate, ifnull(trim(LEADING '0' from  aa.instno),'') as chequeNo, if(aa.InstDt='01/01/1900','',aa.InstDt) as instDt,  
+aa.crAmt, aa.drAmt,ifnull(aa.openingBal,0) as openingBal, ifnull(aa.closingBal,0) as closingBal,   
+(ifnull(aa.closingBal,0) - ifnull(aa.pendingBal,0)) as availableBalance, aa.recno,aa.ty,  
+aa.pendingBal, aa.balance, UPPER(ifnull(cc.CustFullName,'')) as custFullName,   
+UPPER(CONCAT(CAST(ifnull(cc.PerAddressLine1,'')  AS CHAR CHARACTER SET utf8) ,CAST(' ' AS CHAR CHARACTER SET utf8), CAST(ifnull(cc.peraddressline2,'') AS CHAR CHARACTER SET utf8) , 
+CAST(' ' AS CHAR CHARACTER SET utf8), CAST(ifnull(cc.PerVillage,'') AS CHAR CHARACTER SET utf8) ,CAST(' ' AS CHAR CHARACTER SET utf8),  CAST(ifnull(cc.PerBlock,'') AS CHAR CHARACTER SET utf8) , CAST(' ' AS CHAR CHARACTER SET utf8),   
+CAST(ifnull((select ref_desc from cbs_ref_rec_type where REF_REC_NO = '001'  and REF_CODE = cc.PerCityCode),'') AS CHAR CHARACTER SET utf8) ,CAST(' ' AS CHAR CHARACTER SET utf8),   
+CAST(ifnull((select ref_desc from cbs_ref_rec_type where REF_REC_NO = '002'  and REF_CODE = cc.PerStateCode),'') AS CHAR CHARACTER SET utf8),CAST(' ' AS CHAR CHARACTER SET utf8),   
+CAST(ifnull(cc.PerPostalCode,'')AS CHAR CHARACTER SET utf8)))  as address,  
+UPPER(ba.bankname) as bankName, UPPER(ba.bankaddress) as bankAddress, ifnull(bm.Pincode ,'') as brPin, ifnull(BrPhone,'') as brPhone,   
+ifnull(BrFax,'') as brFax,   
+concat(CAST(LPAD(ifnull(ba.micr,''), 3, '0') AS CHAR CHARACTER SET utf8),CAST(LPAD(ifnull(ba.micrcode,''), 3, '0') AS CHAR CHARACTER SET utf8),CAST(LPAD(ifnull(ba.branchcode,''), 3, '0')AS CHAR CHARACTER SET utf8)) as micrCode,   
+ ifnull(bm.email, '') as email, ifnull(UPPER(bm.IFSC_CODE),'') as ifsc,   
+(select Concat(CAST(ifnull(address,'') AS CHAR CHARACTER SET utf8),if(ifnull(brPhone,'')='',CAST('' AS CHAR CHARACTER SET utf8),Concat(CAST(', Phone:' AS CHAR CHARACTER SET utf8),CAST(ifnull(brPhone,'') AS CHAR CHARACTER SET utf8)) )) as hoAdd from parameterinfo where brncode = 90) as hoAdd, 
+aa.voucherNo,ifnull(aa.PrinAmt,0) as prinAmt,ifnull(aa.interest,0) as interest,ifnull(aa.tds,0) as tds,aa.years,aa.months,aa.days,aa.period, 
+aa.roi, date_format(aa.matDt,'%d/%m/%Y') as matDt, date_format(aa.openingDt,'%d/%m/%Y') as openingDt, aa.intOpt
+from cbs_customer_master_detail cc,   
+( 
+select ci.CustId, ci.Acno, am.Nomination,r.details, 
+date_format(ifnull(r.InstDt,'1900-01-01'),'%d/%m/%Y') as InstDt, r.instno, r.dt,r.valuedt, r.cramt, r.dramt, 
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from ca_recon where auth= 'Y' and acno = r.acno and dt < '20170401' and auth = 'Y') as openingBal, 
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from ca_recon where auth= 'Y' and acno = r.acno and dt <= '20170725' and auth = 'Y') as closingBal, 
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from ca_recon where auth= 'Y' and acno = r.acno and dt <= r.dt and auth = 'Y') as balance, 
+(SELECT ifnull(SUM(txninstamt) ,0) from clg_ow_shadowbal where acno = r.acno AND DT <= '20170725') as pendingBal, r.recno, r.ty,  
+0 as VoucherNo,0 as PrinAmt,0 as interest,0 as tds,0 as Years,0 as Months,0 as Days,'' as Period, 
+am.intDeposit as roi, date_format('19000101','%Y%m%d') as matDt, am.openingDt, '' as intOpt     
+from customerid ci, accountmaster am,  ca_recon r  
+where ci.acno = am.acno and r.acno = am.acno  
+and (am.ClosingDate is null or am.ClosingDate = '' or am.ClosingDate>'20170401')  
+and ci.custid =  '42310' and r.dt between '20170401' and '20170725'  
+union all  
+select ci.CustId, ci.Acno, am.Nomination,r.details,  
+ date_format(ifnull(r.InstDt,'1900-01-01'),'%d/%m/%Y') as InstDt,r.instno, r.dt, r.valuedt, r.cramt, r.dramt,  
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from recon where auth= 'Y' and acno = r.acno and dt < '20170401' and auth = 'Y') as openingBal, 
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from recon where auth= 'Y' and acno = r.acno and dt <= '20170725' and auth = 'Y') as closingBal, 
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from recon where auth= 'Y' and acno = r.acno and dt <= r.dt and auth = 'Y') as balance, 
+(SELECT ifnull(SUM(txninstamt) ,0) from clg_ow_shadowbal where acno = r.acno AND DT <= '20170725') as pendingBal, r.recno, r.ty,  
+0 as VoucherNo,0 as PrinAmt,0 as interest,0 as tds,0 as Years,0 as Months,0 as Days,'' as Period, 
+am.intDeposit as roi, date_format('19000101','%Y%m%d') as matDt, am.openingDt, '' as intOpt          
+from customerid ci, accountmaster am,  recon r  
+where ci.acno = am.acno and r.acno = am.acno  
+and (am.ClosingDate is null or am.ClosingDate = '' or am.ClosingDate>'20170401')  
+and ci.custid =  '42310' and r.dt between '20170401' and '20170725'  
+union all  
+select ci.CustId, ci.Acno, am.Nomination,'' as details,  
+date_format(ifnull('1900-01-01','1900-01-01'),'%d/%m/%Y') as InstDt, '' as instno, '19000101' as dt, '19000101' as valuedt, 0 as cramt, 0 as dramt,  
+ 0 as openingBal,  
+(select cast((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))) as decimal(25,2)) from rdrecon where auth= 'Y' and acno = am.acno and dt <= '20170725' ) as closingBal,  
+0 as balance, 0 as pendingBal, 0 as recno, 0 ty, 
+0 as VoucherNo, am.rdinstal as prinamt,  
+(select sum(interest) from rd_interesthistory where acno = ci.acno and dt <='20170630') as interest, 
+(select sum(tds) from tdshistory where acno = ci.acno and dt <='20170630') as tds, 
+0 as Years,0 as Months, 0 as Days, 0 as tenure, am.intdeposit as roi, date_format(am.rdmatdate,'%Y%m%d') as matDt, am.openingdt, 'Q' as intOpt 
+from customerid ci, accountmaster am  
+where ci.acno = am.acno and substring(am.acno,3,2) in (select acctcode from accounttypemaster where acctnature in ('RD')) 
+and (am.ClosingDate is null or am.ClosingDate = '' or am.ClosingDate>'20170401')  
+and ci.custid =  '42310' group by am.acno  
+union all  
+select ci.CustId, ci.Acno, am.Nomination,r.details, 
+date_format(ifnull(r.InstDt,'1900-01-01'),'%d/%m/%Y') as InstDt, r.instno, r.dt,r.valuedt, r.cramt, r.dramt, 
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from loan_recon where auth= 'Y' and acno = r.acno and dt < '20170401') as openingBal, 
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from loan_recon where auth= 'Y' and acno = r.acno and dt <= '20170725') as closingBal, 
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from loan_recon where auth= 'Y' and acno = r.acno and dt <= r.dt) as balance, 
+(SELECT ifnull(SUM(txninstamt) ,0) from clg_ow_shadowbal where acno = r.acno AND DT <= '20170725') as pendingBal, r.recno, r.ty,  
+0 as VoucherNo,0 as PrinAmt,0 as interest,0 as tds,0 as Years,0 as Months,0 as Days,'' as Period, 
+am.intDeposit as roi, date_format('19000101','%Y%m%d') as matDt, am.openingDt, '' as intOpt           
+from customerid ci, accountmaster am,  loan_recon r  
+where ci.acno = am.acno and r.acno = am.acno  
+and (am.ClosingDate is null or am.ClosingDate = '' or am.ClosingDate>'20170401')  
+and ci.custid =  '42310' and r.dt between '20170401' and '20170725'  
+union all  
+select ci.CustId, ci.Acno, am.Nomination,r.details, 
+date_format(ifnull(r.InstDt,'1900-01-01'),'%d/%m/%Y') as InstDt, r.instno, r.dt,r.valuedt, r.cramt, r.dramt, 
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from ddstransaction where auth= 'Y' and acno = r.acno and dt < '20170401' and auth = 'Y') as openingBal, 
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from ddstransaction where auth= 'Y' and acno = r.acno and dt <= '20170725' and auth = 'Y') as closingBal, 
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from ddstransaction where auth= 'Y' and acno = r.acno and dt <= r.dt and auth = 'Y') as balance, 
+(SELECT ifnull(SUM(txninstamt) ,0) from clg_ow_shadowbal where acno = r.acno AND DT <= '20170725') as pendingBal, r.recno, r.ty,  
+0 as VoucherNo,0 as PrinAmt,0 as interest,0 as tds,0 as Years,0 as Months,0 as Days,'' as Period, 
+am.intDeposit as roi, date_format('19000101','%Y%m%d') as matDt, am.openingDt, 'Q' as intOpt        
+from customerid ci,  accountmaster am,  ddstransaction r  
+where ci.acno = am.acno and r.acno = am.acno  
+and (am.ClosingDate is null or am.ClosingDate = '' or am.ClosingDate>'20170401')  
+and ci.custid =  '42310' and r.dt between '20170401' and '20170725'  
+union all  
+select ci.CustId, ci.Acno, am.Nomination,'' as details,  
+date_format(ifnull('1900-01-01','1900-01-01'),'%d/%m/%Y') as InstDt, '' as instno, '19000101' as dt, '19000101' as valuedt, 0 as cramt, 0 as dramt,  
+ 0 as openingBal,  
+(select round((sum(ifnull(cramt,0)) - sum(ifnull(dramt,0))),2) from td_recon where auth= 'Y' and acno = am.acno and closeflag is null  
+and Trantype<> 27 and auth='y' and dt <= '20170717') as closingBal,  
+0 as balance,  
+0 as pendingBal, 0 as recno, 0 ty,v.VoucherNo, v.prinamt,  
+(select sum(interest) from td_interesthistory where acno = ci.acno and VoucherNo = v.VoucherNo and dt <='20170630') as interest, 
+(select sum(tds) from tdshistory where acno = ci.acno and VoucherNo = v.VoucherNo and dt <='20170630') as tds, 
+Years,Months,Days, Period as tenure,v.roi as roi, date_format(v.matDt,'%Y%m%d') as matDt, date_format(v.fddt,'%Y%m%d') as openingDt, v.intOpt 
+from customerid ci, td_accountmaster am, td_vouchmst v   
+where  ci.acno = am.acno and am.acno = v.acno and substring(am.acno,3,2) in (select acctcode from accounttypemaster where acctnature in ('FD','MS')) 
+and (am.ClosingDate is null or am.ClosingDate = '' or am.ClosingDate>'20170401')  
+and (date_format(v.ClDt,'%Y%m%d') is null or date_format(v.ClDt,'%Y%m%d')  = '' or date_format(v.ClDt,'%Y%m%d') >'20170401')  
+and ci.custid =  '42310' group by ci.CustId, ci.Acno,v.VoucherNo ) aa, accounttypemaster atm, branchmaster bm, bnkadd ba, parameterinfo pi  
+where aa.CustId = cc.customerid  
+ and substring(aa.Acno,3,2) = atm.AcctCode and substring(aa.Acno,1,2) = LPAD(ifnull(bm.brncode,''), 2, '0') and   
+bm.AlphaCode = ba.alphacode   
+and pi.brncode = bm.brncode  
+order by  bm.brnCode, atm.acctNature, atm.AcctCode, aa.Acno, aa.dt, aa.recno) bb, cbs_service_detail cs where  
+bb.CustId = cs.customer_id and bb.acno = cs.acno;]]></queryString>
+
+	<field name="title" class="java.lang.String"/>
+	<field name="custId" class="java.lang.Long"/>
+	<field name="acctNature" class="java.lang.String"/>
+	<field name="acctCode" class="java.lang.String"/>
+	<field name="acctDesc" class="java.lang.String"/>
+	<field name="brnCode" class="java.lang.String"/>
+	<field name="acNo" class="java.lang.String"/>
+	<field name="nomination" class="java.lang.String"/>
+	<field name="details" class="java.lang.String"/>
+	<field name="date" class="java.lang.String"/>
+	<field name="valueDate" class="java.lang.String"/>
+	<field name="chequeNo" class="java.lang.String"/>
+	<field name="instDt" class="java.lang.String"/>
+	<field name="crAmt" class="java.lang.Double"/>
+	<field name="drAmt" class="java.lang.Double"/>
+	<field name="openingBal" class="java.lang.Double"/>
+	<field name="closingBal" class="java.lang.Double"/>
+	<field name="availableBalance" class="java.lang.Double"/>
+	<field name="recno" class="java.lang.Double"/>
+	<field name="ty" class="java.lang.Long"/>
+	<field name="pendingBal" class="java.lang.Double"/>
+	<field name="balance" class="java.lang.Double"/>
+	<field name="custFullName" class="java.lang.String"/>
+	<field name="address" class="java.lang.String"/>
+	<field name="bankName" class="java.lang.String"/>
+	<field name="bankAddress" class="java.lang.String"/>
+	<field name="brPin" class="java.lang.String"/>
+	<field name="brPhone" class="java.lang.String"/>
+	<field name="brFax" class="java.lang.String"/>
+	<field name="micrCode" class="java.lang.String"/>
+	<field name="email" class="java.lang.String"/>
+	<field name="ifsc" class="java.lang.String"/>
+	<field name="hoAdd" class="java.lang.String"/>
+	<field name="voucherNo" class="java.lang.Double"/>
+	<field name="prinAmt" class="java.lang.Double"/>
+	<field name="interest" class="java.lang.Double"/>
+	<field name="tds" class="java.lang.Double"/>
+	<field name="years" class="java.lang.Long"/>
+	<field name="months" class="java.lang.Long"/>
+	<field name="days" class="java.lang.Long"/>
+	<field name="period" class="java.lang.String"/>
+	<field name="roi" class="java.lang.Double"/>
+	<field name="matDt" class="java.lang.String"/>
+	<field name="openingDt" class="java.lang.String"/>
+	<field name="intOpt" class="java.lang.String"/>
+
+	<variable name="vDr" class="java.lang.Double" resetType="Group" resetGroup="acNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{drAmt}]]></variableExpression>
+	</variable>
+	<variable name="vCr" class="java.lang.Double" resetType="Group" resetGroup="acNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{crAmt}]]></variableExpression>
+	</variable>
+	<variable name="tdTotalClosingBal" class="java.lang.Double" resetType="Group" resetGroup="tdHeader" calculation="Sum">
+		<variableExpression><![CDATA[Double.valueOf($F{prinAmt}.doubleValue()+$F{interest}.doubleValue()-$F{tds}.doubleValue())]]></variableExpression>
+	</variable>
+
+		<group  name="brnCode" isStartNewPage="true" >
+			<groupExpression><![CDATA[$F{brnCode}]]></groupExpression>
+			<groupHeader>
+			<band height="74"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="3"
+						width="270"
+						height="13"
+						key="textField-1"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{title}.equalsIgnoreCase( "" )?"":(($F{title}+". ")+$F{custFullName})]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="300"
+						y="3"
+						width="235"
+						height="11"
+						key="textField-2"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Your Branch Details:"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="16"
+						width="270"
+						height="58"
+						key="textField-3"/>
+					<box></box>
+					<textElement>
+						<font pdfFontName="Helvetica" size="10" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{address}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="300"
+						y="14"
+						width="269"
+						height="60"
+						key="textField-4"/>
+					<box></box>
+					<textElement textAlignment="Left">
+						<font pdfFontName="Helvetica" size="9" isBold="false"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{bankAddress}.equalsIgnoreCase( "" )?"":$F{bankAddress})+
+($F{brPin}.equalsIgnoreCase( "" )?"":", "+$F{brPin})+"\n"+
+($F{brPhone}.equalsIgnoreCase( "" )?"":"Phone:"+$F{brPhone})+
+($F{brFax}.equalsIgnoreCase( "" )?"":", Fax:"+$F{brFax})+"\n"+
+($F{ifsc}.equalsIgnoreCase( "" )?"":"IFSC:"+$F{ifsc})+
+($F{micrCode}.equalsIgnoreCase( "" )?"":", MICR:"+$F{micrCode})+"\n"+
+($F{email}.equalsIgnoreCase( "" )?"":"Email:"+$F{email})]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="acctNature" >
+			<groupExpression><![CDATA[$F{acctNature}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="AcctCode" >
+			<groupExpression><![CDATA[$F{acctCode}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="tdHeader" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="73"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" ))? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="6"
+						width="569"
+						height="34"
+						backcolor="#97D0F6"
+						key="textField-45"/>
+					<box topPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Details of "+$F{acctDesc}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="47"
+						width="85"
+						height="26"
+						backcolor="#97D0F6"
+						key="textField-46"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Account Number"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="132"
+						y="47"
+						width="71"
+						height="26"
+						backcolor="#97D0F6"
+						key="textField-47"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="9" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Start Date"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="274"
+						y="47"
+						width="85"
+						height="26"
+						backcolor="#97D0F6"
+						key="textField-48"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{acctNature}.equalsIgnoreCase( "RD" ))? "Installment Amount" : "Deposit Amount"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="359"
+						y="47"
+						width="85"
+						height="26"
+						backcolor="#97D0F6"
+						key="textField-49"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Maturity Amount\n (Without TDS)"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="444"
+						y="47"
+						width="40"
+						height="26"
+						backcolor="#97D0F6"
+						key="textField-50"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["ROI"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="203"
+						y="47"
+						width="71"
+						height="26"
+						backcolor="#97D0F6"
+						key="textField-51"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="9" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Maturity Date"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="484"
+						y="47"
+						width="85"
+						height="26"
+						backcolor="#97D0F6"
+						key="textField-52"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Closing Balance"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="85"
+						y="47"
+						width="47"
+						height="26"
+						backcolor="#97D0F6"
+						key="textField-60"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Vch No"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="23"
+						width="270"
+						height="14"
+						key="textField-63"/>
+					<box leftPadding="4"></box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Period: "+$P{pdFromDt}+" to "+$P{pdToDt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="305"
+						y="23"
+						width="264"
+						height="14"
+						key="textField-64"/>
+					<box rightPadding="4"></box>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nomination}.equalsIgnoreCase( "" )?"Nomination: Not Registered ":("Nomination: Registered")]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="13"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" ))? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="484"
+						height="13"
+						key="element-12"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Total Closing Balance: ]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="484"
+						y="0"
+						width="85"
+						height="13"
+						key="textField-62"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isBold="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{tdTotalClosingBal}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="acNo" >
+			<groupExpression><![CDATA[$F{acNo}]]></groupExpression>
+			<groupHeader>
+			<band height="66"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="10"
+						width="569"
+						height="34"
+						backcolor="#97D0F6"
+						key="textField-5"/>
+					<box topPadding="4">					<topPen lineWidth="0.25" lineStyle="Solid"/>
+</box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" size="10" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Transaction Details for your "+$F{acctDesc}+" No. "+$F{acNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="30"
+						width="270"
+						height="14"
+						key="textField-6"/>
+					<box leftPadding="4"></box>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Period: "+$P{pdFromDt}+" to "+$P{pdToDt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="305"
+						y="30"
+						width="264"
+						height="14"
+						key="textField-7"/>
+					<box rightPadding="4"></box>
+					<textElement textAlignment="Right">
+						<font size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{nomination}.equalsIgnoreCase( "" )?"Nomination: Not Registered ":("Nomination: Registered")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="53"
+						width="85"
+						height="13"
+						backcolor="#97D0F6"
+						key="textField-34"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Date"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="85"
+						y="53"
+						width="231"
+						height="13"
+						backcolor="#97D0F6"
+						key="textField-35"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="9" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Details"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="316"
+						y="53"
+						width="80"
+						height="13"
+						backcolor="#97D0F6"
+						key="textField-36"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Debit"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="396"
+						y="53"
+						width="80"
+						height="13"
+						backcolor="#97D0F6"
+						key="textField-37"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Credit"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="476"
+						y="53"
+						width="93"
+						height="13"
+						backcolor="#97D0F6"
+						key="textField-38"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Balance"]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="52"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="316"
+						y="0"
+						width="80"
+						height="13"
+						key="textField-14"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vDr}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="396"
+						y="0"
+						width="80"
+						height="13"
+						key="textField-15"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vCr}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="13"
+						width="476"
+						height="13"
+						key="element-8"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Closing Balance]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="476"
+						y="13"
+						width="75"
+						height="13"
+						key="textField-16"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isBold="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[($F{closingBal}.doubleValue())>= 0 ? $F{closingBal} : new Double(Math.abs($F{closingBal}.floatValue()))]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="26"
+						width="476"
+						height="13"
+						key="element-9"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Pending Balance]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="476"
+						y="26"
+						width="75"
+						height="13"
+						key="textField-17"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isBold="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[($F{pendingBal}.doubleValue())>= 0 ? $F{pendingBal} : new Double(Math.abs($F{pendingBal}.floatValue()))]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement
+						x="0"
+						y="39"
+						width="476"
+						height="13"
+						key="element-10"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Available Balance]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="476"
+						y="39"
+						width="75"
+						height="13"
+						key="textField-18"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isBold="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[($F{availableBalance}.doubleValue())>= 0 ? $F{availableBalance} : new Double(Math.abs($F{availableBalance}.floatValue()))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="551"
+						y="13"
+						width="18"
+						height="13"
+						key="textField-19"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="9" isBold="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{closingBal}.doubleValue() >= 0 ? (" ") : ("Dr")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="551"
+						y="26"
+						width="18"
+						height="13"
+						key="textField-20"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="9" isBold="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{pendingBal}.intValue())>= 0 ? (" ") : ("Dr")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="551"
+						y="39"
+						width="18"
+						height="13"
+						key="textField-21"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="9" isBold="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{availableBalance}.doubleValue() >= 0 ? (" ") : ("Dr")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="85"
+						height="13"
+						key="textField-22"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="85"
+						y="0"
+						width="231"
+						height="13"
+						key="textField-23"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="476"
+						y="0"
+						width="75"
+						height="13"
+						key="textField-25"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="551"
+						y="0"
+						width="18"
+						height="13"
+						key="textField-26"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="9" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="hi" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="13"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+				<staticText>
+					<reportElement
+						x="0"
+						y="0"
+						width="316"
+						height="13"
+						key="element-7"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Opening Balance :]]></text>
+				</staticText>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="476"
+						y="0"
+						width="75"
+						height="13"
+						key="textField-8"/>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isBold="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[($F{openingBal}.doubleValue())>= 0 ? $F{openingBal} : new Double(Math.abs($F{openingBal}.floatValue()))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="551"
+						y="0"
+						width="18"
+						height="13"
+						key="textField-9"
+						stretchType="RelativeToTallestObject"/>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="9" isBold="false" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{openingBal}.intValue())>= 0 ? (" ") : ("Dr")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="316"
+						y="0"
+						width="80"
+						height="13"
+						key="textField-12"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="396"
+						y="0"
+						width="80"
+						height="13"
+						key="textField-13"
+						stretchType="RelativeToTallestObject"/>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Bold" size="10" isBold="true" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="44"  isSplitAllowed="true" >
+				<image  hAlign="Left" onErrorType="Blank" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="569"
+						height="44"
+						key="image-1"/>
+					<box></box>
+					<graphicElement stretchType="NoStretch"/>
+					<imageExpression class="java.lang.String"><![CDATA[$P{image}]]></imageExpression>
+				</image>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="13"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="85"
+						height="13"
+						key="textField-27"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{date}.endsWith( $F{valueDate} ) ? $F{date} : ($F{date}).concat("(".concat($F{valueDate}).concat(")"))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="85"
+						y="0"
+						width="231"
+						height="13"
+						key="textField-28"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box leftPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Left" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="9" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{details}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="316"
+						y="0"
+						width="80"
+						height="13"
+						key="textField-30"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{drAmt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="396"
+						y="0"
+						width="80"
+						height="13"
+						key="textField-31"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{crAmt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="476"
+						y="0"
+						width="75"
+						height="13"
+						key="textField-32"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[($F{balance}.doubleValue())>= 0 ? $F{balance} : new Double(Math.abs($F{balance}.floatValue()))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="551"
+						y="0"
+						width="18"
+						height="13"
+						key="textField-33"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.FALSE : Boolean.TRUE]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="9" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[($F{balance}.intValue())>= 0 ? (" ") : ("Dr")]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="132"
+						y="0"
+						width="71"
+						height="13"
+						key="textField-53"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{openingDt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="203"
+						y="0"
+						width="71"
+						height="13"
+						key="textField-54"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{matDt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="274"
+						y="0"
+						width="85"
+						height="13"
+						key="textField-55"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{prinAmt}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="359"
+						y="0"
+						width="85"
+						height="13"
+						key="textField-56"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{closingBal}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="444"
+						y="0"
+						width="40"
+						height="13"
+						key="textField-57"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{roi}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="484"
+						y="0"
+						width="85"
+						height="13"
+						key="textField-58"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[Double.valueOf($F{prinAmt}.doubleValue()+$F{interest}.doubleValue()-$F{tds}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="85"
+						height="13"
+						key="textField-59"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{acNo}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="85"
+						y="0"
+						width="47"
+						height="13"
+						key="textField-61"
+						stretchType="RelativeToTallestObject">
+							<printWhenExpression><![CDATA[($F{acctNature}.equalsIgnoreCase( "FD" )||$F{acctNature}.equalsIgnoreCase( "MS" )||$F{acctNature}.equalsIgnoreCase( "RD" )||$F{acctNature}.equalsIgnoreCase( "DS" ))? Boolean.TRUE : Boolean.FALSE]]></printWhenExpression>
+						</reportElement>
+					<box>					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$F{voucherNo}]]></textFieldExpression>
+				</textField>
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="34"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="17"
+						width="569"
+						height="17"
+						key="textField-39"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{hoAdd}.equalsIgnoreCase( "" )?"":"Registered and Corporate Office: "+$F{hoAdd}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="433"
+						y="4"
+						width="100"
+						height="13"
+						key="textField-40"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="538"
+						y="4"
+						width="31"
+						height="13"
+						key="textField-41"/>
+					<box></box>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<lastPageFooter>
+			<band height="34"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="17"
+						width="569"
+						height="17"
+						key="textField-42"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font size="8"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{hoAdd}.equalsIgnoreCase( "" )?"":"Registered and Corporate Office: "+$F{hoAdd}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="433"
+						y="4"
+						width="100"
+						height="13"
+						key="textField-43"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="538"
+						y="4"
+						width="31"
+						height="13"
+						key="textField-44"/>
+					<box></box>
+					<textElement verticalAlignment="Bottom">
+						<font fontName="Arial" pdfFontName="Times-Roman" size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				</textField>
+			</band>
+		</lastPageFooter>
+		<summary>
+			<band height="46"  isSplitAllowed="true" >
+				<staticText>
+					<reportElement
+						x="0"
+						y="6"
+						width="569"
+						height="40"
+						key="element-11"/>
+					<box leftPadding="2"></box>
+					<textElement>
+						<font fontName="Arial" pdfFontName="Times-Roman" size="10" isPdfEmbedded ="true"/>
+					</textElement>
+				<text><![CDATA[Unless a Constituent notifies the Bank immediately of any DISCREPANCY found by him/her in the Statement of Account. 
+It will be taken that he/she has found the Statement correct.
+This Statement has been generated by the Computer, therefore  need not be Signed.
+]]></text>
+				</staticText>
+			</band>
+		</summary>
+</jasperReport>

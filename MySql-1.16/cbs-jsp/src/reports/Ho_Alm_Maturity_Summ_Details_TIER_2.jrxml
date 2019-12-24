@@ -1,0 +1,3287 @@
+<?xml version="1.0" encoding="UTF-8"  ?>
+<!-- Created with iReport - A designer for JasperReports -->
+<!DOCTYPE jasperReport PUBLIC "//JasperReports//DTD Report Design//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
+<jasperReport
+		 name="Ho_Alm_Maturity_Summ_Details_TIER_2"
+		 columnCount="1"
+		 printOrder="Vertical"
+		 orientation="Landscape"
+		 pageWidth="1000"
+		 pageHeight="595"
+		 columnWidth="990"
+		 columnSpacing="0"
+		 leftMargin="5"
+		 rightMargin="5"
+		 topMargin="18"
+		 bottomMargin="18"
+		 whenNoDataType="NoPages"
+		 isTitleNewPage="false"
+		 isSummaryNewPage="false">
+	<property name="ireport.scriptlethandling" value="0" />
+	<property name="ireport.encoding" value="UTF-8" />
+	<import value="java.util.*" />
+	<import value="net.sf.jasperreports.engine.*" />
+	<import value="net.sf.jasperreports.engine.data.*" />
+
+	<parameter name="pBankName" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pBankAddress" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pPrintedDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pAmtIn" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="report" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pFromDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pReportDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pToDate" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt1" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt2" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt3" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt4" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt5" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt6" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt7" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt8" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt9" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt10" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt11" isForPrompting="false" class="java.lang.String"/>
+	<parameter name="pbkt12" isForPrompting="false" class="java.lang.String"/>
+	<queryString><![CDATA[select  gNo as gCode,sGNo as sgCode, ssGNo as ssgCode, sssGNo as sssgCode, ssssGNo as ssssgCode, classification as headType,  description,
+acNature, acType, glHeadFrom as codeFr, glHeadTo as codeTo, formula, 
+opBal as buk1, drAmt as buk2 ,crAmt as buk3,closingBal as buk4, opBal as buk5, drAmt as buk6,crAmt as buk7,closingBal as buk8, 
+name as countApplicable, npaClassification  from test1  
+order by reportName, classification desc,gNo,sGNo, ssGNo, sssGNo, ssssGNo]]></queryString>
+
+	<field name="gNo" class="java.lang.Integer"/>
+	<field name="sGNo" class="java.lang.Integer"/>
+	<field name="ssGNo" class="java.lang.Integer"/>
+	<field name="sssGNo" class="java.lang.Integer"/>
+	<field name="ssssGNo" class="java.lang.Integer"/>
+	<field name="classification" class="java.lang.String"/>
+	<field name="description" class="java.lang.String"/>
+	<field name="acNature" class="java.lang.String"/>
+	<field name="acType" class="java.lang.String"/>
+	<field name="glheadFrom" class="java.lang.String"/>
+	<field name="glHeadTo" class="java.lang.String"/>
+	<field name="formula" class="java.lang.String"/>
+	<field name="amt" class="java.lang.Double"/>
+	<field name="secondAmount" class="java.lang.Double"/>
+	<field name="thirdAmount" class="java.lang.Double"/>
+	<field name="fourthAmount" class="java.lang.Double"/>
+	<field name="fifthAmount" class="java.lang.Double"/>
+	<field name="sixthAmount" class="java.lang.Double"/>
+	<field name="seventhAmount" class="java.lang.Double"/>
+	<field name="eighthAmount" class="java.lang.Double"/>
+	<field name="countApplicable" class="java.lang.String"/>
+	<field name="npaClassification" class="java.lang.String"/>
+	<field name="rangeBaseOn" class="java.lang.String"/>
+	<field name="rangeFrom" class="java.lang.String"/>
+	<field name="rangeTo" class="java.lang.String"/>
+	<field name="fGNo" class="java.lang.String"/>
+	<field name="fSGNo" class="java.lang.String"/>
+	<field name="fSsGNo" class="java.lang.String"/>
+	<field name="fSssGNo" class="java.lang.String"/>
+	<field name="fSsssGNo" class="java.lang.String"/>
+	<field name="sNo" class="java.lang.Integer"/>
+	<field name="reportName" class="java.lang.String"/>
+	<field name="nineAmount" class="java.lang.Double"/>
+	<field name="tenAmount" class="java.lang.Double"/>
+	<field name="elevenAmount" class="java.lang.Double"/>
+	<field name="twelveAmount" class="java.lang.Double"/>
+
+	<variable name="desc_SS_GNO" class="java.lang.String" resetType="Group" resetGroup="ssgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="desc_S_GNO" class="java.lang.String" resetType="Group" resetGroup="sgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="desc_GNO" class="java.lang.String" resetType="Group" resetGroup="gno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="desc_SSS_GNO" class="java.lang.String" resetType="Group" resetGroup="sssgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="desc_SSSS_GNO" class="java.lang.String" resetType="Group" resetGroup="ssssgno" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="DESC_CNT" class="java.lang.Integer" resetType="Group" resetGroup="Desc" calculation="Count">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="SSSS_CNT" class="java.lang.Integer" resetType="Group" resetGroup="ssssgno" calculation="Count">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="GNoExclude" class="java.lang.String" resetType="Group" resetGroup="gno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SGNoExclude" class="java.lang.String" resetType="Group" resetGroup="sgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SsGNoExclude" class="java.lang.String" resetType="Group" resetGroup="ssgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SssGNoExclude" class="java.lang.String" resetType="Group" resetGroup="sssgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="SsssGNOExclude" class="java.lang.String" resetType="Group" resetGroup="ssssgno" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="DescExclude" class="java.lang.String" resetType="Group" resetGroup="Desc" calculation="First">
+		<variableExpression><![CDATA[$F{countApplicable}.equalsIgnoreCase( "No" )?"T":"F"]]></variableExpression>
+	</variable>
+	<variable name="desc_classification" class="java.lang.String" resetType="Group" resetGroup="headType" calculation="First">
+		<variableExpression><![CDATA[$F{description}]]></variableExpression>
+	</variable>
+	<variable name="descSumB2" class="java.lang.Double" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{secondAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssssgSumB2" class="java.lang.Double" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{secondAmount}]]></variableExpression>
+	</variable>
+	<variable name="sssgSumB2" class="java.lang.Double" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{secondAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssgSumB2" class="java.lang.Double" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{secondAmount}]]></variableExpression>
+	</variable>
+	<variable name="sgSumB2" class="java.lang.Double" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{secondAmount}]]></variableExpression>
+	</variable>
+	<variable name="gSumB2" class="java.lang.Double" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{secondAmount}]]></variableExpression>
+	</variable>
+	<variable name="vB2" class="java.lang.Double" resetType="Group" resetGroup="headType" calculation="Sum">
+		<variableExpression><![CDATA[$F{secondAmount}]]></variableExpression>
+	</variable>
+	<variable name="descSumB3" class="java.lang.Double" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{thirdAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssssgSumB3" class="java.lang.Double" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{thirdAmount}]]></variableExpression>
+	</variable>
+	<variable name="sssgSumB3" class="java.lang.Double" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{thirdAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssgSumB3" class="java.lang.Double" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{thirdAmount}]]></variableExpression>
+	</variable>
+	<variable name="sgSumB3" class="java.lang.Double" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{thirdAmount}]]></variableExpression>
+	</variable>
+	<variable name="gSumB3" class="java.lang.Double" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{thirdAmount}]]></variableExpression>
+	</variable>
+	<variable name="vB3" class="java.lang.Double" resetType="Group" resetGroup="headType" calculation="Sum">
+		<variableExpression><![CDATA[$F{thirdAmount}]]></variableExpression>
+	</variable>
+	<variable name="descSumB4" class="java.lang.Double" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{fourthAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssssgSumB4" class="java.lang.Double" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{fourthAmount}]]></variableExpression>
+	</variable>
+	<variable name="sssgSumB4" class="java.lang.Double" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{fourthAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssgSumB4" class="java.lang.Double" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{fourthAmount}]]></variableExpression>
+	</variable>
+	<variable name="sgSumB4" class="java.lang.Double" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{fourthAmount}]]></variableExpression>
+	</variable>
+	<variable name="gSumB4" class="java.lang.Double" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{fourthAmount}]]></variableExpression>
+	</variable>
+	<variable name="vB4" class="java.lang.Double" resetType="Group" resetGroup="headType" calculation="Sum">
+		<variableExpression><![CDATA[$F{fourthAmount}]]></variableExpression>
+	</variable>
+	<variable name="descSumB1" class="java.lang.Double" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="ssssgSumB1" class="java.lang.Double" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="sssgSumB1" class="java.lang.Double" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="ssgSumB1" class="java.lang.Double" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="sgSumB1" class="java.lang.Double" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="gSumB1" class="java.lang.Double" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="vB1" class="java.lang.Double" resetType="Group" resetGroup="headType" calculation="Sum">
+		<variableExpression><![CDATA[$F{amt}]]></variableExpression>
+	</variable>
+	<variable name="descSumB5" class="java.lang.Double" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{fifthAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssssgSumB5" class="java.lang.Double" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{fifthAmount}]]></variableExpression>
+	</variable>
+	<variable name="sssgSumB5" class="java.lang.Double" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{fifthAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssgSumB5" class="java.lang.Double" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{fifthAmount}]]></variableExpression>
+	</variable>
+	<variable name="sgSumB5" class="java.lang.Double" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{fifthAmount}]]></variableExpression>
+	</variable>
+	<variable name="gSumB5" class="java.lang.Double" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{fifthAmount}]]></variableExpression>
+	</variable>
+	<variable name="vB5" class="java.lang.Double" resetType="Group" resetGroup="headType" calculation="Sum">
+		<variableExpression><![CDATA[$F{fifthAmount}]]></variableExpression>
+	</variable>
+	<variable name="descSumB6" class="java.lang.Double" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{sixthAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssssgSumB6" class="java.lang.Double" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sixthAmount}]]></variableExpression>
+	</variable>
+	<variable name="sssgSumB6" class="java.lang.Double" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sixthAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssgSumB6" class="java.lang.Double" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sixthAmount}]]></variableExpression>
+	</variable>
+	<variable name="sgSumB6" class="java.lang.Double" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sixthAmount}]]></variableExpression>
+	</variable>
+	<variable name="gSumB6" class="java.lang.Double" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{sixthAmount}]]></variableExpression>
+	</variable>
+	<variable name="vB6" class="java.lang.Double" resetType="Group" resetGroup="headType" calculation="Sum">
+		<variableExpression><![CDATA[$F{sixthAmount}]]></variableExpression>
+	</variable>
+	<variable name="descSumB7" class="java.lang.Double" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{seventhAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssssgSumB7" class="java.lang.Double" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{seventhAmount}]]></variableExpression>
+	</variable>
+	<variable name="sssgSumB7" class="java.lang.Double" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{seventhAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssgSumB7" class="java.lang.Double" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{seventhAmount}]]></variableExpression>
+	</variable>
+	<variable name="sgSumB7" class="java.lang.Double" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{seventhAmount}]]></variableExpression>
+	</variable>
+	<variable name="gSumB7" class="java.lang.Double" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{seventhAmount}]]></variableExpression>
+	</variable>
+	<variable name="vB7" class="java.lang.Double" resetType="Group" resetGroup="headType" calculation="Sum">
+		<variableExpression><![CDATA[$F{seventhAmount}]]></variableExpression>
+	</variable>
+	<variable name="descSumB8" class="java.lang.Double" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{eighthAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssssgSumB8" class="java.lang.Double" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{eighthAmount}]]></variableExpression>
+	</variable>
+	<variable name="sssgSumB8" class="java.lang.Double" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{eighthAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssgSumB8" class="java.lang.Double" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{eighthAmount}]]></variableExpression>
+	</variable>
+	<variable name="sgSumB8" class="java.lang.Double" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{eighthAmount}]]></variableExpression>
+	</variable>
+	<variable name="gSumB8" class="java.lang.Double" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{eighthAmount}]]></variableExpression>
+	</variable>
+	<variable name="vB8" class="java.lang.Double" resetType="Group" resetGroup="headType" calculation="Sum">
+		<variableExpression><![CDATA[$F{eighthAmount}]]></variableExpression>
+	</variable>
+	<variable name="vO1" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?$F{amt}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vO2" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?$F{secondAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vO3" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?$F{thirdAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vO4" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?$F{fourthAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vO5" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?$F{fifthAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vO6" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?$F{sixthAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vO7" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?$F{seventhAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vO8" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?$F{eighthAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vI1" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "A" )?$F{amt}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vI2" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "A" )?$F{secondAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vI3" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "A" )?$F{thirdAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vI4" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "A" )?$F{fourthAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vI5" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "A" )?$F{fifthAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vI6" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "A" )?$F{sixthAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vI7" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "A" )?$F{seventhAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vI8" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "A" )?$F{eighthAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="descSumB9" class="java.lang.Double" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{nineAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssssgSumB9" class="java.lang.Double" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{nineAmount}]]></variableExpression>
+	</variable>
+	<variable name="sssgSumB9" class="java.lang.Double" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{nineAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssgSumB9" class="java.lang.Double" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{nineAmount}]]></variableExpression>
+	</variable>
+	<variable name="sgSumB9" class="java.lang.Double" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{nineAmount}]]></variableExpression>
+	</variable>
+	<variable name="gSumB9" class="java.lang.Double" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{nineAmount}]]></variableExpression>
+	</variable>
+	<variable name="vB9" class="java.lang.Double" resetType="Group" resetGroup="headType" calculation="Sum">
+		<variableExpression><![CDATA[$F{nineAmount}]]></variableExpression>
+	</variable>
+	<variable name="descSumB10" class="java.lang.Double" resetType="Group" resetGroup="Desc" calculation="Sum">
+		<variableExpression><![CDATA[$F{tenAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssssgSumB10" class="java.lang.Double" resetType="Group" resetGroup="ssssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{tenAmount}]]></variableExpression>
+	</variable>
+	<variable name="sssgSumB10" class="java.lang.Double" resetType="Group" resetGroup="sssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{tenAmount}]]></variableExpression>
+	</variable>
+	<variable name="ssgSumB10" class="java.lang.Double" resetType="Group" resetGroup="ssgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{tenAmount}]]></variableExpression>
+	</variable>
+	<variable name="sgSumB10" class="java.lang.Double" resetType="Group" resetGroup="sgno" calculation="Sum">
+		<variableExpression><![CDATA[$F{tenAmount}]]></variableExpression>
+	</variable>
+	<variable name="gSumB10" class="java.lang.Double" resetType="Group" resetGroup="gno" calculation="Sum">
+		<variableExpression><![CDATA[$F{tenAmount}]]></variableExpression>
+	</variable>
+	<variable name="vB10" class="java.lang.Double" resetType="Group" resetGroup="headType" calculation="Sum">
+		<variableExpression><![CDATA[$F{tenAmount}]]></variableExpression>
+	</variable>
+	<variable name="vO9" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?$F{nineAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vI9" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "A" )?$F{nineAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vO10" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?$F{tenAmount}:new Double("0")]]></variableExpression>
+	</variable>
+	<variable name="vI10" class="java.lang.Double" resetType="Report" calculation="Sum">
+		<variableExpression><![CDATA[$F{classification}.equalsIgnoreCase( "A" )?$F{tenAmount}:new Double("0")]]></variableExpression>
+	</variable>
+
+		<group  name="top" >
+			<groupExpression><![CDATA[]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="58"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="200"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-121"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["C) Mismatch(B-A)"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="200"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-122"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI1}.doubleValue()-$V{vO1}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="270"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-123"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI2}.doubleValue()-$V{vO2}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="340"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-124"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI3}.doubleValue()-$V{vO3}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="410"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-125"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI4}.doubleValue()-$V{vO4}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="480"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-126"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI5}.doubleValue()-$V{vO5}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="550"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-127"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI6}.doubleValue()-$V{vO6}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="620"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-128"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI7}.doubleValue()-$V{vO7}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="690"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-129"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI8}.doubleValue()-$V{vO8}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="900"
+						y="0"
+						width="72"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-130"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="14"
+						width="200"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-131"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["D) Cummulative Mismatch"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="690"
+						y="14"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-139"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI8}.doubleValue()-$V{vO8}.doubleValue()+($V{vI7}.doubleValue()-$V{vO7}.doubleValue()+($V{vI6}.doubleValue()-$V{vO6}.doubleValue()+($V{vI5}.doubleValue()-$V{vO5}.doubleValue()+($V{vI4}.doubleValue()-$V{vO4}.doubleValue()+($V{vI3}.doubleValue()-$V{vO3}.doubleValue()+($V{vI2}.doubleValue()-$V{vO2}.doubleValue()+($V{vI1}.doubleValue()-$V{vO1}.doubleValue()))))))))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="900"
+						y="14"
+						width="72"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-140"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="28"
+						width="200"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-141"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["E) C as % to A  (In %)"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="200"
+						y="28"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-142"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double((($V{vI1}.doubleValue()-$V{vO1}.doubleValue())/$V{vO1}.doubleValue())*100)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="270"
+						y="28"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-143"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double((($V{vI2}.doubleValue()-$V{vO2}.doubleValue())/$V{vO2}.doubleValue())*100)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="340"
+						y="28"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-144"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double((($V{vI3}.doubleValue()-$V{vO3}.doubleValue())/$V{vO3}.doubleValue())*100)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="410"
+						y="28"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-145"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double((($V{vI4}.doubleValue()-$V{vO4}.doubleValue())/$V{vO4}.doubleValue())*100)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="480"
+						y="28"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-146"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double((($V{vI5}.doubleValue()-$V{vO5}.doubleValue())/$V{vO5}.doubleValue())*100)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="550"
+						y="28"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-147"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double((($V{vI6}.doubleValue()-$V{vO6}.doubleValue())/$V{vO6}.doubleValue())*100)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="620"
+						y="28"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-148"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double((($V{vI7}.doubleValue()-$V{vO7}.doubleValue())/$V{vO7}.doubleValue())*100)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="690"
+						y="28"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-149"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double((($V{vI8}.doubleValue()-$V{vO8}.doubleValue())/$V{vO8}.doubleValue())*100)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="900"
+						y="28"
+						width="72"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-150"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="46"
+						width="908"
+						height="12"
+						backcolor="#CCCCCC"
+						key="textField-151"/>
+					<box leftPadding="1">					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Left">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[" * Amount to be shown net of provision, interest suspense and claims received from ECGC / DICGC."]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="620"
+						y="14"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-152"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI7}.doubleValue()-$V{vO7}.doubleValue()+($V{vI6}.doubleValue()-$V{vO6}.doubleValue()+($V{vI5}.doubleValue()-$V{vO5}.doubleValue()+($V{vI4}.doubleValue()-$V{vO4}.doubleValue()+($V{vI3}.doubleValue()-$V{vO3}.doubleValue()+($V{vI2}.doubleValue()-$V{vO2}.doubleValue()+($V{vI1}.doubleValue()-$V{vO1}.doubleValue())))))))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="550"
+						y="14"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-153"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI6}.doubleValue()-$V{vO6}.doubleValue()+($V{vI5}.doubleValue()-$V{vO5}.doubleValue()+($V{vI4}.doubleValue()-$V{vO4}.doubleValue()+($V{vI3}.doubleValue()-$V{vO3}.doubleValue()+($V{vI2}.doubleValue()-$V{vO2}.doubleValue()+($V{vI1}.doubleValue()-$V{vO1}.doubleValue()))))))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="480"
+						y="14"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-154"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI5}.doubleValue()-$V{vO5}.doubleValue()+($V{vI4}.doubleValue()-$V{vO4}.doubleValue()+($V{vI3}.doubleValue()-$V{vO3}.doubleValue()+($V{vI2}.doubleValue()-$V{vO2}.doubleValue()+($V{vI1}.doubleValue()-$V{vO1}.doubleValue())))))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="410"
+						y="14"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-155"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI4}.doubleValue()-$V{vO4}.doubleValue()+($V{vI3}.doubleValue()-$V{vO3}.doubleValue()+($V{vI2}.doubleValue()-$V{vO2}.doubleValue()+($V{vI1}.doubleValue()-$V{vO1}.doubleValue()))))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="340"
+						y="14"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-156"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI3}.doubleValue()-$V{vO3}.doubleValue()+($V{vI2}.doubleValue()-$V{vO2}.doubleValue()+($V{vI1}.doubleValue()-$V{vO1}.doubleValue())))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="270"
+						y="14"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-157"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI2}.doubleValue()-$V{vO2}.doubleValue()+($V{vI1}.doubleValue()-$V{vO1}.doubleValue()))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="200"
+						y="14"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-158"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI1}.doubleValue()-$V{vO1}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="760"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-160"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI9}.doubleValue()-$V{vO9}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="760"
+						y="14"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-161"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI9}.doubleValue()-$V{vO9}.doubleValue()+($V{vI7}.doubleValue()-$V{vO7}.doubleValue()+($V{vI6}.doubleValue()-$V{vO6}.doubleValue()+($V{vI5}.doubleValue()-$V{vO5}.doubleValue()+($V{vI4}.doubleValue()-$V{vO4}.doubleValue()+($V{vI3}.doubleValue()-$V{vO3}.doubleValue()+($V{vI2}.doubleValue()-$V{vO2}.doubleValue()+($V{vI1}.doubleValue()-$V{vO1}.doubleValue()))))))))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="760"
+						y="28"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-162"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double((($V{vI9}.doubleValue()-$V{vO9}.doubleValue())/$V{vO9}.doubleValue())*100)]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="830"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-170"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI10}.doubleValue()-$V{vO10}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="830"
+						y="14"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-171"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vI10}.doubleValue()-$V{vO10}.doubleValue()+($V{vI9}.doubleValue()-$V{vO9}.doubleValue()+($V{vI8}.doubleValue()-$V{vO8}.doubleValue()+($V{vI7}.doubleValue()-$V{vO7}.doubleValue()+($V{vI6}.doubleValue()-$V{vO6}.doubleValue()+($V{vI3}.doubleValue()-$V{vO3}.doubleValue()+($V{vI2}.doubleValue()-$V{vO2}.doubleValue()+($V{vI1}.doubleValue()-$V{vO1}.doubleValue()))))))))]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="830"
+						y="28"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-172"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica" size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double((($V{vI10}.doubleValue()-$V{vO10}.doubleValue())/$V{vO10}.doubleValue())*100)]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="headType" isStartNewPage="true" >
+			<groupExpression><![CDATA[$F{classification}]]></groupExpression>
+			<groupHeader>
+			<band height="34"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="200"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-55"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?"Outflows":"Inflows"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="200"
+						y="0"
+						width="70"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-56"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5" rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbkt1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="270"
+						y="0"
+						width="70"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-57"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5" rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbkt2}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="340"
+						y="0"
+						width="70"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-65"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5" rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbkt3}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="410"
+						y="0"
+						width="70"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-73"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5" rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbkt4}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="480"
+						y="0"
+						width="70"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-81"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5" rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbkt5}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="550"
+						y="0"
+						width="70"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-89"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5" rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbkt6}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="620"
+						y="0"
+						width="70"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-97"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5" rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbkt7}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="690"
+						y="0"
+						width="70"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-105"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5" rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbkt8}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="900"
+						y="0"
+						width="72"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-113"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5" rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Total"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="760"
+						y="0"
+						width="70"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-163"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5" rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbkt9}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="#,##0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="830"
+						y="0"
+						width="70"
+						height="34"
+						backcolor="#CCCCCC"
+						key="textField-173"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="5" rightPadding="3">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="9" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pbkt10}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="200"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-53"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{classification}.equalsIgnoreCase( "L" )?"A)   Total Outflows":"B)   Total Inflows"]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="200"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-54"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vB1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="270"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-58"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vB2}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="340"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-66"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vB3}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="410"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-74"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vB4}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="480"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-82"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vB5}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="550"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-90"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vB6}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="620"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-98"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vB7}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="690"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-106"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vB8}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="900"
+						y="0"
+						width="72"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-114"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{vB1}.doubleValue()+$V{vB2}.doubleValue()+$V{vB3}.doubleValue()+$V{vB4}.doubleValue()+$V{vB5}.doubleValue()+$V{vB6}.doubleValue()+$V{vB7}.doubleValue()+$V{vB8}.doubleValue()+$V{sgSumB9}.doubleValue()+$V{sgSumB10}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="760"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-164"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vB9}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="830"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-174"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{vB10}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="gno" >
+			<groupExpression><![CDATA[$F{gNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="0"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$V{GNoExclude}.equalsIgnoreCase( "T" )?Boolean.FALSE:Boolean.TRUE]]></printWhenExpression>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="sgno" >
+			<groupExpression><![CDATA[$F{sGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{ssGNo}.intValue()>0?
+($V{SGNoExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="200"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-33"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["  Sum of "+$V{desc_S_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="200"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-34"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sgSumB1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="270"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-60"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sgSumB2}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="340"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-68"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sgSumB3}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="410"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-76"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sgSumB4}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="480"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-84"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sgSumB5}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="550"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-92"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sgSumB6}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="620"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-100"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sgSumB7}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="690"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-108"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sgSumB8}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="900"
+						y="0"
+						width="72"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-116"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{sgSumB1}.doubleValue()+$V{sgSumB2}.doubleValue()+$V{sgSumB3}.doubleValue()+$V{sgSumB4}.doubleValue()+$V{sgSumB5}.doubleValue()+$V{sgSumB6}.doubleValue()+$V{sgSumB7}.doubleValue()+$V{sgSumB8}.doubleValue()+$V{sgSumB9}.doubleValue()+$V{sgSumB10}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="760"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-165"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sgSumB9}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="830"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-175"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sgSumB10}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ssgno" >
+			<groupExpression><![CDATA[$F{ssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{sssGNo}.intValue()>0?
+($V{SsGNoExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="200"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-42"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["  Sum of "+$V{desc_SS_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="200"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-43"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssgSumB1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="270"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-61"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssgSumB2}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="340"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-69"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssgSumB3}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="410"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-77"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssgSumB4}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="480"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-85"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssgSumB5}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="550"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-93"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssgSumB6}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="620"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-101"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssgSumB7}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="690"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-109"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssgSumB8}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="900"
+						y="0"
+						width="72"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-117"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{ssgSumB1}.doubleValue()+$V{ssgSumB2}.doubleValue()+$V{ssgSumB3}.doubleValue()+$V{ssgSumB4}.doubleValue()+$V{ssgSumB5}.doubleValue()+$V{ssgSumB6}.doubleValue()+$V{ssgSumB7}.doubleValue()+$V{ssgSumB8}.doubleValue()+$V{ssgSumB9}.doubleValue()+$V{ssgSumB10}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="760"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-166"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssgSumB9}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="830"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-176"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssgSumB10}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="sssgno" >
+			<groupExpression><![CDATA[$F{sssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{ssssGNo}.intValue()>0?
+($V{SssGNoExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="200"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-46"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["    Sum of "+$V{desc_SSS_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="200"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-47"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sssgSumB1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="270"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-62"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sssgSumB2}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="340"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-70"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sssgSumB3}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="410"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-78"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sssgSumB4}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="480"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-86"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sssgSumB5}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="550"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-94"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sssgSumB6}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="620"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-102"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sssgSumB7}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="690"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-110"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sssgSumB8}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="900"
+						y="0"
+						width="72"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-118"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{sssgSumB1}.doubleValue()+$V{sssgSumB2}.doubleValue()+$V{sssgSumB3}.doubleValue()+$V{sssgSumB4}.doubleValue()+$V{sssgSumB5}.doubleValue()+$V{sssgSumB6}.doubleValue()+$V{sssgSumB7}.doubleValue()+$V{sssgSumB8}.doubleValue()+$V{sssgSumB9}.doubleValue()+$V{sssgSumB10}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="760"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-167"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sssgSumB9}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="830"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-177"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{sssgSumB10}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="ssssgno" >
+			<groupExpression><![CDATA[$F{ssssGNo}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{ssssGNo}.intValue()>0?
+($V{DESC_CNT}.equals( $V{SSSS_CNT} )?Boolean.FALSE:
+($V{SsssGNOExclude}.equals( "T" )?Boolean.FALSE:Boolean.TRUE)):Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="200"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-48"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["      Sum of "+$V{desc_SSSS_GNO}.trim()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="200"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-49"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssssgSumB1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="270"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-63"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssssgSumB2}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="340"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-71"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssssgSumB3}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="410"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-79"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssssgSumB4}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="480"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-87"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssssgSumB5}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="550"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-95"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssssgSumB6}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="620"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-103"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssssgSumB7}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="690"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-111"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssssgSumB8}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="900"
+						y="0"
+						width="72"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-119"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{ssssgSumB1}.doubleValue()+$V{ssssgSumB2}.doubleValue()+$V{ssssgSumB3}.doubleValue()+$V{ssssgSumB4}.doubleValue()+$V{ssssgSumB5}.doubleValue()+$V{ssssgSumB6}.doubleValue()+$V{ssssgSumB7}.doubleValue()+$V{ssssgSumB8}.doubleValue()+$V{ssssgSumB9}.doubleValue()+$V{ssssgSumB10}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="760"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-168"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssssgSumB9}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="830"
+						y="0"
+						width="70"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-178"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font pdfFontName="Helvetica-Bold" size="8" isBold="true" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{ssssgSumB10}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<group  name="Desc" >
+			<groupExpression><![CDATA[$F{description}]]></groupExpression>
+			<groupHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+			</groupHeader>
+			<groupFooter>
+			<band height="14"  isSplitAllowed="true" >
+				<printWhenExpression><![CDATA[$F{sGNo}.intValue()>0?Boolean.TRUE:Boolean.FALSE]]></printWhenExpression>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						mode="Opaque"
+						x="0"
+						y="0"
+						width="200"
+						height="14"
+						backcolor="#CCCCCC"
+						key="textField-28"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$F{description}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="200"
+						y="0"
+						width="70"
+						height="14"
+						key="textField-29"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{descSumB1}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="270"
+						y="0"
+						width="70"
+						height="14"
+						key="textField-64"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{descSumB2}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="340"
+						y="0"
+						width="70"
+						height="14"
+						key="textField-72"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{descSumB3}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="410"
+						y="0"
+						width="70"
+						height="14"
+						key="textField-80"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{descSumB4}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="480"
+						y="0"
+						width="70"
+						height="14"
+						key="textField-88"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{descSumB5}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="550"
+						y="0"
+						width="70"
+						height="14"
+						key="textField-96"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{descSumB6}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="620"
+						y="0"
+						width="70"
+						height="14"
+						key="textField-104"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{descSumB7}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="690"
+						y="0"
+						width="70"
+						height="14"
+						key="textField-112"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{descSumB8}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="900"
+						y="0"
+						width="72"
+						height="14"
+						key="textField-120"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[new Double($V{descSumB1}.doubleValue()+$V{descSumB2}.doubleValue()+$V{descSumB3}.doubleValue()+$V{descSumB4}.doubleValue()+$V{descSumB5}.doubleValue()+$V{descSumB6}.doubleValue()+$V{descSumB7}.doubleValue()+$V{descSumB8}.doubleValue() +$V{descSumB9}.doubleValue()+$V{descSumB10}.doubleValue())]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="760"
+						y="0"
+						width="70"
+						height="14"
+						key="textField-169"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{descSumB9}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="###0.00;-###0.00" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="830"
+						y="0"
+						width="70"
+						height="14"
+						key="textField-179"
+						stretchType="RelativeToTallestObject"
+						positionType="Float"/>
+					<box leftPadding="1" rightPadding="2">					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25" lineStyle="Solid" lineColor="#000000"/>
+</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="8" isBold="false" isItalic="false" isUnderline="false" isPdfEmbedded ="false" isStrikeThrough="false" />
+					</textElement>
+				<textFieldExpression   class="java.lang.Double"><![CDATA[$V{descSumB10}]]></textFieldExpression>
+				</textField>
+			</band>
+			</groupFooter>
+		</group>
+		<background>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</background>
+		<title>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</title>
+		<pageHeader>
+			<band height="31"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="0"
+						width="253"
+						height="28"
+						key="textField-1"/>
+					<box></box>
+					<textElement>
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pBankName}+", "+$P{pBankAddress}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="807"
+						y="0"
+						width="153"
+						height="14"
+						key="textField-2"/>
+					<box></box>
+					<textElement textAlignment="Right">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pPrintedDate}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="807"
+						y="17"
+						width="153"
+						height="14"
+						key="textField-3"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{pAmtIn}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="301"
+						y="0"
+						width="446"
+						height="28"
+						key="textField-159"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{report}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageHeader>
+		<columnHeader>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnHeader>
+		<detail>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</detail>
+		<columnFooter>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</columnFooter>
+		<pageFooter>
+			<band height="17"  isSplitAllowed="true" >
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="894"
+						y="3"
+						width="58"
+						height="14"
+						key="textField-37"/>
+					<box></box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Page " + $V{PAGE_NUMBER} + " of "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" isBlankWhenNull="false" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="952"
+						y="3"
+						width="18"
+						height="14"
+						key="textField-38"/>
+					<box leftPadding="5"></box>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["" + $V{PAGE_NUMBER} + ""]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="false" pattern="dd/MM/yyyy h.mm a" isBlankWhenNull="true" evaluationTime="Report" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="56"
+						y="3"
+						width="104"
+						height="14"
+						key="textField-39"/>
+					<box></box>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="0"
+						y="3"
+						width="56"
+						height="14"
+						key="textField-40"/>
+					<box></box>
+					<textElement verticalAlignment="Middle">
+						<font size="9"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA["Printed on: "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true" evaluationTime="Now" hyperlinkType="None"  hyperlinkTarget="Self" >
+					<reportElement
+						x="160"
+						y="3"
+						width="734"
+						height="14"
+						key="textField-50"/>
+					<box></box>
+					<textElement textAlignment="Center">
+						<font pdfFontName="Helvetica-Bold" isBold="true"/>
+					</textElement>
+				<textFieldExpression   class="java.lang.String"><![CDATA[$P{report}]]></textFieldExpression>
+				</textField>
+			</band>
+		</pageFooter>
+		<summary>
+			<band height="0"  isSplitAllowed="true" >
+			</band>
+		</summary>
+</jasperReport>
